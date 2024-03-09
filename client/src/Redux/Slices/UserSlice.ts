@@ -5,15 +5,20 @@ export type User = {
   email: string;
   gender: string;
   _id: string;
+  valid?: Date;
+  status?: boolean;
+  role: string;
 };
 
 export type InitialState = {
   user: User | null;
+  status: boolean;
   loading: boolean;
 };
 
 const initialState: InitialState = {
   user: null,
+  status: false,
   loading: false,
 };
 
@@ -27,10 +32,16 @@ const UserReducer = createSlice({
       state.loading = false;
     },
     RemoveUser: (state) => {
-        state.user = null
-    }
+      state.user = null;
+    },
+    addStatus: (state) => {
+      state.status = true;
+    },
+    RemoveStatus: (state) => {
+      state.status = false;
+    },
   },
 });
 
-export default UserReducer.reducer
-export const { addUser, RemoveUser } = UserReducer.actions;
+export default UserReducer.reducer;
+export const { addUser, RemoveUser, addStatus, RemoveStatus } = UserReducer.actions;

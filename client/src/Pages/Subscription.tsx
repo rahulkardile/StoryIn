@@ -1,11 +1,15 @@
 import React from "react";
 import toast from "react-hot-toast";
 import profileImg from "../assets/profile.jpg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
+import { addStatus } from "../Redux/Slices/UserSlice";
+import { useNavigate } from "react-router-dom";
 
 const Subscription = () => {
   const { user } = useSelector((state: ReduxStates) => state.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkout = async (amount: any) => {
@@ -35,19 +39,31 @@ const Subscription = () => {
         "StoryIn is a best audio book plateform to upgrade yourself by listing new audio books.",
       order_id: id,
       image: profileImg,
-      callback_url: "http://localhost:5173/success",
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      handler: async(response: any) => {
-      
+      handler: async (response: any) => {
         const Info = await fetch("/api/order/verify", {
           method: "POST",
-          headers: {"Content-Type": "application/json"},
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            
-          })
-        })
-        console.log(response);
+            order_Id: response.razorpay_order_id,
+            payment_Id: response.razorpay_payment_id,
+            signature: response.razorpay_signature,
+            amount: orderAmount,
+          }),
+        });
+
+        const { success } = await Info.json();
+
+        if (success === true) {
+          toast.success("Subscription Successfull");
+          console.log(success);
+          dispatch(addStatus());
+          navigate("/");
+        }else{
+          toast.error("Payment Failed!")
+        }
       },
+      
       prefill: {
         name: user?.name,
         email: user?.email,

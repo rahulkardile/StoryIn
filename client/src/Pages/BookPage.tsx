@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import NewCard from "../components/NewCard";
+import { useSelector } from "react-redux";
+import { ReduxStates } from "../Redux/Store";
 
 const BookPage = () => {
   const [data, setData] = useState({
@@ -20,25 +22,28 @@ const BookPage = () => {
     __v: "",
   });
   const [newReq, setNewReq] = useState([]);
-
   const { id } = useParams();
   console.log(id);
 
-  useEffect(() => {
+  const { user, status } = useSelector((state: ReduxStates) => state.user);
 
+  useEffect(() => {
     const controller = new AbortController();
 
     const getData = async () => {
-      const res = await fetch(`/api/audio-book/get/${id}`, { signal: controller.signal});
+      const res = await fetch(`/api/audio-book/get/${id}`, {
+        signal: controller.signal,
+      });
       const resData = await res.json();
 
       console.log(resData);
       setData(resData);
-
     };
 
     const data = async () => {
-      const res = await fetch("/api/audio-book/get", { signal: controller.signal });
+      const res = await fetch("/api/audio-book/get", {
+        signal: controller.signal,
+      });
       const resData = await res.json();
 
       if (resData.success === true) {
@@ -51,9 +56,8 @@ const BookPage = () => {
     getData();
     data();
 
-    return ()=> controller.abort();
-    
-  },[]);
+    return () => controller.abort();
+  }, []);
 
   return (
     <section className="text-gray-600 mt-14 mb-3 body-font">
@@ -61,7 +65,7 @@ const BookPage = () => {
         <>
           <div className="container flex gap-4 justify-center ">
             <>
-            <img
+              <img
                 className="lg:w-2/6 md:w-3/6 mb-10 h-80 w-60 object-contain object-center rounded"
                 alt="hero"
                 src={`/api/${data.poster}`}
@@ -114,22 +118,33 @@ const BookPage = () => {
           </div>
 
           <div className="flex flex-col items-center m-auto max-w-[900px] justify-center">
-           <h1>Episodes</h1>
+            <h1>Episodes</h1>
             <p className="border-t-[1px] my-3 border-slate-500 h-1 w-full" />
-
             <div className="flex flex-row items-center mb-3 gap-2">
-              <h1 className="h-8 w-8 border-[1px] border-black text-black flex items-center text-sm justify-evenly rounded-full m-auto"><span>1</span></h1>
-              <audio className="w-[500px] text-red-400" controls={true}>
-                <source
-                  src={`/api/stream?path=${data.episodes[0]}`}
-                  className=""
-                  type="audio/mp3"
-                />
+              <h1 className="h-8 w-8 border-[1px] border-black text-black flex items-center text-sm justify-evenly rounded-full m-auto">
+                <span>1</span>
+              </h1>
+
+              <audio
+                className="w-[500px] text-red-400"
+                draggable={false}
+                controls={true}
+              >
+                {
+                status === true || user?.role === "admin" ? (
+                  <source
+                    src={`/api/stream?path=${data.episodes[0]}`}
+                    className=""
+                    type="audio/mp3"
+                  />
+                ) : (
+                  <source src={``} className="" type="audio/mp3" />
+                )
+                }
               </audio>
             </div>
 
             <p className="border-t-[1px] my-3 border-slate-500 h-1 w-full" />
-
           </div>
 
           <section className="mt-6 flex flex-col gap-6">

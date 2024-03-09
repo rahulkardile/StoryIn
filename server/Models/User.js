@@ -9,7 +9,18 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        min:6
+        min: 6
+    },
+    role: {
+        type: String,
+        enum: ["user", "creator", "admin"],
+        default: "user",
+        required: true
+    },
+    status: {
+        type: Boolean,
+        default: false,
+        required: false
     },
     DOB: {
         type: String,

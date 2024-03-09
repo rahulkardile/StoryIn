@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { ReduxStates } from "../Redux/Store";
 import toast from "react-hot-toast";
-import { RemoveUser } from "../Redux/Slices/UserSlice";
+import { RemoveStatus, RemoveUser } from "../Redux/Slices/UserSlice";
 import profileImg from "../assets/profile.jpg";
 
 const Header = () => {
@@ -20,14 +20,19 @@ const Header = () => {
     if (data.success === true) {
       toast.success("Logout success");
       dispatch(RemoveUser());
+      dispatch(RemoveStatus());
       navigate("/");
     } else {
       toast.error("can't logout");
     }
   };
 
+  const handleBecome = async()=>{
+    
+  }
+
   return (
-    <header className="p-3 relative bg-black flex justify-between items-center select-none">
+    <header onMouseLeave={()=> setDropDown(false)} className="p-3 relative bg-black flex justify-between items-center select-none">
       <div className="ml-4 flex flex-row gap-1 items-center">
         <Link to={"/"}>
           <h1 className="text-white flex gap-1 items-center text-3xl font-semibold duration-300  hover:text-orange-500">
@@ -63,36 +68,52 @@ const Header = () => {
             <div className="flex justify-center items-center flex-col gap-3">
               <img
                 onClick={() => setDropDown(!dropDown)}
+                onMouseEnter={()=> setDropDown(true)}
                 src={profileImg}
                 className="w-9 h-9 rounded-full cursor-pointer"
                 alt=""
               />
               <dialog
+              onMouseLeave={()=> setDropDown(false)}
                 open={dropDown}
-                className="z-10 left-[88%] w-24 bg-grey-100 rounded-lg top-14"
+                className="z-10 left-[88%] w-auto mr-5 bg-grey-100 rounded-lg top-14"
               >
                 <div
                   id="myDropdown"
-                  className={`flex my-2 items-center flex-col justify-evenly gap-1`}
+                  className={`flex my-2 items-center w-auto flex-col justify-evenly gap-1`}
                 >
-                  <Link
-                    to={"/create"}
-                    className="duration-200 hover:text-orange-500 cursor-pointer"
+                  {user.role === "admin" || user.role === "creator" ? (
+                    <Link
+                      to={"/create"}
+                      className="duration-200 hover:text-orange-500 cursor-pointer"
+                    >
+                      Create
+                    </Link>
+                  ) : (
+                    <button
+                    onClick={handleBecome}
+                    className="duration-200 hover:text-red-600"
                   >
-                    Create
-                  </Link>
+                    become creator
+                  </button>
+                  )}
                   <Link
                     to={"/profile"}
                     className="duration-200 hover:text-orange-500 cursor-pointer"
                   >
                     Profile
                   </Link>
-                  <Link
-                    to={"/admin"}
-                    className="duration-200 hover:text-orange-500 cursor-pointer"
-                  >
-                    Admin
-                  </Link>
+                  {user.role === "admin" ? (
+                    <Link
+                      to={"/admin"}
+                      className="duration-200 hover:text-orange-500 cursor-pointer"
+                    >
+                      Admin
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
                   <button
                     onClick={handleLogout}
                     className="duration-200 hover:text-red-600"

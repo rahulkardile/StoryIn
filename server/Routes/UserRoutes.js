@@ -3,6 +3,7 @@ import { User } from "../Models/User.js";
 import bcrypt from "bcrypt"
 import { errorHandler } from "../utils/errHandler.js";
 import jwt from "jsonwebtoken"
+import { verifyUser } from "../utils/VerifyUser.js";
 
 const router = express.Router();
 const oneFifty = 1000 * 60 * 60 * 24 * 150;
@@ -43,8 +44,7 @@ router.post("/get", async (req, res, next) => {
     const passOk = bcrypt.compareSync(password, LoginUser.password)
     if (!passOk) return next(errorHandler(400, "Wrong password!"));
 
-    const access_User = jwt.sign({ _id: LoginUser._id, email: LoginUser.email, name: LoginUser.name }, process.env.JWT_SECRET )
-
+    const access_User = jwt.sign({ _id: LoginUser._id, email: LoginUser.email, name: LoginUser.name, role: LoginUser.role }, process.env.JWT_SECRET )
 
     const { password: pass, createdAt, updatedAt, __v, ...rest } = LoginUser._doc
 
@@ -52,6 +52,27 @@ router.post("/get", async (req, res, next) => {
 
   } catch (error) {
     next(error)
+  }
+})
+
+router.post("/become", verifyUser, async(req, res, next)=> {
+  try {
+
+    const data = await req.user;
+
+    if(data.role === "user"){
+      
+      const newU = await User.findByIdAndUpdate(data._id, {
+        role: "creator"
+      })
+
+      return res.status(200).json("Your now creator")
+    }
+
+    res.json(data)
+
+  } catch (error) {
+    next(error);
   }
 })
 

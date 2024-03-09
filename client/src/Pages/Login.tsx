@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { addUser } from "../Redux/Slices/UserSlice";
+import { addStatus, addUser } from "../Redux/Slices/UserSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -35,12 +35,16 @@ const Login = () => {
 
     if (data.success === false || !data) {
       setLoading(false);
-      setFormData({});
       toast.error(data.message);
     } else {
       toast.success(`Welcome Back ${data.name}`);
       dispatch(addUser(data));
       setLoading(false);
+
+      if(data.status === true){
+        dispatch(addStatus());
+      }
+      
       navigate("/");
     }
     setLoading(false);

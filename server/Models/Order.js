@@ -1,8 +1,12 @@
 import mongoose from "mongoose";
 
 const OrderSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Types.ObjectId,
+    userId: {
+            type: mongoose.Types.ObjectId,
+            required: true
+        },
+    email: {
+        type: String,
         required: true
     },
     orderId: {
@@ -17,15 +21,19 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    data: {
+    date: {
+        type: Date,
+        required: true
+    },
+    expiry: {
         type: Date,
         required: true
     },
     duration: {
         type: String,
         required: true
-    }
-}, { 
+    },
+}, {
     timestamps: true
 })
 

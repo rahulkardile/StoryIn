@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: false }))
 
 dotenv.config();
 const PORT = 3300
-const MONGO_URL = process.env.MONGOURL
+const MONGO_URL = process.env.MONGOURL;
 
 try {
     mongoose.connect(MONGO_URL)
