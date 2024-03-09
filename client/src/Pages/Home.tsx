@@ -9,11 +9,13 @@ import Card from "../components/Card";
 import toast from "react-hot-toast";
 import NewCard from "../components/NewCard";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ReduxStates } from "../Redux/Store";
 
 const Home = () => {
   const [data, setData] = useState([]);
   const [trending, setTrending] = useState([]);
-
+  const { status } = useSelector((state: ReduxStates) => state.user)
 
   useEffect(() => {
     const data = async () => {
@@ -53,14 +55,16 @@ const Home = () => {
             400,000+ bestselling stories and Storytel Originals. Prices starting
             from Rs 149/ month. Cancel anytime
           </p>
-          <Link to={'/subscription'} className="p-3 bg-white text-black rounded-lg text-lg lg:text-xl font-bold hover:opacity-80">
+          { status === false ? <Link to={'/subscription'} className="p-3 bg-white text-black mt-2 rounded-lg text-lg lg:text-xl font-bold hover:opacity-80">
             Subscribe Now
-          </Link>
+          </Link> : <Link to={'/audio-books'} className="p-3 bg-white text-black rounded-lg text-lg mt-2 lg:text-xl font-semibold hover:opacity-80">
+            Explore Premium
+          </Link> }
         </div>
 
         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
           <img
-            className="object-cover object-center rounded"
+            className="object-cover ml-20 object-center rounded"
             alt="hero"
             src={logo}
           />

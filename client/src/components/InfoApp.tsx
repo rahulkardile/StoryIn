@@ -1,6 +1,12 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { ReduxStates } from '../Redux/Store'
+import { Link } from 'react-router-dom'
 
 const InfoApp = () => {
+
+  const { status } = useSelector((state: ReduxStates)=> state.user)
+
   return (
     <section className="bg-black max-w-[1800px] p-14 flex flex-col m-auto items-center gap-2 mb-3">
         <div className="flex flex-row gap-2 justify-evenly">
@@ -27,9 +33,11 @@ const InfoApp = () => {
           </div>
         </div>
 
-        <button className="p-3 bg-white text-black rounded text-xl font-semibold hover:opacity-80 px-7 max-w-[15rem] mt-6">
-          Subscribe Now
-        </button>
+        { status === false ? <Link to={'/subscription'} className="p-3 bg-white text-black rounded-lg mt-6 text-lg lg:text-xl font-bold hover:opacity-80">
+            Subscribe Now
+          </Link> : <Link to={'/audio-books'} className="p-3 bg-white text-black rounded-lg text-lg lg:text-xl mb-7 font-semibold hover:opacity-80">
+            Explore Premium
+          </Link> }
       </section>
   )
 }

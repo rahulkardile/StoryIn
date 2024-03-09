@@ -7,9 +7,12 @@ import Karn from "../assets/NewCard.jpeg";
 import Card from "../components/Card";
 import NewCard from "../components/NewCard";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { ReduxStates } from "../Redux/Store";
 
 const AudioBooks = () => {
   const [data, setData] = useState([]);
+  const { status } = useSelector((state: ReduxStates)=> state.user)
 
   useEffect(() => {
     const controller = new AbortController();
@@ -51,9 +54,12 @@ const AudioBooks = () => {
             awaits you every day. Step into a limitless audio adventure with
             over 400,000+ titles, waiting to be discovered.
           </p>
-          <button className="p-3 bg-white mx-14 text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80">
+          { 
+          status === false ? <Link to={'/subscription'} className="p-3 bg-white mx-14 flex justify-center text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80">
             Subscribe Now
-          </button>
+          </Link> : <p className="mb-9"></p>
+          }
+          
         </div>
       </div>
 

@@ -5,8 +5,13 @@ import { FaCaretRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Karn from "../assets/NewCard.jpeg";
 import Robo from "../assets/img.webp";
+import { useSelector } from "react-redux";
+import { ReduxStates } from "../Redux/Store";
 
 const EBooks = () => {
+
+  const { status } = useSelector((state: ReduxStates)=> state.user)
+
   return (
     <section className="h-[1300px] w-full">
       <div className="h-[40%] w-full relative flex items-center gap-2 flex-col">
@@ -25,9 +30,11 @@ const EBooks = () => {
             Get access to more than 250 000 + eBooks – new content is added
             daily. Start now. Read anytime, anywhere.
           </p>
-          <button className="p-3 bg-white mx-14 text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80">
+          { 
+            status === false  ? <button className="p-3 bg-white mx-14 text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80">
             Subscribe Now
-          </button>
+          </button> : ""
+          }
         </div>
       </div>
       <div className="max-w-[1300px] ml-8 m-auto mt-3">

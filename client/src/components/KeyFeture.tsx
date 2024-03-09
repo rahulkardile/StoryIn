@@ -1,8 +1,14 @@
 import React from 'react'
 import sec from "../assets/Personalization_Block.jpeg";
 import thi from "../assets/3-device.png";
+import { useSelector } from 'react-redux';
+import { ReduxStates } from '../Redux/Store';
+import { Link } from 'react-router-dom';
 
 const KeyFeture = () => {
+
+  const { status } = useSelector((state: ReduxStates) => state.user)
+
   return (
     <>
      <section className="bg-white flex items-center gap-20 max-w-[950px] justify-center mt-24 mb-24 m-auto">
@@ -21,9 +27,11 @@ const KeyFeture = () => {
               Discover unique stories only available on Storytel. Choose among
               celebrated series, captivating fiction, or pulse-raising crime.
             </p>
-            <button className="p-3 bg-black text-white rounded-full text-xl font-semibold hover:opacity-80 max-w-[15rem] mt-6">
-              Subscribe Now
-            </button>
+            { status === false ? <Link to={'/subscription'} className="p-3 flex justify-center bg-black text-white rounded-lg text-center m-auto text-lg lg:text-xl font-bold hover:opacity-80">
+            Subscribe Now
+          </Link> : <Link to={'/audio-books'} className="p-3 bg-black flex justify-center text-white rounded-lg text-lg lg:text-xl max-w-[15rem]  font-semibold hover:opacity-80">
+            Explore Premium
+          </Link> }
           </div>
         </section>
 
@@ -36,9 +44,9 @@ const KeyFeture = () => {
               Read in bed – listen on the go. Download audiobooks and e-books
               offline on your favorite devices.
             </p>
-            <button className="p-3 bg-black text-white rounded-full text-xl font-semibold hover:opacity-80 max-w-[15rem] mt-6">
+            <Link to={'/audio-books'}className="p-3 bg-black text-white flex justify-center rounded-lg text-xl font-semibold hover:opacity-80 max-w-[15rem] mt-6">
               Explore More
-            </button>
+            </Link>
           </div>
 
           <div className="lg:max-w-3xl lg:w-full md:1/2 w-5/6">
