@@ -44,32 +44,59 @@ router.post("/get", async (req, res, next) => {
     const passOk = bcrypt.compareSync(password, LoginUser.password)
     if (!passOk) return next(errorHandler(400, "Wrong password!"));
 
-    const access_User = jwt.sign({ _id: LoginUser._id, email: LoginUser.email, name: LoginUser.name, role: LoginUser.role }, process.env.JWT_SECRET )
+    const access_User = jwt.sign({ _id: LoginUser._id, email: LoginUser.email, name: LoginUser.name, role: LoginUser.role }, process.env.JWT_SECRET)
 
     const { password: pass, createdAt, updatedAt, __v, ...rest } = LoginUser._doc
 
-    res.cookie("_user_access", access_User, { secure: true, maxAge: oneFifty}).status(200).json(rest);
+    res.cookie("_user_access", access_User, { secure: true, maxAge: oneFifty }).status(200).json(rest);
 
   } catch (error) {
     next(error)
   }
 })
 
-router.post("/become", verifyUser, async(req, res, next)=> {
+router.get("/reSign", verifyUser, async (req, res, next) => {
+  try {
+    const { _id, email } = await req.user;
+    if (!_id) return next(errorHandler("404", "Wrong User!"));
+
+    const LoginUser = await User.findOne({ email });
+    const { password: pass, createdAt, updatedAt, __v, ...rest } = LoginUser._doc
+
+    res.status(200).json({
+      success: true,
+      user: rest
+    })
+
+  } catch (error) {
+    next(error);
+  }
+})
+
+router.get("/become", verifyUser, async (req, res, next) => {
   try {
 
     const data = await req.user;
 
-    if(data.role === "user"){
-      
+    if (data.role === "user") {
+
       const newU = await User.findByIdAndUpdate(data._id, {
         role: "creator"
       })
 
-      return res.status(200).json("Your now creator")
+      return res.status(200).json({
+        success: true,
+        message: "Your now creator"
+      })
+
+    }else{
+      res.json({
+        success: false,
+        message: "Your already creator"
+      })
     }
 
-    res.json(data)
+    
 
   } catch (error) {
     next(error);

@@ -6,7 +6,7 @@ export type User = {
   gender: string;
   _id: string;
   valid?: Date;
-  status?: boolean;
+  status: boolean;
   role: string;
 };
 
@@ -36,12 +36,21 @@ const UserReducer = createSlice({
     },
     addStatus: (state) => {
       state.status = true;
+      if (state.user !== null) {
+        state.user.status = true;
+      }
     },
     RemoveStatus: (state) => {
       state.status = false;
+    },
+    changeRole: (state) => {
+      if (state.user !== null) {
+        state.user.role = "creator";
+      }
     },
   },
 });
 
 export default UserReducer.reducer;
-export const { addUser, RemoveUser, addStatus, RemoveStatus } = UserReducer.actions;
+export const { addUser, RemoveUser, addStatus, RemoveStatus, changeRole } =
+  UserReducer.actions;

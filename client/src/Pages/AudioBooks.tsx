@@ -12,7 +12,8 @@ import { ReduxStates } from "../Redux/Store";
 
 const AudioBooks = () => {
   const [data, setData] = useState([]);
-  const { status } = useSelector((state: ReduxStates)=> state.user)
+  const [Trending, setTrending] = useState([]);
+  const { status } = useSelector((state: ReduxStates) => state.user);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -28,11 +29,25 @@ const AudioBooks = () => {
       } else {
         toast.error("problem");
       }
-
-      return () => controller.abort();
+      
     };
 
+    const trending = async () => {
+      const res = await fetch("/api/audio-book/trending", {
+        signal: controller.signal,
+      });
+      const resData = await res.json();
+
+      if (resData.success === true) {
+        setTrending(resData.data);
+      } else {
+        toast.error("problem");
+      }
+    };
+    
+    trending();
     data();
+    return () => controller.abort();
   }, []);
 
   return (
@@ -48,18 +63,24 @@ const AudioBooks = () => {
           }}
           className="relative mt-[340px] flex flex-col gap-3 w-full"
         >
-          <h1 className="ml-14 text-5xl text-orange-500 font-bold">Audiobooks</h1>
+          <h1 className="ml-14 text-5xl text-orange-500 font-bold">
+            Audiobooks
+          </h1>
           <p className="ml-14 text-base text-white max-w-[590px]">
             Get unlimited access to the world of audiobooks - where new content
             awaits you every day. Step into a limitless audio adventure with
             over 400,000+ titles, waiting to be discovered.
           </p>
-          { 
-          status === false ? <Link to={'/subscription'} className="p-3 bg-white mx-14 flex justify-center text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80">
-            Subscribe Now
-          </Link> : <p className="mb-9"></p>
-          }
-          
+          {status === false ? (
+            <Link
+              to={"/subscription"}
+              className="p-3 bg-white mx-14 flex justify-center text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80"
+            >
+              Subscribe Now
+            </Link>
+          ) : (
+            <p className="mb-9"></p>
+          )}
         </div>
       </div>
 
@@ -109,17 +130,48 @@ const AudioBooks = () => {
             </section>
           )}
 
-          <section className="overflow-hidden flex mt-3 flex-col gap-4">
-            <Card
-              img={Robo}
-              id="12445"
-              author="Robot Kiyosaki"
-              bookName="Rich Dad Poor Dad"
-              title="Stories to start with"
-            />
+          {/* <section className="overflow-hidden flex mt-3 flex-col gap-4"> */}
+          <section className="mr-8 my-3">
+            {Trending.length > 0 ? (
+              <>
+                <section className=" max-w-[1200px] flex flex-col gap-4 m-auto mb-9">
+                  <div className="ml-6 mt-2">
+                    <h1 className="font-semibold text-xl">
+                      Stories to start with
+                    </h1>
+                  </div>
+                  <div
+                    id="scroll"
+                    className="overflow-auto whitespace-nowrap mb-3"
+                  >
+                    {Trending.map((item, i) => (
+                      <NewCard
+                        key={i}
+                        img={`/api/${item?.poster}`}
+                        id={item?._id}
+                        author={item?.user.name}
+                        bookName={item?.title}
+                      />
+                    ))}
+                  </div>
+                </section>
+              </>
+            ) : (
+              <section className=" max-w-[1200px] flex flex-col gap-4 m-auto mb-9">
+                <div className="ml-6 mt-2">
+                  <h1 className="font-semibold text-xl">Stories to start with</h1>
+                </div>
+                <div
+                  id="scroll"
+                  className="overflow-auto m-auto whitespace-nowrap my-9"
+                >
+                  <h2>Loading . . . </h2>
+                </div>
+              </section>
+            )}
           </section>
 
-          <section className="overflow-hidden flex flex-col gap-4 m-auto">
+          {/* <section className="overflow-hidden flex flex-col gap-4 m-auto">
             <Card
               img={Karn}
               id="23133"
@@ -127,7 +179,7 @@ const AudioBooks = () => {
               bookName="Mrutyunjay Bhag 1 - Karn"
               title="Stories to start with"
             />
-          </section>
+          </section> */}
         </section>
       </div>
     </section>
@@ -147,7 +199,13 @@ export default AudioBooks;
             alt="mainLogo"
           />
         </div>
-
+  <Card
+              img={Robo}
+              id="12445"
+              author="Robot Kiyosaki"
+              bookName="Rich Dad Poor Dad"
+              title="Stories to start with"
+            />
         <div
           style={{
             boxShadow: "10px -110px 70px black inset",

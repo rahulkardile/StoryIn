@@ -8,6 +8,12 @@ import { User } from "../Models/User.js";
 
 const router = express.Router();
 
+// try {
+//     User.updateMany({gender: "male"},{status: false}).then(()=> console.log("done"))
+// } catch (error) {
+//     console.log(error);
+// }
+
 router.post("/checkout", verifyUser, async (req, res, next) => {
 
     const { amount } = req.body;
@@ -24,8 +30,6 @@ router.post("/checkout", verifyUser, async (req, res, next) => {
         if (err) {
             console.log(err);
         } else {
-            console.log(order);
-
             res.status(200).json({
                 success: true,
                 order
@@ -70,6 +74,7 @@ router.post("/verify", verifyUser, async (req, res, next) => {
                 orderId: order_Id,
                 paymentId: payment_Id,
                 signature,
+                amount: amount,
                 date: curruntDate,
                 expiry: expiry,
                 userId: data._id,

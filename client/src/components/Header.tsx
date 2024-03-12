@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { ReduxStates } from "../Redux/Store";
 import toast from "react-hot-toast";
-import { RemoveStatus, RemoveUser } from "../Redux/Slices/UserSlice";
+import {
+  RemoveStatus,
+  RemoveUser,
+  changeRole,
+} from "../Redux/Slices/UserSlice";
 import profileImg from "../assets/profile.jpg";
 
 const Header = () => {
@@ -27,12 +31,23 @@ const Header = () => {
     }
   };
 
-  const handleBecome = async()=>{
-    
-  }
+  const handleBecome = async () => {
+    const res = await fetch("/api/user/become");
+    const { success, message } = await res.json();
+
+    if (success === true) {
+      toast.success(message);
+      dispatch(changeRole());
+    } else {
+      toast.error(message);
+    }
+  };
 
   return (
-    <header onMouseLeave={()=> setDropDown(false)} className="p-3 relative bg-black flex justify-between items-center select-none">
+    <header
+      onMouseLeave={() => setDropDown(false)}
+      className="p-3 relative bg-black flex justify-between items-center select-none"
+    >
       <div className="ml-4 flex flex-row gap-1 items-center">
         <Link to={"/"}>
           <h1 className="text-white flex gap-1 items-center text-3xl font-semibold duration-300  hover:text-orange-500">
@@ -49,12 +64,12 @@ const Header = () => {
         >
           Audiobooks
         </Link>
-        <Link
+        {/* <Link
           to={"/ebooks"}
           className="duration-200 hover:text-orange-500 cursor-pointer"
         >
           eBooks
-        </Link>
+        </Link> */}
         <Link
           to={"/"}
           className="duration-200 hover:text-orange-500 cursor-pointer"
@@ -68,13 +83,13 @@ const Header = () => {
             <div className="flex justify-center items-center flex-col gap-3">
               <img
                 onClick={() => setDropDown(!dropDown)}
-                onMouseEnter={()=> setDropDown(true)}
+                onMouseEnter={() => setDropDown(true)}
                 src={profileImg}
                 className="w-9 h-9 rounded-full cursor-pointer"
                 alt=""
               />
               <dialog
-              onMouseLeave={()=> setDropDown(false)}
+                onMouseLeave={() => setDropDown(false)}
                 open={dropDown}
                 className="z-10 left-[88%] w-auto mr-5 bg-grey-100 rounded-lg top-14"
               >
@@ -91,11 +106,11 @@ const Header = () => {
                     </Link>
                   ) : (
                     <button
-                    onClick={handleBecome}
-                    className="duration-200 hover:text-red-600"
-                  >
-                    become creator
-                  </button>
+                      onClick={handleBecome}
+                      className="duration-200 hover:text-red-600"
+                    >
+                      become creator
+                    </button>
                   )}
                   <Link
                     to={"/profile"}

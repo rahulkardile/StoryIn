@@ -9,6 +9,10 @@ const OrderSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    amount: {
+        type: Number,
+        required: true
+    },
     orderId: {
         type: String,
         required: true

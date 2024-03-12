@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import logo from "../assets/4214.jpg";
-import Karn from "../assets/NewCard.jpeg";
-import Robo from "../assets/img.webp";
 
 import InfoApp from "../components/InfoApp";
 import KeyFeture from "../components/KeyFeture";
-import Card from "../components/Card";
 import toast from "react-hot-toast";
 import NewCard from "../components/NewCard";
 import { Link } from "react-router-dom";
@@ -140,14 +137,6 @@ const Home = () => {
             </div>
           </section>
         )}
-
-        <Card
-          img={Karn}
-          id="23133"
-          author="Shivaji Sawant"
-          bookName="Mrutyunjay Bhag 1 - Karn"
-          title="Stories to start with"
-        />
       </div>
     </>
   );

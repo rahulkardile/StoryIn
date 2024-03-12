@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import profileImg from "../assets/profile.jpg";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,7 +48,7 @@ const Subscription = () => {
             order_Id: response.razorpay_order_id,
             payment_Id: response.razorpay_payment_id,
             signature: response.razorpay_signature,
-            amount: orderAmount,
+            amount: amount,
           }),
         });
 
@@ -59,11 +59,11 @@ const Subscription = () => {
           console.log(success);
           dispatch(addStatus());
           navigate("/");
-        }else{
-          toast.error("Payment Failed!")
+        } else {
+          toast.error("Payment Failed!");
         }
       },
-      
+
       prefill: {
         name: user?.name,
         email: user?.email,
@@ -78,8 +78,7 @@ const Subscription = () => {
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const paymentObject = new (window as any).Razorpay(options);
-
+    const paymentObject = await new (window as any).Razorpay(options);
     paymentObject.open();
   };
 
