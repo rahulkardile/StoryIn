@@ -64,11 +64,34 @@ const Profile = () => {
     return () => controller.abort();
   }, []);
 
-  // const handleBooks = (id: string) => {};
-
   return (
-    <div className="flex gap-2 flex-col justify-center mt-3 mb-28 m-auto items-center p-6 rounded-lg">
-      <section className="flex justify-center items-center flex-col">
+    <div
+      className={`flex gap-2 flex-col justify-center mt-3 mb-28 m-auto  items-center p-6 rounded-lg `}
+    >
+      <ul
+        className={`mt-2 flex absolute z-10 bg-gray-900 text-white w-80 rounded-lg h-auto flex-col py-5 items-center ${
+          Option ? "" : "hidden"
+        }`}
+      >
+        <button onClick={() => console.log("edit")} className="">Edit</button>
+        <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
+        <button onClick={() => console.log("edit")} className="">Favorite</button>
+        <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
+        
+        <Link to={"/"} className="text-center">Home</Link>
+        <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
+        
+        <button onClick={() => setOption(false)} className=" text-center">Close</button>
+        <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
+        
+        <button onClick={() => console.log("edit")} className="text-center text-red-500 font-bold ">Delete</button>
+      </ul>
+
+      <section
+        className={`flex justify-center items-center flex-col ${
+          Option ? "opacity-35" : ""
+        }`}
+      >
         <div className="flex items-center">
           <img
             draggable={false}
@@ -149,9 +172,14 @@ const Profile = () => {
           </div>
         </div>
       </section>
-      {user?.role === "creator" && OrderList.length > 0 ? (
-        <section className="m-auto flex flex-col justify-center items-center gap-4">
+      {user?.role === "creator" && OrderList.length > 1 ? (
+        <section
+          className={`m-auto flex flex-col justify-center items-center gap-4 ${
+            Option ? "opacity-35" : ""
+          }`}
+        >
           <h1 className="font-semibold my-3">My Books</h1>
+
           <div className="flex justify-evenly gap-8 flex-wrap">
             {OrderList.map((item, i) => (
               <div className="flex justify-evenly flex-col">
@@ -175,20 +203,15 @@ const Profile = () => {
                     <BiDotsVerticalRounded className="text-lg font-bold" />
                   </button>
                 </div>
-                <div
-                    className={`mt-2 flex justify-between ${
-                      Option ? "hidden" : ""
-                    }`}
-                  >
-                    <button>Edit</button>
-                    <button>Delete</button>
-                  </div>
               </div>
             ))}
           </div>
         </section>
       ) : (
-        <h1>Your Books are Loading . . .</h1>
+        <section className="m-auto flex flex-col justify-center items-center gap-4">
+          <h1 className="font-semibold my-3">My Books</h1>
+          <h1 className="mt-3">Your Books are Loading . . .</h1>
+        </section>
       )}
     </div>
   );

@@ -70,12 +70,12 @@ const Header = () => {
         >
           eBooks
         </Link> */}
-        <Link
+        {/* <Link
           to={"/"}
           className="duration-200 hover:text-orange-500 cursor-pointer"
         >
           Category
-        </Link>
+        </Link> */}
         <Link
           to={"/"}
           className="duration-200 hover:text-orange-500 cursor-pointer"
