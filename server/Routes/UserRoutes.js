@@ -95,9 +95,6 @@ router.get("/become", verifyUser, async (req, res, next) => {
         message: "Your already creator"
       })
     }
-
-    
-
   } catch (error) {
     next(error);
   }

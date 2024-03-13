@@ -74,6 +74,24 @@ const Header = () => {
           to={"/"}
           className="duration-200 hover:text-orange-500 cursor-pointer"
         >
+          Category
+        </Link>
+        <Link
+          to={"/"}
+          className="duration-200 hover:text-orange-500 cursor-pointer"
+        >
+          Favorite
+        </Link>
+        <Link
+          to={"/about"}
+          className="duration-200 hover:text-orange-500 cursor-pointer"
+        >
+          About
+        </Link>
+        <Link
+          to={"/"}
+          className="duration-200 hover:text-orange-500 cursor-pointer"
+        >
           Home
         </Link>
         <p className="border border-white py-3" />

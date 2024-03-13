@@ -64,56 +64,6 @@ app.get("/api/stream", async (req, res, next) => {
     }
 })
 
-
-// app.get("/api/stream", async (req, res, next) => {
-//     try {
-
-//         const filePath = req.query.path
-
-//         if (!filePath) return next(errorHandler(404, "File Not found"));
-
-//         const stat = fs.statSync(filePath);
-
-//         // legnth of the audio file
-//         const fileSize = stat.size;
-
-//         // get range of audio file
-//         const range = req.headers.range;
-
-//         if (range) {
-
-//             const parts = range.replace(/bytes=/, '').slice('-')
-//             const start = parseInt(parts[0], 10);
-//             const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-
-//             const chunkSize = end - start + 1;
-//             const file = fs.createReadStream(filePath, { start, end });
-//             const head = {
-//                 'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-//                 'Accept-Ranges': 'bytes',
-//                 'Content-Length': chunkSize,
-//                 'Content-Type': "audio/mp3"
-//             }
-
-//             res.writeHead(206, head);
-//             file.pipe(res);
-//         }
-//         else {
-
-//             const head = {
-//                 "Content-Length": fileSize,
-//                 "Content-Type": "audio/mp3"
-//             };
-
-//             res.writeHead(200, head);
-//             fs.createReadStream(filePath).pipe(res)
-//         }
-
-//     } catch (error) {
-//         next()
-//     }
-// })
-
 app.use("/api/uploads", express.static("uploads"))
 
 app.use("/api/user/", User)

@@ -17,6 +17,7 @@ const Create = lazy(() => import("./Pages/Create"));
 const Profile = lazy(() => import("./Pages/Profile"));
 const Private = lazy(() => import("./components/Private"));
 const Admin = lazy(() => import("./Pages/Admin"));
+const About = lazy(() => import("./Pages/About"));
 const Subscription = lazy(() => import("./Pages/Subscription"));
 
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/book/:id" element={<BookPage />} />
           <Route path="/audio-books" element={<AudioBooks />} />
           <Route path="/ebooks" element={<EBooks />} />
+          <Route path="/about" element={<About />} />
 
           <Route element={<Private />}>
             <Route path="/create" element={<Create />} />

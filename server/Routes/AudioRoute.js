@@ -2,7 +2,7 @@ import express from "express"
 import ListBook from "../Models/ListAudioBook.js"
 import { verifyUser } from "../utils/VerifyUser.js";
 import { errorHandler } from "../utils/errHandler.js";
-import fs from "fs";
+import fs, { ReadStream } from "fs";
 import { upload } from "../middleware/multer.js";
 
 // import audioFile from "../uploads/episode/AUR - TU HAI KAHAN - Raffey - Usama - Ahad (Official Music Video).m4a"
@@ -98,6 +98,27 @@ routes.get("/trending", async (req, res, next) => {
             success: true,
             data: List
         })
+    } catch (error) {
+        next(error)
+    }
+})
+
+routes.get("/userBooks", verifyUser, async (req, res, next) => {
+    try {
+
+        const id = await req.user._id
+        const List = await ListBook.find({user: id });
+        const newList = []
+        List.map((item, i)=> {
+            const { description, tags, episodes, createdAt, updatedAt, __v, ...rest } = item._doc
+            newList.push(rest)
+        })
+
+        res.status(200).json({
+            success: true,
+            data: newList
+        })
+
     } catch (error) {
         next(error)
     }
