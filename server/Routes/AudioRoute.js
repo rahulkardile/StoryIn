@@ -12,8 +12,6 @@ const routes = express.Router();
 routes.post("/new", verifyUser, upload.fields([{ name: "img", maxCount: 1 }, { name: "epi", maxCount: 50 }]), async (req, res, next) => {
     try {
         const data = req.user;
-
-
         const { title, description, date, tags } = req.body;
 
         if (!title, !description, !date, !tags) return next(errorHandler(400, "something is mising"));
@@ -35,11 +33,7 @@ routes.post("/new", verifyUser, upload.fields([{ name: "img", maxCount: 1 }, { n
             // newData.map(i => episodes.push(i.path))
 
             episodes = audioData[0].path
-
             poster = await req.files.img[0].path;
-
-            console.log("poster : ", poster);
-            console.log("epi : ", episodes);
 
             const NewABook = await ListBook.create({
                 title,
@@ -92,7 +86,7 @@ routes.get("/trending", async (req, res, next) => {
     try {
 
         const id = req.params.id
-        const List = await ListBook.find().populate("user").limit(8).sort({ createdAt: 1});
+        const List = await ListBook.find().populate("user").limit(8).sort({ createdAt: 1 });
 
         res.status(200).json({
             success: true,
@@ -107,9 +101,9 @@ routes.get("/userBooks", verifyUser, async (req, res, next) => {
     try {
 
         const id = await req.user._id
-        const List = await ListBook.find({user: id });
+        const List = await ListBook.find({ user: id });
         const newList = []
-        List.map((item, i)=> {
+        List.map((item, i) => {
             const { description, tags, episodes, createdAt, updatedAt, __v, ...rest } = item._doc
             newList.push(rest)
         })
@@ -154,22 +148,54 @@ routes.get("/userBooks", verifyUser, async (req, res, next) => {
 // })
 
 
-// routes.delete("/delete/:id", verifyUser, async (req, res, next) => {
-//     try {
-//         const userId = req.user._id;
-//         const id = req.params.id;
+routes.delete("/delete/:id", verifyUser, async (req, res, next) => {
+    try {
+        const userId = req.user._id;
+        const id = req.params.id;
 
-//         const List = await Todo.findById(id);
-//         if (!List) return next(errorHandler(400, "Not Found"))
-//         if (List.user != userId) return next(errorHandler(400, "bad request!"))
+        const Book = await ListBook.findById(id);
 
-//         await Todo.findByIdAndDelete(id)
-//         res.status(200).json("delete successfully");
+        if (!Book) return next(errorHandler(400, "Not Found"))
+        if (Book.user != userId) return next(errorHandler(400, "bad request!"))
 
-//     } catch (error) {
-//         next(error)
-//     }
-// })
+        const deleteFileList = [];
+        deleteFileList.push(Book.poster);
+        Book.episodes.forEach(i => deleteFileList.push(i));
+
+        try {
+            deleteFileList.forEach(async (i) => {
+                fs.unlink(i, (err) => {
+                    if (err) {
+                        if (err.code === "ENOENT") {
+                            return next(errorHandler(404, "File Not Found!"));
+                        } else {
+                            console.log(err);
+                        }
+                    } else {
+                        deleteFileList[""];
+                        try {
+                            ListBook.deleteOne({ _id: Book._id }).then(() => {
+                                res.status(200).json({
+                                    success: true,
+                                    message: "deleted successfully!"
+                                });
+                            }).catch((err) => {
+                                next(err)
+                            })
+                        } catch (error) {
+                            next(error)
+                        }
+
+                    }
+                })
+            })
+        } catch (error) {
+            next(error)
+        }
+    } catch (error) {
+        next(error)
+    }
+})
 
 
 export default routes

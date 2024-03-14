@@ -4,10 +4,15 @@ import { ReduxStates } from "../Redux/Store";
 import profileImg from "../assets/profile.jpg";
 import { Link } from "react-router-dom";
 import { BiDotsVerticalRounded } from "react-icons/bi";
+import toast from "react-hot-toast";
 
 const Profile = () => {
   const { user, status } = useSelector((state: ReduxStates) => state.user);
   const [Option, setOption] = useState<boolean>(false);
+  const [Proccess, setProccess] = useState<boolean>(false);
+
+  const [Id, setId] = useState<string>("");
+
   const [orderDate, setOrderData] = useState({
     date: "",
     duration: "",
@@ -64,6 +69,30 @@ const Profile = () => {
     return () => controller.abort();
   }, []);
 
+  const handlePop = (id: string) => {
+    setOption(!Option);
+    setId(id);
+  };
+
+  const handleDelete = async () => {
+    setProccess(true);
+    const res = await fetch(`/api/audio-book/delete/${Id}`, {
+      method: "DELETE",
+    });
+    const resData = await res.json();
+    if (resData.success === true) {
+      setProccess(false);
+      toast.success(resData.message);
+      window.location.reload();
+    } else {
+      setProccess(false);
+      toast.error("Can't Delete!");
+      window.location.reload();
+    }
+
+    console.log(resData);
+  };
+
   return (
     <div
       className={`flex gap-2 flex-col justify-center mt-3 mb-28 m-auto  items-center p-6 rounded-lg `}
@@ -73,23 +102,36 @@ const Profile = () => {
           Option ? "" : "hidden"
         }`}
       >
-        <button onClick={() => console.log("edit")} className="">Edit</button>
+        <button disabled={Proccess} onClick={() => console.log("edit")} className="">
+          Edit
+        </button>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
-        <button onClick={() => console.log("edit")} className="">Favorite</button>
+        <button disabled={Proccess} onClick={() => console.log("edit")} className="">
+          Favorite
+        </button>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
-        
-        <Link to={"/"} className="text-center">Home</Link>
+
+        <Link to={"/"} className="text-center">
+          Home
+        </Link>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
-        
-        <button onClick={() => setOption(false)} className=" text-center">Close</button>
+
+        <button disabled={Proccess} onClick={() => setOption(false)} className=" text-center">
+          Close
+        </button>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
-        
-        <button onClick={() => console.log("edit")} className="text-center text-red-500 font-bold ">Delete</button>
+
+        <button disabled={Proccess}
+          onClick={() => handleDelete()}
+          className="text-center text-red-500 font-bold "
+        >
+          Delete
+        </button>
       </ul>
 
       <section
         className={`flex justify-center items-center flex-col ${
-          Option ? "opacity-35" : ""
+          Option ? "opacity-10" : ""
         }`}
       >
         <div className="flex items-center">
@@ -175,7 +217,7 @@ const Profile = () => {
       {user?.role === "creator" && OrderList.length > 1 ? (
         <section
           className={`m-auto flex flex-col justify-center items-center gap-4 ${
-            Option ? "opacity-35" : ""
+            Option ? "opacity-10" : ""
           }`}
         >
           <h1 className="font-semibold my-3">My Books</h1>
@@ -199,7 +241,7 @@ const Profile = () => {
                     {item.title}
                   </h1>
 
-                  <button onClick={() => setOption(!Option)}>
+                  <button onClick={() => handlePop(item._id)}>
                     <BiDotsVerticalRounded className="text-lg font-bold" />
                   </button>
                 </div>
