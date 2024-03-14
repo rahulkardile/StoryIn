@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import profileImg from "../assets/profile.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import toast from "react-hot-toast";
 
 const Profile = () => {
   const { user, status } = useSelector((state: ReduxStates) => state.user);
+  const naviagte = useNavigate();
   const [Option, setOption] = useState<boolean>(false);
   const [Proccess, setProccess] = useState<boolean>(false);
 
@@ -82,16 +83,20 @@ const Profile = () => {
     const resData = await res.json();
     if (resData.success === true) {
       setProccess(false);
+      setId("")
       toast.success(resData.message);
       window.location.reload();
     } else {
       setProccess(false);
+      setId("")
       toast.error("Can't Delete!");
       window.location.reload();
     }
-
-    console.log(resData);
   };
+
+  const updatePost = () => {
+    naviagte(`/update/${Id}`)
+  }
 
   return (
     <div
@@ -102,7 +107,7 @@ const Profile = () => {
           Option ? "" : "hidden"
         }`}
       >
-        <button disabled={Proccess} onClick={() => console.log("edit")} className="">
+        <button disabled={Proccess} onClick={() => updatePost()} className="">
           Edit
         </button>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
@@ -123,7 +128,7 @@ const Profile = () => {
 
         <button disabled={Proccess}
           onClick={() => handleDelete()}
-          className="text-center text-red-500 font-bold "
+          className="text-center text-red-500 font-bold"
         >
           Delete
         </button>

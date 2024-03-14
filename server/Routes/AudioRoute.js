@@ -5,8 +5,6 @@ import { errorHandler } from "../utils/errHandler.js";
 import fs, { ReadStream } from "fs";
 import { upload } from "../middleware/multer.js";
 
-// import audioFile from "../uploads/episode/AUR - TU HAI KAHAN - Raffey - Usama - Ahad (Official Music Video).m4a"
-
 const routes = express.Router();
 
 routes.post("/new", verifyUser, upload.fields([{ name: "img", maxCount: 1 }, { name: "epi", maxCount: 50 }]), async (req, res, next) => {
@@ -67,6 +65,17 @@ routes.get("/get/:id", async (req, res, next) => {
     }
 })
 
+routes.get("/getU/:id", async (req, res, next) => {
+    try {
+
+        const id = req.params.id
+        const List = await ListBook.findById(id);
+        res.status(200).json(List)
+    } catch (error) {
+        next(error)
+    }
+})
+
 routes.get("/get", async (req, res, next) => {
     try {
 
@@ -118,45 +127,45 @@ routes.get("/userBooks", verifyUser, async (req, res, next) => {
     }
 })
 
-// routes.patch("/update/:id", verifyUser, async (req, res, next) => {
-//     try {
+routes.patch("/update/:id", verifyUser, async (req, res, next) => {
+    try {
 
-//         const id = req.params.id;
-//         const userId = req.user._id;
+        const id = req.params.id;
+        const userId = req.user._id;
 
-//         const { title, description, status, date } = req.body;
+        const { title, description, status, date } = req.body;
 
-//         const List = await Todo.findById(id);
-//         if (!List) return next(errorHandler(404, "Not Found"));
-//         if (List.user != userId) return next(errorHandler(400, "bad request!"))
-
-
-//         if (title) List.title = title
-//         if (description) List.description = description
-//         if (status) List.status = status
-//         if (date) List.date = date
-
-//        const data  = await List.save();
+        const List = await ListBook.findById(id);
+        if (!List) return next(errorHandler(404, "Not Found"));
+        if (List.user != userId) return next(errorHandler(400, "bad request!"))
 
 
+        if (title) List.title = title
+        if (description) List.description = description
+        if (status) List.status = status
+        if (date) List.date = date
 
-//         res.status(200).json(data)
+       const data  = await ListBook.save();
 
-//     } catch (error) {
-//         next(error)
-//     }
-// })
+
+
+        res.status(200).json(data)
+
+    } catch (error) {
+        next(error)
+    }
+})
 
 
 routes.delete("/delete/:id", verifyUser, async (req, res, next) => {
     try {
-        const userId = req.user._id;
+        const { _id, role } = req.user;
         const id = req.params.id;
 
         const Book = await ListBook.findById(id);
 
         if (!Book) return next(errorHandler(400, "Not Found"))
-        if (Book.user != userId) return next(errorHandler(400, "bad request!"))
+        if (Book.user != _id) return next(errorHandler(400, "bad request!"))
 
         const deleteFileList = [];
         deleteFileList.push(Book.poster);

@@ -18,6 +18,7 @@ const Profile = lazy(() => import("./Pages/Profile"));
 const Private = lazy(() => import("./components/Private"));
 const Admin = lazy(() => import("./Pages/Admin"));
 const About = lazy(() => import("./Pages/About"));
+const Update = lazy(() => import("./Pages/UpdatePost"));
 const Subscription = lazy(() => import("./Pages/Subscription"));
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
           <Route element={<Private />}>
             <Route path="/create" element={<Create />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/update/:id" element={<Update />} />
             <Route path="/subscription" element={<Subscription />} />
 
             <Route element={<AdminProtect />}>
