@@ -14,28 +14,24 @@ const Create = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
-useEffect(() => {
-  const controller = new AbortController();
+  useEffect(() => {
+    const controller = new AbortController();
 
-  const getPrev = async()=> {
-    const res = await fetch(`/api/audio-book/getu/${id}`,{
-      signal: controller.signal,
-      method: "GET"
-    })
+    const getPrev = async () => {
+      const res = await fetch(`/api/audio-book/getu/${id}`, {
+        signal: controller.signal,
+        method: "GET",
+      });
 
-    const { title, description, poster, tags, episodes } = await res.json();
+      const { title, description, poster, tags, episodes } = await res.json();
 
-    setTitle(title)
-    setDescription(description),
-    setTags(tags);
+      setTitle(title);
+      setDescription(description), setTags(tags);
+    };
 
-  }
-
-  getPrev();
-  return ()=> controller.abort();
-
-}, [])
-
+    getPrev();
+    return () => controller.abort();
+  }, []);
 
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === "img") {
@@ -57,33 +53,33 @@ useEffect(() => {
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     setLoading(true);
-    const formData = new FormData();
 
-    formData.set("epi", audio);
-    formData.set("img", img);
+    // const formData = {
+    //   title: title,
+    //   description: description,
+    //   tags: tags,
+    // }
+const formData = new FormData();
 
-    formData.set("title", title);
-    formData.set("description", description);
-    formData.set("tags", tags);
+formData.append(title, title)
+formData.append(description, description)
+formData.append(tags, tags)
 
-    console.log(formData);
-
-    const res = await fetch("/api/audio-book/new", {
-      method: "POST",
-      body: formData,
+    const res = await fetch(`/api/audio-book/update/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(formData),
     });
+    const { success, message } = await res.json();
 
-    const data = await res.json();
-
-    if (data.success === true) {
-      toast.success("Audio Book successfully created");
+    if (success === true) {
+      toast.success(message);
       setAudio([]);
       setImg([]);
       setDescription("");
       setTags("");
       setTitle("");
       setLoading(false);
-      navigate(`/`);
+      navigate(`/book/${id}`);
     } else {
       toast.error("got an error");
       setLoading(false);
@@ -92,7 +88,7 @@ useEffect(() => {
 
   return (
     <section className="flex justify-evenly flex-col gap-4 m-auto items-center mt-6 mb-24">
-      <h1 className="text-2xl font-semibold">List Your Audio Book</h1>
+      <h1 className="text-2xl font-semibold">Update Your Audio Book</h1>
 
       <form
         onSubmit={handleSubmit}
@@ -120,7 +116,6 @@ useEffect(() => {
               value={description}
               placeholder="Description"
               onChange={(e) => setDescription(e.target.value)}
-              required
             />
           </div>
 
@@ -133,7 +128,6 @@ useEffect(() => {
               placeholder="Add Tags"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              required
             />
           </div>
 
@@ -145,7 +139,6 @@ useEffect(() => {
               accept="image/*"
               className="p-2 w-[100%] border rounded bg-white"
               onChange={handleFile}
-              required
             />
           </div>
         </div>
@@ -160,7 +153,6 @@ useEffect(() => {
               type="file"
               id="epi"
               accept="audio/*"
-              required
               multiple
               className="p-2 w-[100%] border rounded bg-white"
               onChange={handleFile}
@@ -172,7 +164,7 @@ useEffect(() => {
             disabled={loading}
             className="p-2 bg-black text-white font-semibold disabled:opacity-85 rounded "
           >
-            Upload
+            Update
           </button>
         </div>
       </form>

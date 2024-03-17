@@ -2,7 +2,7 @@ import express from "express"
 import ListBook from "../Models/ListAudioBook.js"
 import { verifyUser } from "../utils/VerifyUser.js";
 import { errorHandler } from "../utils/errHandler.js";
-import fs, { ReadStream } from "fs";
+import fs, { ReadStream, rm } from "fs";
 import { upload } from "../middleware/multer.js";
 
 const routes = express.Router();
@@ -133,23 +133,27 @@ routes.patch("/update/:id", verifyUser, async (req, res, next) => {
         const id = req.params.id;
         const userId = req.user._id;
 
-        const { title, description, status, date } = req.body;
+        const { title, description, tags } = req.body;
+
+        console.log(title, description, tags);
 
         const List = await ListBook.findById(id);
         if (!List) return next(errorHandler(404, "Not Found"));
         if (List.user != userId) return next(errorHandler(400, "bad request!"))
 
+        await ListBook.updateOne({ _id: id }, {
+            title: title,
+            description: description,
+            tags: tags
+        }).then(() => {
+            res.status(200).json({
+                success: true,
+                message: "Book is updated"
+            })
+        }).catch((err) => {
+            console.log(err);
+        })
 
-        if (title) List.title = title
-        if (description) List.description = description
-        if (status) List.status = status
-        if (date) List.date = date
-
-       const data  = await ListBook.save();
-
-
-
-        res.status(200).json(data)
 
     } catch (error) {
         next(error)
@@ -171,40 +175,30 @@ routes.delete("/delete/:id", verifyUser, async (req, res, next) => {
         deleteFileList.push(Book.poster);
         Book.episodes.forEach(i => deleteFileList.push(i));
 
-        try {
-            deleteFileList.forEach(async (i) => {
-                fs.unlink(i, (err) => {
-                    if (err) {
-                        if (err.code === "ENOENT") {
-                            return next(errorHandler(404, "File Not Found!"));
-                        } else {
-                            console.log(err);
-                        }
-                    } else {
-                        deleteFileList[""];
-                        try {
-                            ListBook.deleteOne({ _id: Book._id }).then(() => {
-                                res.status(200).json({
-                                    success: true,
-                                    message: "deleted successfully!"
-                                });
-                            }).catch((err) => {
-                                next(err)
-                            })
-                        } catch (error) {
-                            next(error)
-                        }
+        deleteFileList.forEach(async (i) => {
 
+            rm(i, (err, data) => {
+                if (err) {
+                    if (err.code === "ENOENT") {
+                        console.log("File not found!");
+                        return next(errorHandler(404, "File not found"))
+                    } else {
+                        console.log(err);
                     }
-                })
+                }
             })
-        } catch (error) {
-            next(error)
-        }
+
+        })
+
+        await ListBook.findOneAndDelete({ _id: Book._id });
+        res.status(200).json({
+            success: true,
+            message: "deleted successfully!"
+        })
+
     } catch (error) {
         next(error)
     }
 })
-
 
 export default routes
