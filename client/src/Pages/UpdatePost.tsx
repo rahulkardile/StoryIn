@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
 const Create = () => {
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [tags, setTags] = useState<string>("");
+  const [data, setData] = useState({
+    title: "",
+    description: "",
+    tags: "",
+  });
 
   const [img, setImg] = useState<File[]>([]);
   const [audio, setAudio] = useState<File[]>([]);
@@ -23,10 +25,12 @@ const Create = () => {
         method: "GET",
       });
 
-      const { title, description, poster, tags, episodes } = await res.json();
-
-      setTitle(title);
-      setDescription(description), setTags(tags);
+      const { title, description, tags } = await res.json();
+      setData({
+        title,
+        description,
+        tags,
+      });
     };
 
     getPrev();
@@ -50,24 +54,25 @@ const Create = () => {
     }
   };
 
+  const handleChange = (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
+    setData({
+      ...data,
+      [e.target.id]: e.target.value,
+    });
+  };
+
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // const formData = {
-    //   title: title,
-    //   description: description,
-    //   tags: tags,
-    // }
-const formData = new FormData();
-
-formData.append(title, title)
-formData.append(description, description)
-formData.append(tags, tags)
-
     const res = await fetch(`/api/audio-book/update/${id}`, {
-      method: "PATCH",
-      body: JSON.stringify(formData),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
     const { success, message } = await res.json();
 
@@ -75,9 +80,11 @@ formData.append(tags, tags)
       toast.success(message);
       setAudio([]);
       setImg([]);
-      setDescription("");
-      setTags("");
-      setTitle("");
+      setData({
+        description: "",
+        tags: "",
+        title: "",
+      });
       setLoading(false);
       navigate(`/book/${id}`);
     } else {
@@ -85,6 +92,8 @@ formData.append(tags, tags)
       setLoading(false);
     }
   };
+
+  console.log(data);
 
   return (
     <section className="flex justify-evenly flex-col gap-4 m-auto items-center mt-6 mb-24">
@@ -100,8 +109,8 @@ formData.append(tags, tags)
             <input
               type="text"
               id="title"
-              onChange={(e) => setTitle(e.target.value)}
-              value={title}
+              onChange={(e) => handleChange(e)}
+              value={data.title}
               className="p-2 w-[100%] border rounded"
               placeholder="Name"
               required
@@ -113,9 +122,9 @@ formData.append(tags, tags)
             <textarea
               id="description"
               className="p-5 w-[100%] border rounded"
-              value={description}
+              value={data.description}
               placeholder="Description"
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => handleChange(e)}
             />
           </div>
 
@@ -126,8 +135,8 @@ formData.append(tags, tags)
               id="tags"
               className="p-2 w-[100%] border rounded"
               placeholder="Add Tags"
-              value={tags}
-              onChange={(e) => setTags(e.target.value)}
+              value={data.tags}
+              onChange={(e) => handleChange(e)}
             />
           </div>
 

@@ -127,7 +127,7 @@ routes.get("/userBooks", verifyUser, async (req, res, next) => {
     }
 })
 
-routes.patch("/update/:id", verifyUser, async (req, res, next) => {
+routes.post("/update/:id", verifyUser, async (req, res, next) => {
     try {
 
         const id = req.params.id;
@@ -135,7 +135,12 @@ routes.patch("/update/:id", verifyUser, async (req, res, next) => {
 
         const { title, description, tags } = req.body;
 
-        console.log(title, description, tags);
+        console.log(req.body);
+
+        if(  !title, !description, !tags ){
+            console.log("no data");
+            return next(errorHandler(400, "no data"))
+        }
 
         const List = await ListBook.findById(id);
         if (!List) return next(errorHandler(404, "Not Found"));
