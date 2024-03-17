@@ -135,11 +135,8 @@ routes.post("/update/:id", verifyUser, async (req, res, next) => {
 
         const { title, description, tags } = req.body;
 
-        console.log(req.body);
-
         if(  !title, !description, !tags ){
-            console.log("no data");
-            return next(errorHandler(400, "no data"))
+            return next(errorHandler(400, "Can't Update"))
         }
 
         const List = await ListBook.findById(id);
@@ -158,7 +155,6 @@ routes.post("/update/:id", verifyUser, async (req, res, next) => {
         }).catch((err) => {
             console.log(err);
         })
-
 
     } catch (error) {
         next(error)

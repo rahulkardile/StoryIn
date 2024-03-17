@@ -63,6 +63,7 @@ const Home = () => {
           <img
             className="object-cover ml-20 object-center rounded"
             alt="hero"
+            draggable={false}
             src={logo}
           />
         </div>
