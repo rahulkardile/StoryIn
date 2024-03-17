@@ -83,20 +83,29 @@ const Profile = () => {
     const resData = await res.json();
     if (resData.success === true) {
       setProccess(false);
-      setId("")
+      setId("");
       toast.success(resData.message);
       window.location.reload();
     } else {
       setProccess(false);
-      setId("")
+      setId("");
       toast.error("Can't Delete!");
       window.location.reload();
     }
   };
 
   const updatePost = () => {
-    naviagte(`/update/${Id}`)
-  }
+    naviagte(`/update/${Id}`);
+  };
+
+  const handleHeart = async () => {
+    const like = await fetch(`/api/fev/create/${Id}`, {
+      method: "POST",
+    });
+    const { message } = await like.json();
+    setOption(!Option);
+    toast.success(message);
+  };
 
   return (
     <div
@@ -111,7 +120,7 @@ const Profile = () => {
           Edit
         </button>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
-        <button disabled={Proccess} onClick={() => console.log("edit")} className="">
+        <button disabled={Proccess} onClick={() => handleHeart()} className="">
           Favorite
         </button>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
@@ -121,12 +130,17 @@ const Profile = () => {
         </Link>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
 
-        <button disabled={Proccess} onClick={() => setOption(false)} className=" text-center">
+        <button
+          disabled={Proccess}
+          onClick={() => setOption(false)}
+          className=" text-center"
+        >
           Close
         </button>
         <p className="border-t-[0.5px] border-gray-300 my-2 w-[90%]" />
 
-        <button disabled={Proccess}
+        <button
+          disabled={Proccess}
           onClick={() => handleDelete()}
           className="text-center text-red-500 font-bold"
         >

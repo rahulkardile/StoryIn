@@ -77,7 +77,7 @@ const Header = () => {
           Category
         </Link> */}
         <Link
-          to={"/"}
+          to={"/favorite"}
           className="duration-200 hover:text-orange-500 cursor-pointer"
         >
           Favorite

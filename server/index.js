@@ -9,6 +9,7 @@ import razorpay from 'razorpay'
 import User from "./Routes/UserRoutes.js"
 import OrederRoute from "./Routes/OrderRoute.js"
 import AudioRoute from "./Routes/AudioRoute.js"
+import FevRoute from "./Routes/FevRoute.js"
 
 const app = express();
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
@@ -69,6 +70,7 @@ app.use("/api/uploads", express.static("uploads"))
 app.use("/api/user/", User)
 app.use("/api/audio-book/", AudioRoute)
 app.use("/api/order/", OrederRoute)
+app.use("/api/fev/", FevRoute)
 
 
 app.use((err, req, res, next) => {

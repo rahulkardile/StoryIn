@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import NewCard from "../components/NewCard";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
+import { FaHeart } from "react-icons/fa";
 
 const BookPage = () => {
   const [data, setData] = useState({
@@ -21,9 +22,11 @@ const BookPage = () => {
     updatedAt: "",
     __v: "",
   });
+
   const [newReq, setNewReq] = useState([]);
+  const [heart, setHeart] = useState(false);
+  const [heartLoading, setHeartLoading] = useState(false);
   const { id } = useParams();
-  console.log(id);
 
   const { user, status } = useSelector((state: ReduxStates) => state.user);
 
@@ -36,7 +39,6 @@ const BookPage = () => {
       });
       const resData = await res.json();
 
-      console.log(resData);
       setData(resData);
     };
 
@@ -59,6 +61,19 @@ const BookPage = () => {
     return () => controller.abort();
   }, []);
 
+  const handleHeart = async() => {
+    setHeartLoading(true);
+
+    const like = await fetch(`/api/fev/create/${id}`, {
+      method: "POST"
+    });
+    const { message } = await like.json();
+
+    toast.success(message);
+    setHeart(!heart);
+    setHeartLoading(false);
+  };
+
   return (
     <section className="text-gray-600 mt-14 mb-3 body-font">
       {data?.title ? (
@@ -71,23 +86,37 @@ const BookPage = () => {
                 src={`/api/${data.poster}`}
               />
               <div className="text-center lg:w-1/2 w-full">
-                <h1 className="title-font sm:text-4xl text-3xl mb-1 font-bold text-gray-900">
-                  {data?.title}
-                </h1>
-                <p className="font-semibold mb-4">
-                  By{" "}
-                  <span className="text-orange-500 cursor-pointer font-bold">
-                    {data?.user.name}
-                  </span>{" "}
-                  With:{" "}
-                  <span className="text-orange-500 cursor-pointer font-bold">
-                    Sanket Mhatre
-                  </span>{" "}
-                  Publisher{" "}
-                  <span className="text-orange-500 cursor-pointer font-bold">
-                    Storyside IN
-                  </span>
-                </p>
+                <div className="flex justify-evenly w-full">
+                  <div className="">
+                    <h1 className="title-font sm:text-4xl text-3xl mb-1 font-bold text-gray-900">
+                      {data?.title}
+                    </h1>
+                    <p className="font-semibold mb-4">
+                      By{" "}
+                      <span className="text-orange-500 cursor-pointer font-bold">
+                        {data?.user.name}
+                      </span>{" "}
+                      With:{" "}
+                      <span className="text-orange-500 cursor-pointer font-bold">
+                        Sanket Mhatre
+                      </span>{" "}
+                      Publisher{" "}
+                      <span className="text-orange-500 cursor-pointer font-bold">
+                        Storyside IN
+                      </span>
+                    </p>
+                  </div>
+
+                  <button
+                  disabled={heartLoading}
+                    onClick={() => handleHeart()}
+                    className={`${
+                      heart ? "text-red-500 duration-150 scale-125 " : ""
+                    } absolute right-28 font-bold text-2xl `}
+                  >
+                    <FaHeart />
+                  </button>
+                </div>
 
                 <div className="max-w-[550px] m-auto p-4 flex flex-row gap-8 justify-evenly border border-gray-500 border-t-[1px] border-b-[1px] border-x-0">
                   <span className="font-semibold text-sm">
@@ -130,8 +159,7 @@ const BookPage = () => {
                 draggable={false}
                 controls={true}
               >
-                {
-                status === true || user?.role === "admin" ? (
+                {status === true || user?.role === "admin" ? (
                   <source
                     src={`/api/stream?path=${data.episodes[0]}`}
                     className=""
@@ -139,8 +167,7 @@ const BookPage = () => {
                   />
                 ) : (
                   <source src={``} className="" type="audio/mp3" />
-                )
-                }
+                )}
               </audio>
             </div>
 

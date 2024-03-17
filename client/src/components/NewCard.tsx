@@ -31,7 +31,7 @@ const NewCard = (data: data) => {
             />
           </div>
           <h1 className="font-semibold text-sm mt-2 truncate">{data.bookName}</h1>
-          <p className="text-xs truncate">{data.author}</p>
+          <p className="text-sm truncate">{data.author}</p>
         </Link>
     </div>
   );
