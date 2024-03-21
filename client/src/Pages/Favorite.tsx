@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { ReduxStates } from "../Redux/Store";
 
 const Favorite = () => {
   const [data, setData] = useState([
@@ -13,6 +15,9 @@ const Favorite = () => {
     },
   ]);
 
+  const { List } = useSelector((state: ReduxStates) => state.fev);
+  console.log(List);
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -21,6 +26,8 @@ const Favorite = () => {
         signal: controller.signal,
       });
       const bookData = await data.json();
+
+      
 
       setData(bookData);
     };
@@ -35,10 +42,12 @@ const Favorite = () => {
       method: "POST",
     });
 
-    const { message } = await like.json();
-    window.location.reload();
-    toast.success(message);
+    const { message, success } = await like.json();
 
+    if (success === true) {
+      window.location.reload();
+      toast.success(message);
+    }
   };
 
   return (
@@ -47,30 +56,37 @@ const Favorite = () => {
       <p className="mb-1 h-[1px] bg-gray-400 mt-1 w-96" />
 
       <div className="flex gap-3 flex-col items-center w-full mt-7">
-        { data.length > 0 ? data.map((i) => (
-          <div className="flex justify-start gap-3 my-4 w-[550px]">
-            <Link to={`/book/${i._id}`}>
-              <img
-                src={`/api/${i.poster}`}
-                className="bg-slate-200  object-contain w-40 h-40 duration-300 rounded-lg hover:scale-105 overflow-hidden"
-                alt="poster"
-              />
-            </Link>
-
-            <div className="w-[400px] h-full">
-              <Link to={`/book/${i._id}`}>
-                <h2 className="text-lg mb-1 font-semibold">{i.title}</h2>
-              </Link>
-              <h2 className="text-sm line-clamp-3">{i.description}</h2>
-              <button
-                onClick={() => handleRemove(i._id)}
-                className="text-blue-700 mt-5"
+        {data.length > 0 ? (
+          data.map((i) => (
+            <div className="flex justify-start gap-3 my-4 w-[550px] overflow-hidden">
+              <Link
+                className=" border border-black p-2 bg-slate-200 rounded"
+                to={`/book/${i._id}`}
               >
-                remove
-              </button>
+                <img
+                  src={`/api/${i.poster}`}
+                  className="object-contain h-[170px] w-40 duration-300 rounded-2xl hover:scale-105"
+                  alt="poster"
+                />
+              </Link>
+
+              <div className="w-[400px] h-full">
+                <Link to={`/book/${i._id}`}>
+                  <h2 className="text-lg mb-1 font-semibold">{i.title}</h2>
+                </Link>
+                <h2 className="text-sm line-clamp-3">{i.description}</h2>
+                <button
+                  onClick={() => handleRemove(i._id)}
+                  className="text-blue-700 mt-5"
+                >
+                  remove
+                </button>
+              </div>
             </div>
-          </div>
-        )) : <h1 className="my-2 text-sm mb-10">Add books from home page</h1>}
+          ))
+        ) : (
+          <h1 className="my-2 text-sm mb-10">Add books from home page</h1>
+        )}
       </div>
     </div>
   );

@@ -25,12 +25,14 @@ routes.post("/create/:id", verifyUser, async (req, res, next) => {
             if (!getFev.like.includes(id)) {
                 await getFev.updateOne({ $push: { like: id } });
                 res.status(200).json({
+                    success: true,
                     message: "Added To The Favorites"
                 })
 
             } else {
                 await getFev.updateOne({ $pull: { like: id } });
                 res.status(200).json({
+                    success: true,
                     message: "Removed From The Favorite"
                 })
             }

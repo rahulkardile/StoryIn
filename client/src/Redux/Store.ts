@@ -3,6 +3,8 @@ import UserReducer from "./Slices/UserSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
+import FevReducer from "./Slices/Fevs";
+import persistCombineReducers from "redux-persist/es/persistCombineReducers";
 
 const persistConfig = {
   key: "root",
@@ -10,11 +12,12 @@ const persistConfig = {
   storage,
 };
 
-const reducer = combineReducers({
-  user: UserReducer,
-});
+// const reducer = combineReducers({
+//   user: UserReducer,
+//   fev: FevReducer
+// });
 
-const persistedReducer = persistReducer(persistConfig, reducer);
+const persistedReducer = persistCombineReducers(persistConfig, { user: UserReducer, fev: FevReducer });
 
 export const store = configureStore({
   reducer: persistedReducer,

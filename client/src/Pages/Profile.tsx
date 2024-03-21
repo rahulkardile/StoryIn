@@ -241,7 +241,7 @@ const Profile = () => {
         >
           <h1 className="font-semibold my-3">My Books</h1>
 
-          <div className="flex justify-evenly gap-8 flex-wrap">
+          <div className="flex justify-center gap-8 max-w-[70%] flex-wrap">
             {OrderList.map((item, i) => (
               <div className="flex justify-evenly flex-col">
                 <div className="w-[160px] h-[160px] gap-1 rounded-md overflow-hidden">

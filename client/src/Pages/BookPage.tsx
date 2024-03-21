@@ -29,6 +29,7 @@ const BookPage = () => {
   const { id } = useParams();
 
   const { user, status } = useSelector((state: ReduxStates) => state.user);
+  const { List } = useSelector((state: ReduxStates)=> state.fev)
 
   useEffect(() => {
     const controller = new AbortController();
@@ -54,6 +55,13 @@ const BookPage = () => {
         toast.error("problem");
       }
     };
+
+    List.map((i)=>{
+      if(i._id === id){
+        setHeart(true)
+        console.log("this is like");
+      }
+    })
 
     getData();
     data();
