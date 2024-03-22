@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import NewCard from "../components/NewCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { FaHeart } from "react-icons/fa";
+import { addOneMore } from "../Redux/Slices/Fevs";
 
 const BookPage = () => {
   const [data, setData] = useState({
@@ -27,6 +28,7 @@ const BookPage = () => {
   const [heart, setHeart] = useState(false);
   const [heartLoading, setHeartLoading] = useState(false);
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   const { user, status } = useSelector((state: ReduxStates) => state.user);
   const { List } = useSelector((state: ReduxStates)=> state.fev)
@@ -59,7 +61,6 @@ const BookPage = () => {
     List.map((i)=>{
       if(i._id === id){
         setHeart(true)
-        console.log("this is like");
       }
     })
 
@@ -187,7 +188,7 @@ const BookPage = () => {
               <>
                 <section className=" max-w-[1200px] flex flex-col gap-4 m-auto mb-9">
                   <div className="ml-6 mt-2">
-                    <h1 className="font-semibold text-xl">Recommend . . .</h1>
+                    <h1 className="font-semibold text-xl">Recommended . . .</h1>
                   </div>
                   <div
                     id="scroll"

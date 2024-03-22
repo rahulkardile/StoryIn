@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { ReduxStates } from "../Redux/Store";
 
 const Favorite = () => {
   const [data, setData] = useState([
@@ -15,9 +13,6 @@ const Favorite = () => {
     },
   ]);
 
-  const { List } = useSelector((state: ReduxStates) => state.fev);
-  console.log(List);
-
   useEffect(() => {
     const controller = new AbortController();
 
@@ -26,9 +21,7 @@ const Favorite = () => {
         signal: controller.signal,
       });
       const bookData = await data.json();
-
       
-
       setData(bookData);
     };
 
