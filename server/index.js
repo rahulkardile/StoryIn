@@ -6,6 +6,10 @@ import cors from 'cors'
 import fs from "fs"
 import razorpay from 'razorpay'
 
+// graphQL SetUp
+import { ApolloServer } from '@apollo/server';
+import { expressMiddleware } from "@apollo/server/express4"
+
 import User from "./Routes/UserRoutes.js"
 import OrederRoute from "./Routes/OrderRoute.js"
 import AudioRoute from "./Routes/AudioRoute.js"

@@ -26,11 +26,11 @@ const OrderSchema = new mongoose.Schema({
         required: true
     },
     date: {
-        type: Date,
+        type: String,
         required: true
     },
     expiry: {
-        type: Date,
+        type: String,
         required: true
     },
     duration: {

@@ -68,7 +68,7 @@ router.post("/verify", verifyUser, async (req, res, next) => {
 
         let expiry = `${day}/${month}/${year}`
         let curruntDate = new Date().toLocaleDateString();
-
+        
         if (isAuth) {
             await Order.create({
                 orderId: order_Id,
@@ -108,6 +108,8 @@ router.get("/get", verifyUser, async (req, res, next) => {
     try {
         const { _id } = await req.user;
         const get = await Order.findOne({userId: _id});
+
+        if(!get) return next(errorHandler(404, "Not Subcribed yet!"))
 
         const { createdAt, _id: id, __v, updatedAt, signature, userId, paymentId, email, ...rest } = await get._doc
 

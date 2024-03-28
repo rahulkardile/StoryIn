@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import profileImg from "../assets/profile.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import toast from "react-hot-toast";
+import { RemoveStatus } from "../Redux/Slices/UserSlice";
 
 const Profile = () => {
   const { user, status } = useSelector((state: ReduxStates) => state.user);
   const naviagte = useNavigate();
+  const dispatch = useDispatch();
   const [Option, setOption] = useState<boolean>(false);
   const [Proccess, setProccess] = useState<boolean>(false);
 
@@ -47,6 +49,8 @@ const Profile = () => {
 
       if (success === true) {
         setOrderData(order);
+      }else{
+        dispatch(RemoveStatus());
       }
     };
 
@@ -183,7 +187,7 @@ const Profile = () => {
           <div className="mt-4">
             <p>
               Subscription Status:{" "}
-              {user?.status === true ? (
+              {status === true ? (
                 <span className="text-green-700 font-semibold">Running </span>
               ) : (
                 <span className="text-red-600 font-semibold">Nan</span>

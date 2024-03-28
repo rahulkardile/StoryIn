@@ -5,7 +5,6 @@ import NewCard from "../components/NewCard";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { FaHeart } from "react-icons/fa";
-import { addOneMore } from "../Redux/Slices/Fevs";
 
 const BookPage = () => {
   const [data, setData] = useState({
@@ -28,7 +27,6 @@ const BookPage = () => {
   const [heart, setHeart] = useState(false);
   const [heartLoading, setHeartLoading] = useState(false);
   const { id } = useParams();
-  const dispatch = useDispatch();
 
   const { user, status } = useSelector((state: ReduxStates) => state.user);
   const { List } = useSelector((state: ReduxStates)=> state.fev)
@@ -57,12 +55,6 @@ const BookPage = () => {
         toast.error("problem");
       }
     };
-
-    List.map((i)=>{
-      if(i._id === id){
-        setHeart(true)
-      }
-    })
 
     getData();
     data();
