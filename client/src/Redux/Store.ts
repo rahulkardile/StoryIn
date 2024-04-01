@@ -12,11 +12,6 @@ const persistConfig = {
   storage,
 };
 
-// const reducer = combineReducers({
-//   user: UserReducer,
-//   fev: FevReducer
-// });
-
 const persistedReducer = persistCombineReducers(persistConfig, { user: UserReducer, fev: FevReducer });
 
 export const store = configureStore({
