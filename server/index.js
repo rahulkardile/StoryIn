@@ -41,6 +41,13 @@ export const instance  = new razorpay({
 
 let cout= 1;
 
+app.get("/", (req, res, next)=> {
+    res.status(200).json({
+        success: true,
+        message: "Server is running"
+    })
+})
+
 app.get("/api/stream", async (req, res, next) => {
     try {
 
