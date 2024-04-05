@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/4214.jpg";
 
 import InfoApp from "../components/InfoApp";
@@ -11,8 +11,24 @@ import { ReduxStates } from "../Redux/Store";
 import { add } from "../Redux/Slices/Fevs";
 
 const Home = () => {
-  const [data, setData] = useState([]);
-  const [trending, setTrending] = useState([]);
+  const [data, setData] = useState([{
+    poster: "",
+    _id: "",
+    user: {
+      name: ""
+    },
+    title: ""
+  }]);
+  const [trending, setTrending] = useState([
+    {
+      poster: "",
+      _id: "",
+      user: {
+        name: ""
+      },
+      title: ""
+    }
+  ]);
   const { status } = useSelector((state: ReduxStates) => state.user);
 
   const dispatch = useDispatch();
@@ -64,35 +80,35 @@ const Home = () => {
 
   return (
     <>
-      <section className="bg-black text-white flex flex-col lg:flex-row justify-evenly p-7 gap-8">
+      <section className="bg-black text-white flex flex-col md:flex-row justify-evenly p-7 gap-8">
         <div className="max-w-[700px] lg:mt-72 lg:ml-8">
-          <h1 className="text-4xl lg:text-5xl mb-4 font-bold text-orange-600">
+          <h1 className="text-2xl sm:text-4xl mb-4 font-bold text-orange-600">
             Audiobooks for everyone
           </h1>
-          <p className="mb-8 text-white text-lg lg:text-xl">
+          <p className="mb-8 text-white text-sm sm:text-xl">
             400,000+ bestselling stories and Storytel Originals. Prices starting
             from Rs 149/ month. Cancel anytime
           </p>
           {status === false ? (
             <Link
               to={"/subscription"}
-              className="p-3 bg-white text-black mt-2 rounded-lg text-lg lg:text-xl font-bold hover:opacity-80"
+              className="p-3 bg-white text-black mt-2 rounded-lg text-sm lg:text-xl font-semibold sm:font-bold hover:opacity-80"
             >
               Subscribe Now
             </Link>
           ) : (
             <Link
               to={"/audio-books"}
-              className="p-3 bg-white text-black rounded-lg text-lg mt-2 lg:text-xl font-semibold hover:opacity-80"
+              className="p-3 bg-white text-black rounded-lg mt-2 text-sm lg:text-xl font-semibold hover:opacity-80"
             >
               Explore Premium
             </Link>
           )}
         </div>
 
-        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+        <div className="w-[220px] m-auto h-auto sm:w-[440px]">
           <img
-            className="object-cover ml-20 object-center rounded"
+            className="object-cover object-center rounded-md"
             alt="hero"
             draggable={false}
             src={logo}

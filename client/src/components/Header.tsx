@@ -50,51 +50,40 @@ const Header = () => {
     >
       <div className="ml-4 flex flex-row gap-1 items-center">
         <Link to={"/"}>
-          <h1 className="text-white flex gap-1 items-center text-3xl font-semibold duration-300  hover:text-orange-500">
+          <h1 className="text-white flex gap-1 items-center text-lg sm:text-3xl font-semibold duration-300  hover:text-orange-500">
             <IoHeadsetSharp /> StoryIn
           </h1>
         </Link>
         client
       </div>
 
-      <div className="text-white flex items-center gap-4 text-sm mr-10">
+      <div className="text-white flex items-center gap-3 sm:gap-4 mr-5 sm:mr-10">
         <Link
           to={"/audio-books"}
-          className="duration-200 hover:text-orange-500 cursor-pointer"
+          className="duration-200 hidden text-base sm:block hover:text-orange-500 cursor-pointer"
         >
           Audiobooks
         </Link>
-        {/* <Link
-          to={"/ebooks"}
-          className="duration-200 hover:text-orange-500 cursor-pointer"
-        >
-          eBooks
-        </Link> */}
-        {/* <Link
-          to={"/"}
-          className="duration-200 hover:text-orange-500 cursor-pointer"
-        >
-          Category
-        </Link> */}
+
         <Link
           to={"/favorite"}
-          className="duration-200 hover:text-orange-500 cursor-pointer"
+          className="duration-200 text-xs sm:text-base hover:text-orange-500 cursor-pointer"
         >
           Favorite
         </Link>
         <Link
           to={"/about"}
-          className="duration-200 hover:text-orange-500 cursor-pointer"
+          className="duration-200 hidden text-base sm:block hover:text-orange-500 cursor-pointer"
         >
           About
         </Link>
         <Link
           to={"/"}
-          className="duration-200 hover:text-orange-500 cursor-pointer"
+          className="duration-200 text-xs sm:text-base hover:text-orange-500 cursor-pointer"
         >
           Home
         </Link>
-        <p className="border border-white py-3" />
+        <p className="border text-xs sm:text-base border-white py-3" />
 
         {user?.name ? (
           <>
@@ -103,13 +92,13 @@ const Header = () => {
                 onClick={() => setDropDown(!dropDown)}
                 onMouseEnter={() => setDropDown(true)}
                 src={profileImg}
-                className="w-9 h-9 rounded-full cursor-pointer"
+                className="w-7 h-7 sm:w-9 sm:h-9 rounded-full cursor-pointer"
                 alt=""
               />
               <dialog
                 onMouseLeave={() => setDropDown(false)}
                 open={dropDown}
-                className="z-10 left-[88%] w-auto mr-5 bg-grey-100 rounded-lg top-14"
+                className="z-10 left-[69%] sm:left-[88%] w-auto mr-5 bg-grey-100 rounded-lg top-14"
               >
                 <div
                   id="myDropdown"
