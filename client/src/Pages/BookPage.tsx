@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import NewCard from "../components/NewCard";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { FaHeart } from "react-icons/fa";
 
@@ -23,13 +23,21 @@ const BookPage = () => {
     __v: "",
   });
 
-  const [newReq, setNewReq] = useState([]);
+  const [newReq, setNewReq] = useState([
+    {
+      poster: "",
+      _id: "",
+      title: "",
+      user: {
+        name: "",
+      },
+    },
+  ]);
   const [heart, setHeart] = useState(false);
   const [heartLoading, setHeartLoading] = useState(false);
   const { id } = useParams();
 
   const { user, status } = useSelector((state: ReduxStates) => state.user);
-  const { List } = useSelector((state: ReduxStates) => state.fev);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -83,8 +91,10 @@ const BookPage = () => {
             disabled={heartLoading}
             onClick={() => handleHeart()}
             className={`${
-              heart ? "z-10 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24 text-red-500" : ""
-            } absolute z-10 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24`}
+              heart
+                ? "z-0 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24 text-red-500"
+                : ""
+            } absolute z-0 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24`}
           >
             <FaHeart />
           </button>

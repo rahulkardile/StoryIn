@@ -138,7 +138,7 @@ const Header = () => {
 
                   <button
                     onClick={handleLogout}
-                    className="duration-200 text-xs sm:text-base hover:text-red-600"
+                    className="duration-200 text-base hover:text-red-600"
                   >
                     Logout
                   </button>

@@ -185,6 +185,7 @@ const Profile = () => {
               <span className="text-black font-semibold"> (123) 456-7890 </span>{" "}
             </p>
           </div>
+
           <div className="mt-4">
             <p>
               Subscription Status:{" "}
