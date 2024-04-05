@@ -3,7 +3,7 @@ import { IoEarth, IoLocation } from "react-icons/io5";
 
 const Footer = () => {
   return (
-    <footer className="mt-3">
+    <footer className="mt-3 w-screen">
       <p className="mt-2 border border-gray-200" />
     <div className="flex flex-row justify-evenly items-start mb-20 mt-6">
          <section className="flex gap-1  flex-col text-sm">

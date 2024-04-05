@@ -8,7 +8,7 @@ const InfoApp = () => {
   const { status } = useSelector((state: ReduxStates)=> state.user)
 
   return (
-    <section className="bg-black w-screen sm:max-w-[1800px] p-14 flex flex-col m-auto items-center gap-2 mb-3">
+    <section className="bg-black w-screen sm:max-w-[1800px] pt-12 px-10 flex flex-col m-auto items-center gap-2 mb-3">
 
         <div className="flex flex-col sm:flex-row gap-2 justify-evenly">
 
@@ -39,9 +39,9 @@ const InfoApp = () => {
 
         </div>
 
-        { status === false ? <Link to={'/subscription'} className="p-3 bg-white text-black rounded-lg mt-6 text-lg lg:text-xl font-bold hover:opacity-80">
+        { status === false ? <Link to={'/subscription'} className="p-3 bg-white text-black rounded-full my-6 text-lg lg:text-xl font-bold hover:opacity-80">
             Subscribe Now
-          </Link> : <Link to={'/audio-books'} className="p-3 bg-white text-black rounded-lg text-lg lg:text-xl mb-7 font-semibold hover:opacity-80">
+          </Link> : <Link to={'/audio-books'} className="p-3 bg-white text-black rounded-full text-lg lg:text-xl my-7 font-semibold hover:opacity-80">
             Explore Premium
           </Link> }
       </section>

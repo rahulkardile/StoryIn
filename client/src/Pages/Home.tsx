@@ -1,6 +1,6 @@
-import { RefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/4214.jpg";
-import pie from "../assets/audio/Heeriye X Chaleya X Tu.mp3";
+import pie from "../assets/audio/Life of Pi - Book Summary.mp3";
 
 import InfoApp from "../components/InfoApp";
 import KeyFeture from "../components/KeyFeture";
@@ -109,14 +109,14 @@ const Home = () => {
           {status === false ? (
             <Link
               to={"/subscription"}
-              className="p-3 bg-white text-black mt-2 rounded-lg text-sm lg:text-xl font-semibold sm:font-bold hover:opacity-80"
+              className="p-3 bg-white text-black mt-2 rounded-full text-sm lg:text-xl font-semibold sm:font-bold hover:opacity-80"
             >
               Subscribe Now
             </Link>
           ) : (
             <Link
               to={"/audio-books"}
-              className="p-3 bg-white text-black rounded-lg mt-2 text-sm lg:text-xl font-semibold hover:opacity-80"
+              className="p-3 bg-white text-black rounded-full mt-2 text-sm lg:text-xl font-semibold hover:opacity-80"
             >
               Explore Premium
             </Link>

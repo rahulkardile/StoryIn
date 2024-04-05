@@ -21,7 +21,7 @@ const Favorite = () => {
         signal: controller.signal,
       });
       const bookData = await data.json();
-      
+
       setData(bookData);
     };
 
@@ -44,28 +44,28 @@ const Favorite = () => {
   };
 
   return (
-    <div className="flex justify-center mt-4 mb-20 flex-col w-[900px] m-auto items-center">
+    <div className="flex justify-center mt-4 mb-20 flex-col w-screen sm:w-[900px] m-auto items-center">
       <h1 className="font-semibold text-xl">Your Favorite Books</h1>
       <p className="mb-1 h-[1px] bg-gray-400 mt-1 w-96" />
 
       <div className="flex gap-3 flex-col items-center w-full mt-7">
         {data.length > 0 ? (
           data.map((i) => (
-            <div className="flex justify-start gap-3 my-4 w-[550px] overflow-hidden">
+            <div className="flex sm:justify-start justify-center  items-center gap-3 my-4 w-[450px] overflow-hidden">
               <Link
-                className=" border border-black p-2 bg-slate-200 rounded"
+                className="sm:border sm:border-black sm:p-1 sm:bg-gray-100 rounded"
                 to={`/book/${i._id}`}
               >
                 <img
                   src={`/api/${i.poster}`}
-                  className="object-contain h-[170px] w-40 duration-300 rounded-2xl hover:scale-105"
+                  className="object-contain w-32 h-[200px] sm:w-56 duration-300 rounded-2xl hover:scale-105"
                   alt="poster"
                 />
               </Link>
 
-              <div className="w-[400px] h-full">
+              <div className="sm:w-[400px] w-[220px] h-full">
                 <Link to={`/book/${i._id}`}>
-                  <h2 className="text-lg mb-1 font-semibold">{i.title}</h2>
+                  <h2 className="text-lg mb-1 truncate font-semibold">{i.title}</h2>
                 </Link>
                 <h2 className="text-sm line-clamp-3">{i.description}</h2>
                 <button
@@ -78,7 +78,7 @@ const Favorite = () => {
             </div>
           ))
         ) : (
-          <h1 className="my-2 text-sm mb-10">Add books from home page</h1>
+          <h1 className="my-2 text-sm mb-10">There is no book added to Favorite list</h1>
         )}
       </div>
     </div>
