@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useRef, useState } from "react";
 import logo from "../assets/4214.jpg";
+import pie from "../assets/audio/Heeriye X Chaleya X Tu.mp3";
 
 import InfoApp from "../components/InfoApp";
 import KeyFeture from "../components/KeyFeture";
@@ -9,26 +10,32 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { add } from "../Redux/Slices/Fevs";
+import { FaPlay, FaPause } from "react-icons/fa";
 
 const Home = () => {
-  const [data, setData] = useState([{
-    poster: "",
-    _id: "",
-    user: {
-      name: ""
+  const [data, setData] = useState([
+    {
+      poster: "",
+      _id: "",
+      user: {
+        name: "",
+      },
+      title: "",
     },
-    title: ""
-  }]);
+  ]);
   const [trending, setTrending] = useState([
     {
       poster: "",
       _id: "",
       user: {
-        name: ""
+        name: "",
       },
-      title: ""
-    }
+      title: "",
+    },
   ]);
+
+  const [playAudio, setPlay] = useState(false);
+  const [audio] = useState(new Audio(pie));
   const { status } = useSelector((state: ReduxStates) => state.user);
 
   const dispatch = useDispatch();
@@ -78,14 +85,24 @@ const Home = () => {
     return () => controller.abort();
   }, []);
 
+  const play = () => {
+    audio.play();
+    setPlay(true);
+  };
+
+  const pause = () => {
+    audio.pause();
+    setPlay(false);
+  };
+
   return (
     <>
       <section className="bg-black text-white flex flex-col md:flex-row justify-evenly p-7 gap-8">
-        <div className="max-w-[700px] lg:mt-72 lg:ml-8">
-          <h1 className="text-2xl sm:text-4xl mb-4 font-bold text-orange-600">
+        <div className="max-w-[700px] lg:mt-72 portrait:flex flex-col items-center lg:ml-8">
+          <h1 className="text-3xl portrait:text-center sm:text-4xl mb-4 font-bold text-orange-600">
             Audiobooks for everyone
           </h1>
-          <p className="mb-8 text-white text-sm sm:text-xl">
+          <p className="mb-8 text-white text-center sm:text-start text-sm mr-5 sm:text-xl">
             400,000+ bestselling stories and Storytel Originals. Prices starting
             from Rs 149/ month. Cancel anytime
           </p>
@@ -106,13 +123,35 @@ const Home = () => {
           )}
         </div>
 
-        <div className="w-[220px] m-auto h-auto sm:w-[440px]">
+        <div className="w-[270px] m-auto h-auto sm:w-[440px]">
           <img
             className="object-cover object-center rounded-md"
             alt="hero"
             draggable={false}
             src={logo}
           />
+          <div className="flex gap-4 justify-start items-center mt-4">
+            <div className=" w-12 h-12 bg-white rounded-full flex justify-center items-center">
+              {playAudio ? (
+                <FaPause
+                  onClick={pause}
+                  className="w-4 h-4 text-black text-center"
+                />
+              ) : (
+                <FaPlay
+                  onClick={play}
+                  className="w-4 h-4 text-black text-center"
+                />
+              )}
+            </div>
+            <div className="w-[100px]">
+              <h1 className="font-semibold text-base">Life Of Pie</h1>
+              <p className="line-clamp-2 text-xs w-[190px]">
+                Life of Pi is a Canadian philosophical novel by Yann Martel
+                published in 2001.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
