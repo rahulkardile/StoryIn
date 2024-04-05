@@ -50,8 +50,8 @@ const KeyFeture = () => {
       </section>
 
       <section className="bg-white flex items-center flex-col sm:flex-row mx-4 gap-4 sm:gap-20 max-w-[950px] justify-center mt-24 mb-24 m-auto">
-        <h2 className="text-orange-500 sm:hidden text-[2.5rem] font-bold">
-          Anytime anywhere
+        <h2 className="text-orange-500  text-center  sm:hidden text-[3.4rem] font-bold">
+          Anytime, anywhere
         </h2>
 
         <div className="h-auto sm:w-[35%]">
