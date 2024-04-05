@@ -169,7 +169,8 @@ const Profile = () => {
             <p className="text-gray-600">Web Developer</p>
           </div>
         </div>
-        <div className="flex flex-row gap-10">
+
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-10">
           <div className="mt-4">
             <p className="">
               Email:{" "}
@@ -243,12 +244,12 @@ const Profile = () => {
             Option ? "opacity-10" : ""
           }`}
         >
-          <h1 className="font-semibold my-3">My Books</h1>
+          <h1 className="font-semibold portrait:text-xl my-3">My Books</h1>
 
-          <div className="flex justify-center gap-8 max-w-[70%] flex-wrap">
+          <div className="flex justify-center gap-6 sm:gap-8 sm:max-w-[78%] max-w-[93%] flex-row flex-wrap">
             {OrderList.map((item, i) => (
-              <div className="flex justify-evenly flex-col">
-                <div className="w-[160px] h-[160px] gap-1 rounded-md overflow-hidden">
+              <div className="flex justify-evenly mt-3 flex-col sm:w-[160px] w-[120px] h-[120px] sm:h-[160px]">
+                <div className="gap-1 rounded-md overflow-hidden">
                   <Link to={`/book/${item._id}`} key={i}>
                     <img
                       draggable={false}

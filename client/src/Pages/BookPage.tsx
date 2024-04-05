@@ -29,7 +29,7 @@ const BookPage = () => {
   const { id } = useParams();
 
   const { user, status } = useSelector((state: ReduxStates) => state.user);
-  const { List } = useSelector((state: ReduxStates)=> state.fev)
+  const { List } = useSelector((state: ReduxStates) => state.fev);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -62,11 +62,11 @@ const BookPage = () => {
     return () => controller.abort();
   }, []);
 
-  const handleHeart = async() => {
+  const handleHeart = async () => {
     setHeartLoading(true);
 
     const like = await fetch(`/api/fev/create/${id}`, {
-      method: "POST"
+      method: "POST",
     });
     const { message } = await like.json();
 
@@ -79,14 +79,24 @@ const BookPage = () => {
     <section className="text-gray-600 mt-14 mb-3 body-font">
       {data?.title ? (
         <>
-          <div className="container flex gap-4 justify-center ">
+          <button
+            disabled={heartLoading}
+            onClick={() => handleHeart()}
+            className={`${
+              heart ? "z-10 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24 text-red-500" : ""
+            } absolute z-10 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24`}
+          >
+            <FaHeart />
+          </button>
+          <div className="container flex flex-col sm:flex-row gap-4 items-center justify-center ">
             <>
               <img
-                className="lg:w-2/6 md:w-3/6 mb-10 h-80 w-60 object-contain object-center rounded"
+                className="mb-10 h-80 w-60 object-contain object-center rounded"
                 alt="hero"
                 src={`/api/${data.poster}`}
               />
-              <div className="text-center lg:w-1/2 w-full">
+
+              <div className="text-center lg:w-1/2 w-[90%] sm:w-full">
                 <div className="flex justify-evenly w-full">
                   <div className="">
                     <h1 className="title-font sm:text-4xl text-3xl mb-1 font-bold text-gray-900">
@@ -107,16 +117,6 @@ const BookPage = () => {
                       </span>
                     </p>
                   </div>
-
-                  <button
-                  disabled={heartLoading}
-                    onClick={() => handleHeart()}
-                    className={`${
-                      heart ? "text-red-500 duration-150 scale-125 " : ""
-                    } absolute right-28 font-bold text-2xl `}
-                  >
-                    <FaHeart />
-                  </button>
                 </div>
 
                 <div className="max-w-[550px] m-auto p-4 flex flex-row gap-8 justify-evenly border border-gray-500 border-t-[1px] border-b-[1px] border-x-0">
@@ -147,7 +147,7 @@ const BookPage = () => {
             </>
           </div>
 
-          <div className="flex flex-col items-center m-auto max-w-[900px] justify-center">
+          <div className="flex flex-col items-center m-auto w-[90%] sm:max-w-[900px] justify-center">
             <h1>Episodes</h1>
             <p className="border-t-[1px] my-3 border-slate-500 h-1 w-full" />
             <div className="flex flex-row items-center mb-3 gap-2">
@@ -156,7 +156,7 @@ const BookPage = () => {
               </h1>
 
               <audio
-                className="w-[500px] text-red-400"
+                className="sm:w-[500px] text-red-400"
                 draggable={false}
                 controls={true}
               >
@@ -178,7 +178,7 @@ const BookPage = () => {
           <section className="mt-6 flex flex-col gap-6">
             {newReq.length > 0 ? (
               <>
-                <section className=" max-w-[1200px] flex flex-col gap-4 m-auto mb-9">
+                <section className="w-screen sm:max-w-[1200px] flex flex-col gap-4 m-auto mb-9">
                   <div className="ml-6 mt-2">
                     <h1 className="font-semibold text-xl">Recommended . . .</h1>
                   </div>

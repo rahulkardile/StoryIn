@@ -53,53 +53,55 @@ const Login = () => {
   const HandleGoogle = () => {};
 
   return (
-    <main className="max-w-[500px] flex flex-col gap-3 justify-center items-center m-auto mt-14 mb-28">
+    <main className="sm:max-w-[500px] w-[85%] flex flex-col gap-3 justify-center items-center m-auto mt-14 mb-28">
       <div className="w-full flex justify-center flex-col">
-        <h1 className="text-black font-bold text-3xl">Welcome Back!</h1>
-        <p className="text-sm tracking-wider">
+        <h1 className="text-black font-bold portrait:text-center text-xl sm:text-3xl">Welcome Back!</h1>
+        <p className="text-xs sm:text-sm portrait:text-center tracking-wider">
           {" "}
           Welcome Back! Please enter your details
         </p>
       </div>
+
       <form
         onSubmit={handleManual}
-        className="w-full flex justify-start flex-col gap-6"
+        className="w-full flex justify-center sm:items-start items-center sm:justify-start flex-col gap-6"
       >
-        <div className="w-full">
+        <div className="sm:w-full w-[79%]">
           <p className="text-gray-950">Email</p>
           <input
             type="email"
-            className="p-[10px] w-[75%] text-sm rounded border-gray-700 border-[1px]"
+            className="p-[10px] w-[100%] sm:w-[75%] text-sm rounded border-gray-700 border-[1px]"
             required
             placeholder="email"
             id="email"
             onChange={handleChange}
           />
         </div>
-        <div className="w-full">
+        <div className="sm:w-full w-[79%]">
           <p className="text-gray-950">Password</p>
           <input
             type="password"
-            className="p-[10px] w-[75%] text-sm rounded border-gray-700 border-[1px]"
+            className="p-[10px] w-[100%] sm:w-[75%]  text-sm rounded border-gray-700 border-[1px]"
             required
             placeholder="password"
             id="password"
             onChange={handleChange}
           />
         </div>
+
         <button
           type="submit"
-          className="bg-black text-white font-semibold p-[10px] w-[75%] rounded-md  duration-300 ease-in-out hover:scale-105"
+          className="bg-black text-white font-semibold p-[10px]  w-[80%] sm:w-[75%]  rounded-md  duration-300 ease-in-out hover:scale-105"
           disabled={loading}
         >
           Login
         </button>
       </form>
 
-      <div className="w-full flex flex-col gap-3">
+      <div className="sm:w-full w-[79%] flex portrait:items-center flex-col gap-3">
         <button
           disabled={loading}
-          className="p-[10px] mb-2 flex flex-row items-center gap-3 justify-center font-semibold rounded-md bg-white border border-slate-800 w-[75%] duration-300 ease-in-out hover:shadow-2xl "
+          className="p-[10px] mb-2 flex flex-row items-center portrait:w-[102%] gap-3 justify-center font-semibold rounded-md bg-white border border-slate-800 w-[75%] duration-300 ease-in-out hover:shadow-2xl "
           onClick={HandleGoogle}
         >
           <FaGoogle />

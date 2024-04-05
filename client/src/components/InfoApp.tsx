@@ -39,9 +39,9 @@ const InfoApp = () => {
 
         </div>
 
-        { status === false ? <Link to={'/subscription'} className="p-3 bg-white text-black rounded-full my-6 text-lg lg:text-xl font-bold hover:opacity-80">
+        { status === false ? <Link to={'/subscription'} className="p-3 bg-white text-black px-9 rounded-full my-6 text-lg lg:text-xl font-semibold hover:opacity-80">
             Subscribe Now
-          </Link> : <Link to={'/audio-books'} className="p-3 bg-white text-black rounded-full text-lg lg:text-xl my-7 font-semibold hover:opacity-80">
+          </Link> : <Link to={'/audio-books'} className="p-3 bg-white text-black px-9 rounded-full text-lg lg:text-xl my-7 font-semibold hover:opacity-80">
             Explore Premium
           </Link> }
       </section>

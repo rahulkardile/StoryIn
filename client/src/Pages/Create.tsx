@@ -72,10 +72,11 @@ const Create = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="flex justify-between w-[70%]  gap-8  flex-row"
+        className="flex sm:justify-between w-[90%] sm:[50%] sm:gap-8 flex-col sm:flex-row"
       >
-        <div className="p-3 w-[50%] ml-4">
-          <div className="flex flex-col gap-1 mb-2">
+        <div className="w-full sm:w-[50%] ml-4">
+
+          <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Name</span>
             <input
               type="text"
@@ -87,7 +88,7 @@ const Create = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-1 mb-2">
+          <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Description</span>
             <textarea
               id="description"
@@ -98,7 +99,7 @@ const Create = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-1 mb-2">
+          <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Tags</span>
             <input
               type="text"
@@ -110,7 +111,7 @@ const Create = () => {
             />
           </div>
 
-          <div className="flex flex-col gap-1 mb-2">
+          <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Image</span>
             <input
               type="file"
@@ -122,7 +123,8 @@ const Create = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col mt-5 w-[50%]">
+
+        <div className="flex flex-col mt-5 w-full sm:w-[50%]">
           <div className="flex flex-row items-center gap-2 mb-2">
             <h1 className="text-base font-semibold">Audio Epicodes:</h1>
             <span className="text-sm">Add episode one after another </span>
