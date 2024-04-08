@@ -52,21 +52,21 @@ const AudioBooks = () => {
 
   return (
     <section className="h-full w-full">
-      <div className="h-[40%] w-full relative flex items-center gap-2 flex-col">
+      <div className="sm:h-[40%] w-full relative flex items-center gap-2 flex-col">
         <div className="h-[100%] absolute overflow-hidden w-full">
           <img src={mainImg} className="object-cover" alt="img" />
         </div>
 
         <div
           style={{
-            boxShadow: "10px -110px 70px black inset",
+            boxShadow: "5px -70px 60px black inset",
           }}
-          className="relative mt-[340px] flex flex-col gap-3 w-full"
+          className="relative mt-7 sm:mt-[340px] flex flex-col gap-3 w-full"
         >
-          <h1 className="ml-14 text-5xl text-orange-500 font-bold">
+          <h1 className="ml-14 portrait:ml-8 text-2xl sm:text-5xl text-orange-500 font-bold">
             Audiobooks
           </h1>
-          <p className="ml-14 text-base text-white max-w-[590px]">
+          <p className="ml-14 portrait:ml-8 text-xs portrait:line-clamp-3 sm:text-base text-white max-w-[590px]">
             Get unlimited access to the world of audiobooks - where new content
             awaits you every day. Step into a limitless audio adventure with
             over 400,000+ titles, waiting to be discovered.
@@ -79,7 +79,7 @@ const AudioBooks = () => {
               Subscribe Now
             </Link>
           ) : (
-            <p className="mb-9"></p>
+            <p className="sm:mb-9"></p>
           )}
         </div>
       </div>
