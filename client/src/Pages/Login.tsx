@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc"
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addStatus, addUser } from "../Redux/Slices/UserSlice";
@@ -104,7 +105,7 @@ const Login = () => {
           className="p-[10px] mb-2 flex flex-row items-center portrait:w-[102%] gap-3 justify-center font-semibold rounded-md bg-white border border-slate-800 w-[75%] duration-300 ease-in-out hover:shadow-2xl "
           onClick={HandleGoogle}
         >
-          <FaGoogle />
+          <FcGoogle className="w-7 h-7" />
           Continue with Google
         </button>
         <p>

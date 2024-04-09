@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc"
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -134,7 +135,7 @@ const Register = () => {
           className="p-[10px] flex flex-row items-center gap-3  justify-center font-semibold rounded-md bg-white border border-slate-800 w-[80%] sm:w-[75%] duration-300 ease-in-out hover:shadow-2xl"
           onClick={HandleGoogle}
         >
-          <FaGoogle />
+          <FcGoogle className="w-7 h-7" />
           Continue with Google
         </button>
         <p>

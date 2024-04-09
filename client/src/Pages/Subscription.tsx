@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { addStatus } from "../Redux/Slices/UserSlice";
 import { useNavigate } from "react-router-dom";
+import { FaCheck } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6"
 
 const Subscription = () => {
   const { user } = useSelector((state: ReduxStates) => state.user);
@@ -83,38 +85,52 @@ const Subscription = () => {
   };
 
   return (
-    <div className="p-6 m-auto max-w-[990px] my-9 mb-5 rounded-lg">
+    <div className="p-6 m-auto max-w-[990px] mb-12 rounded-lg">
       <h1 className="text-2xl text-center text-black font-semibold mb-4">
         Choose Your Plan
       </h1>
-      <div className="flex gap-4  items-center justify-center flex-row ">
-        <div className="w-1/2 p-4 h-[250px] border rounded-lg bg-gray-100">
+
+      <div className="flex gap-4  items-center justify-center flex-col sm:flex-row ">
+        <div className="w-10/12 p-4 h-auto border rounded-lg flex flex-col gap-1 items-center bg-gray-100">
           <h2 className="text-lg font-semibold">Premium of 1 Months</h2>
-          <p className="text-gray-600">₹119/month</p>
+          <p className="text-gray-600 flex items-center gap-1">
+            <span className="text-lg font-semibold text-black">₹119</span>{" "}
+            <span className="line-through">₹199</span>
+          </p>
+
           <ul className="mt-4">
-            <li>HD Audio Quality</li>
-            <li>Premium Features</li>
-            <li>Premium Features</li>
+            <li className="flex mt-2 flex-row gap-1 "> <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-300 "> <FaCheck className="text-xs" /> </div> <span>HD Audio Quality</span> </li>
+            <li className="flex mt-2 flex-row gap-1 "> <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-300 "> <FaCheck className="text-xs" /> </div> <span>Premium Features</span> </li>
+            <li className="flex mt-2 flex-row gap-1 "> <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-300 "> <FaCheck className="text-xs" /> </div> <span>Unlimited Downloads</span> </li>
+            <li className="flex mt-2 flex-row gap-1 "> <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-300 "> <FaXmark className="text-xs" /> </div> <span>Login Multiple Devices</span> </li>
           </ul>
+
           <button
             onClick={() => checkout(119)}
-            className="mt-4 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
+            className="mt-4 bg-orange-500 text-white px-4 py-2 w-full rounded hover:bg-orange-600"
           >
             Subscribe
           </button>
         </div>
-        <div className="w-1/2 p-4 h-[250px] border rounded-lg bg-gray-100">
+
+        <div className="w-10/12 p-4 h-auto border rounded-lg flex flex-col gap-1 items-center bg-gray-100">
           <h2 className="text-lg font-semibold">Premium of 12 Months</h2>
-          <p className="text-gray-600">₹1199/year</p>
+          <p className="text-gray-600 flex items-center gap-1">
+            {" "}
+            <span className="text-lg font-semibold text-black">₹1199</span>{" "}
+            <span className="line-through">₹1899</span>
+          </p>
+
           <ul className="mt-4">
-            <li>Unlimited Downloads</li>
-            <li>Login Multiple Devices</li>
-            <li>HD Audio Quality</li>
-            <li>Premium Features</li>
+            <li className="flex mt-2 flex-row gap-1 "> <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-300 "> <FaCheck className="text-xs" /> </div> <span>HD Audio Quality</span> </li>
+            <li className="flex mt-2 flex-row gap-1 "> <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-300 "> <FaCheck className="text-xs" /> </div> <span>Premium Features</span> </li>
+            <li className="flex mt-2 flex-row gap-1 "> <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-300 "> <FaCheck className="text-xs" /> </div> <span>Unlimited Downloads</span> </li>
+            <li className="flex mt-2 flex-row gap-1 "> <div className="w-7 h-7 rounded-full flex items-center justify-center bg-zinc-300 "> <FaCheck className="text-xs" /> </div> <span>Login Multiple Devices</span> </li>
           </ul>
+
           <button
             onClick={() => checkout(1199)}
-            className="mt-4 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
+            className="mt-4 bg-orange-500 text-white px-4 py-2 w-full rounded hover:bg-orange-600"
           >
             Subscribe
           </button>

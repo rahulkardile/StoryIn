@@ -60,7 +60,7 @@ const Header = () => {
       <div className="text-white flex items-center gap-3 sm:gap-4 mr-5 sm:mr-10">
         <Link
           to={"/audio-books"}
-          className="duration-200 hidden text-base sm:block hover:text-orange-500 cursor-pointer"
+          className="duration-200 portrait:text-xs text-base hover:text-orange-500 cursor-pointer"
         >
           Audiobooks
         </Link>
@@ -79,7 +79,7 @@ const Header = () => {
         </Link>
         <Link
           to={"/"}
-          className="duration-200 text-xs sm:text-base hover:text-orange-500 cursor-pointer"
+          className="duration-200 hidden sm:block  text-xs sm:text-base hover:text-orange-500 cursor-pointer"
         >
           Home
         </Link>
@@ -147,7 +147,10 @@ const Header = () => {
             </div>
           </>
         ) : (
-          <Link to={"/login"} className="duration-200  text-xs sm:text-base hover:text-red-700">
+          <Link
+            to={"/login"}
+            className="duration-200  text-xs sm:text-base hover:text-red-700"
+          >
             Login
           </Link>
         )}
