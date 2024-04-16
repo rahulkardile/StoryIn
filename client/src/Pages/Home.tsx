@@ -102,10 +102,18 @@ const Home = () => {
           <h1 className="text-3xl portrait:text-center sm:text-4xl mb-4 font-bold text-orange-600">
             Audiobooks for everyone
           </h1>
-          <p className="mb-8 text-white text-center sm:text-start text-sm mr-5 sm:text-xl">
-            400,000+ bestselling stories and Storytel Originals. Prices starting
-            from Rs 149/ month. Cancel anytime
-          </p>
+          {status === false ? (
+            <p className="mb-8 text-white text-center sm:text-start text-sm mr-5 sm:text-xl">
+              400,000+ bestselling stories and Storytel Originals. Prices
+              starting from Rs 149/ month. Cancel anytime
+            </p>
+          ) : (
+            <p className="mb-8 text-white text-center sm:text-start text-sm mr-5 sm:text-xl">
+              Discover best Audio books, Podcasts, Talk shows, Stories at
+              StoryIn. An App Made with love in India. Listen content in Hindi &
+              7 Other Languages!
+            </p>
+          )}
           {status === false ? (
             <Link
               to={"/subscription"}
