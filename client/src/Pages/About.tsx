@@ -1,5 +1,3 @@
-import React from "react";
-
 const About = () => {
   return (
     <section className="max-w-[600px] m-auto my-12">

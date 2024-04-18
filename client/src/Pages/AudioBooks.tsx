@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaCaretRight } from "react-icons/fa6";
 import mainImg from "../assets/Cover.jpg";
-import { Link, useParams } from "react-router-dom";
-import Robo from "../assets/img.webp";
-import Karn from "../assets/NewCard.jpeg";
-import Card from "../components/Card";
+import { Link } from "react-router-dom";
 import NewCard from "../components/NewCard";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
