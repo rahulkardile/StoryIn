@@ -8,8 +8,24 @@ import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 
 const AudioBooks = () => {
-  const [data, setData] = useState([]);
-  const [Trending, setTrending] = useState([]);
+  const [data, setData] = useState([{
+    _id: "",
+    poster: "",
+    title: "",
+    user: {
+      name: ""
+    }
+  }]);
+  console.log(data);
+  
+  const [Trending, setTrending] = useState([{
+    _id: "",
+    poster: "",
+    title: "",
+    user: {
+      name: ""
+    }
+  }]);
   const { status } = useSelector((state: ReduxStates) => state.user);
 
   useEffect(() => {
@@ -20,7 +36,7 @@ const AudioBooks = () => {
         signal: controller.signal,
       });
       const resData = await res.json();
-
+      
       if (resData.success === true) {
         setData(resData.data);
       } else {
