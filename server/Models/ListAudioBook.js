@@ -26,9 +26,11 @@ const TodoSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-}, {
-    timestamps: true}
+}, 
+{
+    timestamps: true
+}
 )
- const ListBook = mongoose.model("ListBook", TodoSchema);
+const ListBook = mongoose.model("ListBook", TodoSchema);
 
 export default ListBook

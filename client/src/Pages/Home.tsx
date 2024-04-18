@@ -97,9 +97,9 @@ const Home = () => {
 
   return (
     <>
-      <section className="bg-black text-white flex flex-col md:flex-row justify-evenly p-7 gap-8">
+      <section className="bg-black text-white flex flex-col md:flex-row justify-evenly md:justify-between p-7 gap-8">
         <div className="max-w-[700px] lg:mt-72 portrait:flex flex-col items-center lg:ml-8">
-          <h1 className="text-3xl portrait:text-center sm:text-4xl mb-4 font-bold text-orange-600">
+          <h1 className="text-3xl portrait:text-center sm:text-4xl md:text-5xl xl:text-6xl mb-4 font-bold text-orange-600">
             Audiobooks for everyone
           </h1>
           {status === false ? (
@@ -132,13 +132,14 @@ const Home = () => {
         </div>
 
         <div className="w-[270px] m-auto h-auto sm:w-[440px]">
+       
           <img
-            className="object-cover object-center rounded-md"
+            className="object-contain md:ml-[15%] xl:ml-[25%] object-center rounded-md"
             alt="hero"
             draggable={false}
             src={logo}
           />
-          <div className="flex gap-4 justify-start items-center mt-4">
+          <div className="flex gap-4 md:ml-[13%] xl:ml-[25%] justify-start items-center mt-4">
             <div className=" w-12 h-12 bg-white rounded-full flex justify-center items-center">
               {playAudio ? (
                 <FaPause
