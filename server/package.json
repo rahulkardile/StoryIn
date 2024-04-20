@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node app.js",
+    "start": "node index.js",
     "build": "npm i",
-    "dev": "nodemon app.js"
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
