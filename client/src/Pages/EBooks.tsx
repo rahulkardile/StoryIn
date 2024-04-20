@@ -1,4 +1,3 @@
-import React from "react";
 import img from "../assets/pexels-perfecto-capucine-1324859.jpg";
 import Card from "../components/Card";
 import { FaCaretRight } from "react-icons/fa";
