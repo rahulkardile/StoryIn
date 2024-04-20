@@ -47,7 +47,7 @@ router.post("/verify", verifyUser, async (req, res, next) => {
         if (!order_Id, !payment_Id, !signature, !amount) return next(errorHandler(402, "some fields are missing!"))
 
         const body = order_Id + "|" + payment_Id;
-        const expectedSign = crypto.createHmac("sha256", process.env.KEY_SECRET).update(body.toString()).digest('hex');
+        const expectedSign = crypto.createHmac("sha256", process.env.KEYSECRET).update(body.toString()).digest('hex');
         const isAuth = expectedSign === signature;
 
         const date = new Date();
@@ -100,7 +100,7 @@ router.post("/verify", verifyUser, async (req, res, next) => {
 router.get("/key", async (req, res, next) => {
     return res.status(200).json({
         success: true,
-        key: process.env.KEY_ID
+        key: process.env.KEYID
     })
 })
 

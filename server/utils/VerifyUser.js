@@ -6,7 +6,7 @@ export const verifyUser = (req, res, next) => {
 
     if (!token) return next(errorHandler(401, "User is not authenticated!"))
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    jwt.verify(token, process.env.JWTSECRET, (err, user) => {
         if (err) return next(errorHandler(400, "Invalid Cookies"))
 
         req.user = user;

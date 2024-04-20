@@ -44,7 +44,7 @@ router.post("/get", async (req, res, next) => {
     const passOk = bcrypt.compareSync(password, LoginUser.password)
     if (!passOk) return next(errorHandler(400, "Wrong password!"));
 
-    const access_User = jwt.sign({ _id: LoginUser._id, email: LoginUser.email, name: LoginUser.name, role: LoginUser.role }, process.env.JWT_SECRET)
+    const access_User = jwt.sign({ _id: LoginUser._id, email: LoginUser.email, name: LoginUser.name, role: LoginUser.role }, process.env.JWTSECRET)
 
     const { password: pass, createdAt, updatedAt, __v, ...rest } = LoginUser._doc
 

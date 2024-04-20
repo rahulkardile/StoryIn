@@ -35,8 +35,8 @@ try {
 }
 
 export const instance  = new razorpay({
-    key_id: process.env.KEY_ID,
-    key_secret: process.env.KEY_SECRET,
+    key_id: process.env.KEYID,
+    KEY_SECRET: process.env.KEYSECRET,
 })
 
 let cout= 1;
