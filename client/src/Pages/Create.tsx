@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -7,33 +7,42 @@ const Create = () => {
   const [description, setDescription] = useState<string>("");
   const [tags, setTags] = useState<string>("");
 
-  const [img, setImg] = useState<File[]>([]);
-  const [audio, setAudio] = useState<File[]>([]);
+  const [img, setImg] = useState<File>();
+  const [audio, setAudio] = useState<File>();
 
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // const ImgHandler = () => {
+
+  // }
+
+  const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
+
+    const file:File | undefined = e.target.files?.[0];
+
     if (e.target.id === "img") {
       if (e.target.files != null) {
-        setImg(e.target.files[0]);
+        setImg(file);
       } else {
         toast.error("Can't upload img");
       }
     }
+
     if (e.target.id === "epi") {
       if (e.target.files != null) {
-        setAudio(e.target.files[0]);
+        setAudio(file);
       } else {
         toast.error("Can't upload img");
       }
     }
   };
 
-  const handleSubmit = async (e: SubmitEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const formData = new FormData();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const formData:any = new FormData();
 
     formData.set("epi", audio);
     formData.set("img", img);
@@ -53,8 +62,8 @@ const Create = () => {
 
     if (data.success === true) {
       toast.success("Audio Book successfully created");
-      setAudio([]);
-      setImg([]);
+      setAudio(undefined);
+      setImg(undefined);
       setDescription("");
       setTags("");
       setTitle("");
