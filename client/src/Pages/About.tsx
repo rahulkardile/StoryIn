@@ -22,7 +22,7 @@ const About = () => {
           StoryIn operates in over 20 markets around the globe and is
           headquartered in Stockholm, Sweden.
         </p>
-        <p className="font-bold">StoryIn India</p>
+        <p className="font-bold">StoryIn Audiobooks India</p>
       </div>
     </section>
   );

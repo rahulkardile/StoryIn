@@ -106,6 +106,7 @@ const Profile = () => {
     const like = await fetch(`/api/fev/create/${Id}`, {
       method: "POST",
     });
+    
     const { message } = await like.json();
     setOption(!Option);
     toast.success(message);
@@ -192,7 +193,7 @@ const Profile = () => {
               {status === true ? (
                 <span className="text-green-700 font-semibold">Running </span>
               ) : (
-                <span className="text-red-600 font-semibold">Nan</span>
+                <span className="text-red-600 font-semibold">None</span>
               )}{" "}
             </p>
             {status === false ? (
