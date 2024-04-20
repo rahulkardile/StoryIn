@@ -1,4 +1,3 @@
-import React from "react";
 import sec from "../assets/Personalization_Block.jpeg";
 import thi from "../assets/3-device.png";
 import { useSelector } from "react-redux";
