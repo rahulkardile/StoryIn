@@ -2,11 +2,11 @@ import { CgSpinner } from "react-icons/cg";
 
 const Loader = () => {
   return (
-    <div className="flex bg-slate-900 flex-row p-3 items-center gap-2 px-7 rounded-lg mt-1">
-      <CgSpinner
-        className="animate-spin h-7 w-6 text-white"
-      />
-      <span className="text-white font-semibold">Loading...</span>
+    <div className="flex flex-row m-auto p-56 h-[20%] w-[20%] items-center justify-center gap-2  rounded-lg mt-1">
+      <div className="flex gap-1 items-center">
+        <CgSpinner className="animate-spin h-7 w-6 text-black" />
+        <span className="text-black font-semibold">Loading...</span>
+      </div>
     </div>
   );
 };
