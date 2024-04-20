@@ -1,4 +1,3 @@
-import React from 'react'
 import { useSelector } from 'react-redux'
 import { ReduxStates } from '../Redux/Store'
 import { Link } from 'react-router-dom'

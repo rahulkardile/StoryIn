@@ -1,4 +1,3 @@
-import React from "react";
 import { IoEarth, IoLocation } from "react-icons/io5";
 
 const Footer = () => {
