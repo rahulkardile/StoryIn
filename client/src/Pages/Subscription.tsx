@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import toast from "react-hot-toast";
 import profileImg from "../assets/profile.jpg";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,6 +1,5 @@
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
-import { FaGoogle } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc"
 import { Link, useNavigate } from "react-router-dom";
 
@@ -18,7 +17,7 @@ const Register = () => {
     });
   };
 
-  const handleManual = async (e: SubmitEvent) => {
+  const handleManual = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
