@@ -1,5 +1,5 @@
 import express from "express"
-import { instance } from "../index.js";
+import { instance } from "../app.js"
 import { verifyUser } from "../utils/VerifyUser.js";
 import crypto from "crypto"
 import Order from "../Models/Order.js";
