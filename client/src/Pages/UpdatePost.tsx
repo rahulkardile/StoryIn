@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -8,9 +8,6 @@ const Create = () => {
     description: "",
     tags: "",
   });
-
-  const [img, setImg] = useState<File[]>([]);
-  const [audio, setAudio] = useState<File[]>([]);
 
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -37,23 +34,6 @@ const Create = () => {
     return () => controller.abort();
   }, []);
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.id === "img") {
-      if (e.target.files != null) {
-        setImg(e.target.files[0]);
-      } else {
-        toast.error("Can't upload img");
-      }
-    }
-    if (e.target.id === "epi") {
-      if (e.target.files != null) {
-        setAudio(e.target.files[0]);
-      } else {
-        toast.error("Can't upload img");
-      }
-    }
-  };
-
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -65,7 +45,7 @@ const Create = () => {
     });
   };
 
-  const handleSubmit = async (e: SubmitEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
 
@@ -78,8 +58,7 @@ const Create = () => {
 
     if (success === true) {
       toast.success(message);
-      setAudio([]);
-      setImg([]);
+
       setData({
         description: "",
         tags: "",
@@ -147,7 +126,7 @@ const Create = () => {
               id="img"
               accept="image/*"
               className="p-2 w-[100%] border rounded bg-white"
-              onChange={handleFile}
+              onChange={()=>console.log("handleFile")}
             />
           </div>
         </div>
@@ -164,7 +143,7 @@ const Create = () => {
               accept="audio/*"
               multiple
               className="p-2 w-[100%] border rounded bg-white"
-              onChange={handleFile}
+              onChange={()=>console.log("handleFile")}
             />
           </div>
 
