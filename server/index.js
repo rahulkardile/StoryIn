@@ -36,7 +36,7 @@ try {
 
 export const instance  = new razorpay({
     key_id: process.env.KEYID,
-    KEY_SECRET: process.env.KEYSECRET,
+    key_secret: process.env.KEYSECRET,
 })
 
 let cout= 1;
@@ -54,13 +54,12 @@ app.get("/api/stream", async (req, res, next) => {
        
         const stat = fs.statSync(filePath);
         const fileSize = stat.size;        // legnth of the audio file
-        const range = req.headers.range;    // get range of audio file
+        const range = req.headers.range;   // get range of audio file
 
         const head = {
             "Content-Length": fileSize,
             "Content-Type": "audio/mp3"
-        };
-
+        }
 
         res.writeHead(200, head);
         console.log("streaming " + cout);

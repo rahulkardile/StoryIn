@@ -16,26 +16,33 @@ const router = express.Router();
 
 router.post("/checkout", verifyUser, async (req, res, next) => {
 
+    console.log("checkout triggerd");
     const { amount } = req.body;
     const email = req.user.email;
 
-    const options = {
-        currency: "INR",
-        amount: Number(amount * 100),
-        receipt: "receipt#1",
-        payment_capture: 0
-    }
-
-    instance.orders.create(options, (err, order) => {
-        if (err) {
-            console.log(err);
-        } else {
-            res.status(200).json({
-                success: true,
-                order
-            })
+    try {
+        const options = {
+            currency: "INR",
+            amount: Number(amount * 100),
+            receipt: "receipt1",
+            payment_capture: 0
         }
-    })
+
+        instance.orders.create(options, (err, order) => {
+            if (err) {
+                console.log(err);
+                next(err)
+            } else {
+                res.status(200).json({
+                    success: true,
+                    order
+                })
+            }
+        })
+        
+    } catch (error) {
+        next(error)
+    }
 })
 
 router.post("/verify", verifyUser, async (req, res, next) => {
@@ -68,7 +75,7 @@ router.post("/verify", verifyUser, async (req, res, next) => {
 
         let expiry = `${day}/${month}/${year}`
         let curruntDate = new Date().toLocaleDateString();
-        
+
         if (isAuth) {
             await Order.create({
                 orderId: order_Id,
@@ -107,9 +114,9 @@ router.get("/key", async (req, res, next) => {
 router.get("/get", verifyUser, async (req, res, next) => {
     try {
         const { _id } = await req.user;
-        const get = await Order.findOne({userId: _id});
+        const get = await Order.findOne({ userId: _id });
 
-        if(!get) return next(errorHandler(404, "Not Subcribed yet!"))
+        if (!get) return next(errorHandler(404, "Not Subcribed yet!"))
 
         const { createdAt, _id: id, __v, updatedAt, signature, userId, paymentId, email, ...rest } = await get._doc
 

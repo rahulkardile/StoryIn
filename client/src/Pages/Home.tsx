@@ -132,7 +132,6 @@ const Home = () => {
         </div>
 
         <div className="w-[270px] m-auto h-auto sm:w-[440px]">
-       
           <img
             className="object-contain md:ml-[15%] xl:ml-[25%] object-center rounded-md"
             alt="hero"
@@ -174,15 +173,19 @@ const Home = () => {
                 <h1 className="font-semibold text-xl">New On StoryIn</h1>
               </div>
               <div id="scroll" className="overflow-auto whitespace-nowrap mb-3">
-                {data.map((item, i) => (
-                  <NewCard
-                    key={i}
-                    img={`/api/${item?.poster}`}
-                    id={item?._id}
-                    author={item?.user.name}
-                    bookName={item?.title}
-                  />
-                ))}
+                {data.map((item, i) => {
+                  console.log(`/api/${item?.poster}`);
+
+                  return (
+                    <NewCard
+                      key={i}
+                      img={`/api/${item?.poster}`}
+                      id={item?._id}
+                      author={item?.user.name}
+                      bookName={item?.title}
+                    />
+                  );
+                })}
               </div>
             </section>
           </>
