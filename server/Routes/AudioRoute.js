@@ -96,7 +96,6 @@ routes.get("/getU/:id", async (req, res, next) => {
 routes.get("/get", async (req, res, next) => {
     try {
 
-        const id = req.params.id
         // const List = await ListBook.find().populate("user").limit(8).sort({ createdAt: -1 })
         const raw = await ListBook.find().populate("user").select(["title", "poster", "user", "_id"]).limit(8).sort({ createdAt: -1 })
 
@@ -127,7 +126,6 @@ routes.get("/get", async (req, res, next) => {
 routes.get("/trending", async (req, res, next) => {
     try {
 
-        const id = req.params.id
         const raw = await ListBook.find().populate("user").limit(8).sort({ createdAt: 1 });
 
         const List = [];
