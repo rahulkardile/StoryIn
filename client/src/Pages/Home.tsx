@@ -44,7 +44,7 @@ const Home = () => {
     const controller = new AbortController();
 
     const data = async () => {
-      const res = await fetch("/api/audio-book/get", {
+      const res = await fetch("http://44.202.237.86:3300/api/audio-book/get", {
         signal: controller.signal,
       });
 
@@ -58,7 +58,7 @@ const Home = () => {
     };
 
     const trending = async () => {
-      const res = await fetch("/api/audio-book/trending", {
+      const res = await fetch("http://44.202.237.86:3300/api/audio-book/trending", {
         signal: controller.signal,
       });
 
@@ -72,7 +72,7 @@ const Home = () => {
     };
 
     const getList = async () => {
-      const data = await fetch("/api/fev/userList", {
+      const data = await fetch("http://44.202.237.86:3300/api/fev/userList", {
         signal: controller.signal,
       });
       const bookData = await data.json();
