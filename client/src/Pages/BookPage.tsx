@@ -20,7 +20,6 @@ const BookPage = () => {
     episodes: [""],
     createdAt: "",
     updatedAt: "",
-    __v: "",
   });
 
   const [newReq, setNewReq] = useState([

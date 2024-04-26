@@ -55,10 +55,9 @@ routes.get("/userList", verifyUser, async (req, res, next) => {
         const getList = await Fev.findOne({ user: userId })
         const { like } = await getList._doc
 
-
-
         // const data = await ListBook.find({ '_id': { $in: like } })
-        const data = await ListBook.find().where("_id").in(like);
+        const data = await ListBook.find().where("_id").in(like).select(["_id", "title", "description", "poster", "tags" ])
+
         res.status(200).json(
             data
         )

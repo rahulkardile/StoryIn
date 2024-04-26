@@ -58,8 +58,25 @@ routes.get("/get/:id", async (req, res, next) => {
     try {
 
         const id = req.params.id
-        const List = await ListBook.findById(id).populate("user");
-        res.status(200).json(List)
+        const raw = await ListBook.findById(id).populate("user");
+
+            const modified = {
+                _id: raw._id,
+                title: raw.title,
+                description: raw.description,
+                user: {
+                    _id: raw.user._id,
+                    name: raw.user.name,
+                },
+                poster: raw.poster,
+                tags: raw.tags,
+                episodes: raw.episodes,
+                createdAt: raw.createdAt,
+                updatedAt: raw.updatedAt
+            }
+
+
+        res.status(200).json(modified)
     } catch (error) {
         next(error)
     }
@@ -80,7 +97,23 @@ routes.get("/get", async (req, res, next) => {
     try {
 
         const id = req.params.id
-        const List = await ListBook.find().populate("user").limit(8).sort({ createdAt: -1 })
+        // const List = await ListBook.find().populate("user").limit(8).sort({ createdAt: -1 })
+        const raw = await ListBook.find().populate("user").select(["title", "poster", "user", "_id"]).limit(8).sort({ createdAt: -1 })
+
+        const List = [];
+
+        raw.forEach((i) => {
+            const modified = {
+                _id: i._id,
+                title: i.title,
+                user: {
+                    name: i.user.name,
+                },
+                poster: i.poster
+            }
+
+            List.push(modified);
+        })
 
         res.status(200).json({
             success: true,
@@ -95,7 +128,22 @@ routes.get("/trending", async (req, res, next) => {
     try {
 
         const id = req.params.id
-        const List = await ListBook.find().populate("user").limit(8).sort({ createdAt: 1 });
+        const raw = await ListBook.find().populate("user").limit(8).sort({ createdAt: 1 });
+
+        const List = [];
+
+        raw.forEach((i) => {
+            const modified = {
+                _id: i._id,
+                title: i.title,
+                user: {
+                    name: i.user.name,
+                },
+                poster: i.poster
+            }
+
+            List.push(modified);
+        })
 
         res.status(200).json({
             success: true,
@@ -135,7 +183,7 @@ routes.post("/update/:id", verifyUser, async (req, res, next) => {
 
         const { title, description, tags } = req.body;
 
-        if(  !title, !description, !tags ){
+        if (!title, !description, !tags) {
             return next(errorHandler(400, "Can't Update"))
         }
 
