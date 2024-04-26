@@ -44,9 +44,8 @@ const Home = () => {
     const controller = new AbortController();
 
     const data = async () => {
-      const res = await fetch("http://44.201.189.101:3300/api/audio-book/get", {
+      const res = await fetch("/api/audio-book/get", {
         signal: controller.signal,
-        referrerPolicy: "unsafe-url"
       });
 
       const resData = await res.json();
@@ -59,9 +58,8 @@ const Home = () => {
     };
 
     const trending = async () => {
-      const res = await fetch("http://44.201.189.101:3300/api/audio-book/trending", {
+      const res = await fetch("/api/audio-book/trending", {
         signal: controller.signal,
-        referrerPolicy: "unsafe-url"
       });
 
       const resData = await res.json();
@@ -74,9 +72,8 @@ const Home = () => {
     };
 
     const getList = async () => {
-      const data = await fetch("http://44.201.189.101:3300/api/fev/userList", {
+      const data = await fetch("/api/fev/userList", {
         signal: controller.signal,
-        referrerPolicy: "unsafe-url"
       });
       const bookData = await data.json();
       dispatch(add(bookData));
