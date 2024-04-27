@@ -26,9 +26,11 @@ app.use(express.urlencoded({ extended: false }))
 dotenv.config();
 const PORT = 3300
 const MONGO_URL = process.env.MONGOURL;
+const MONGO_CLOUD_URL = process.env.MONGOURL_CLOUDE;
+
 
 try {
-    mongoose.connect(MONGO_URL)
+    mongoose.connect(MONGO_CLOUD_URL)
         .then(() => console.log('Database is connected'))
 } catch (error) {
     console.log('Database is error ' + error);
@@ -41,7 +43,13 @@ export const instance  = new razorpay({
 
 let cout= 1;
 
-app.get("/", (req, res) => {
+app.use(express.static(path.join(__dirname, '/client/dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+})
+
+app.get("/check", (req, res) => {
     res.json("Welcome to server and this is rahul")
 })
 
