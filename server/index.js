@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import fs from "fs"
+import path from 'path';
 import razorpay from 'razorpay'
 
 // graphQL SetUp
@@ -16,6 +17,7 @@ import AudioRoute from "./Routes/AudioRoute.js"
 import FevRoute from "./Routes/FevRoute.js"
 
 const app = express();
+const __dirname = path.resolve();
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(cookieParser());
 app.use(express.json());
