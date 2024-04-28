@@ -5,6 +5,7 @@ import NewCard from "../components/NewCard";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { FaHeart } from "react-icons/fa";
+import noImg from "../assets/noImg.jpg"
 
 const BookPage = () => {
   const [data, setData] = useState({
@@ -103,6 +104,9 @@ const BookPage = () => {
                 className="mb-10 h-80 w-60 object-contain object-center rounded"
                 alt="hero"
                 src={`/api/${data.poster}`}
+                onError={e=>{
+                  e.currentTarget.src = noImg
+                }}
               />
 
               <div className="text-center lg:w-1/2 w-[90%] sm:w-full">

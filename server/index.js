@@ -17,7 +17,7 @@ import AudioRoute from "./Routes/AudioRoute.js"
 import FevRoute from "./Routes/FevRoute.js"
 
 const app = express();
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 app.use(cookieParser());
 app.use(express.json());
@@ -32,7 +32,7 @@ const MONGO_CLOUD_URL = process.env.MONGOURL_CLOUDE;
 
 
 try {
-    mongoose.connect(MONGO_CLOUD_URL)
+    mongoose.connect(MONGO_URL)
         .then(() => console.log('Database is connected'))
 } catch (error) {
     console.log('Database is error ' + error);
@@ -45,13 +45,13 @@ export const instance  = new razorpay({
 
 let cout= 1;
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+// app.use(express.static(path.join(__dirname, '/client/dist')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-})
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+// })
 
-app.get("/check", (req, res) => {
+app.get("/", (req, res) => {
     res.json("Welcome to server and this is rahul")
 })
 

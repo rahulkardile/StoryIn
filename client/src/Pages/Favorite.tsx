@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import noImg from "../assets/noImg.jpg"
 
 const Favorite = () => {
   const [data, setData] = useState([
@@ -60,6 +61,9 @@ const Favorite = () => {
                   src={`/api/${i.poster}`}
                   className="object-contain w-32 h-[200px] sm:w-56 duration-300 rounded-2xl hover:scale-105"
                   alt="poster"
+                  onError={e=> {
+                    e.currentTarget.src = noImg
+                  }}
                 />
               </Link>
 

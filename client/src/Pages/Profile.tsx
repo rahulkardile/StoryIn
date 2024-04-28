@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { RemoveStatus } from "../Redux/Slices/UserSlice";
+import noImg from "../assets/noImg.jpg"
 
 const Profile = () => {
   const { user, status } = useSelector((state: ReduxStates) => state.user);
@@ -256,6 +257,9 @@ const Profile = () => {
                     <img
                       draggable={false}
                       src={`api/${item.poster}`}
+                      onError={e=>{
+                        e.currentTarget.src = noImg
+                      }}
                       style={{ userSelect: "none" }}
                       className="object-fill rounded-md overflow-hidden duration-300 ease-in-out hover:scale-105"
                       alt="imgs"
