@@ -32,7 +32,7 @@ const MONGO_CLOUD_URL = process.env.MONGOURL_CLOUDE;
 
 
 try {
-    mongoose.connect(MONGO_CLOUD_URL)
+    mongoose.connect(MONGO_URL)
         .then(() => console.log('Database is connected'))
 } catch (error) {
     console.log('Database is error ' + error);
