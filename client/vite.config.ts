@@ -10,7 +10,7 @@ export default defineConfig({
   server:{
     proxy: {
       "/api": {
-        target:"https://storyin-server.onrender.com/",
+        target:"https://storyin.onrender.com/",
         secure: false
       }
     }

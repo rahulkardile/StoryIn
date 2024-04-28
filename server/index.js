@@ -18,7 +18,7 @@ import FevRoute from "./Routes/FevRoute.js"
 
 const app = express();
 // const __dirname = path.resolve();
-app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 // app.use(status());
