@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import NewCard from "../components/NewCard";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { FaHeart } from "react-icons/fa";
-import noImg from "../assets/noImg.jpg"
+import noImg from "../assets/noImg.jpg";
 
 const BookPage = () => {
   const [data, setData] = useState({
@@ -98,14 +98,14 @@ const BookPage = () => {
           >
             <FaHeart />
           </button>
-          <div className="container flex flex-col sm:flex-row gap-4 items-center justify-center ">
+          <div className="container flex flex-col sm:flex-row sm:mx-4 md:mx-8 gap-4 items-center justify-center">
             <>
               <img
                 className="mb-10 h-80 w-60 object-contain object-center rounded"
                 alt="hero"
                 src={`/api/${data.poster}`}
-                onError={e=>{
-                  e.currentTarget.src = noImg
+                onError={(e) => {
+                  e.currentTarget.src = noImg;
                 }}
               />
 
@@ -164,25 +164,35 @@ const BookPage = () => {
             <h1>Episodes</h1>
             <p className="border-t-[1px] my-3 border-slate-500 h-1 w-full" />
             <div className="flex flex-row items-center mb-3 gap-2">
-              <h1 className="h-8 w-8 border-[1px] border-black text-black flex items-center text-sm justify-evenly rounded-full m-auto">
-                <span>1</span>
-              </h1>
+              {status === true || user?.role === "admin" ? (
+                <>
+                  <h1 className="h-8 w-8 border-[1px] border-black text-black flex items-center text-sm justify-evenly rounded-full m-auto">
+                    <span>1</span>
+                  </h1>
 
-              <audio
-                className="sm:w-[500px] text-red-400"
-                draggable={false}
-                controls={true}
-              >
-                {status === true || user?.role === "admin" ? (
-                  <source
-                    src={`/api/stream?path=${data.episodes[0]}`}
-                    className=""
-                    type="audio/mp3"
-                  />
-                ) : (
-                  <source src={``} className="" type="audio/mp3" />
-                )}
-              </audio>
+                  <audio
+                    className="sm:w-[500px] text-red-400"
+                    draggable={false}
+                    controls={true}
+                  >
+                    <source
+                      src={`/api/stream?path=${data.episodes[0]}`}
+                      className=""
+                      type="audio/mp3"
+                    />
+                  </audio>
+                </>
+              ) : (
+                <div className="flex flex-col gap-2 items-center justify-center">
+                  <h1 className="text-black text-lg">Buy Subscripion from here . . .</h1>
+                  <Link
+                    to={"/subscription"}
+                    className="p-3 bg-orange-400 text-white mt-2 rounded-full px-9 text-sm lg:text-xl font-semibold sm:font-bold hover:opacity-80"
+                  >
+                    Subscribe Now
+                  </Link>
+                </div>
+              )}
             </div>
 
             <p className="border-t-[1px] my-3 border-slate-500 h-1 w-full" />

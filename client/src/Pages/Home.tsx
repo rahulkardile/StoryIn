@@ -13,6 +13,7 @@ import { add } from "../Redux/Slices/Fevs";
 import { FaPlay, FaPause } from "react-icons/fa";
 
 const Home = () => {
+
   const [data, setData] = useState([
     {
       poster: "",
@@ -23,6 +24,7 @@ const Home = () => {
       title: "",
     },
   ]);
+  
   const [trending, setTrending] = useState([
     {
       poster: "",
@@ -105,7 +107,7 @@ const Home = () => {
           {status === false ? (
             <p className="mb-8 text-white text-center sm:text-start text-sm mr-5 sm:text-xl">
               400,000+ bestselling stories and Storytel Originals. Prices
-              starting from Rs 149/ month. Cancel anytime
+              starting from Rs 149/ month. Cancel anytime.
             </p>
           ) : (
             <p className="mb-8 text-white text-center sm:text-start text-sm mr-5 sm:text-xl">

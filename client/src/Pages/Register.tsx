@@ -131,7 +131,7 @@ const Register = () => {
       <div className="w-full flex portrait:justify-center portrait:items-center flex-col gap-3">
         <button
         disabled={loading}
-          className="p-[10px] flex flex-row items-center gap-3  justify-center font-semibold rounded-md bg-white border border-slate-800 w-[80%] sm:w-[75%] duration-300 ease-in-out hover:shadow-2xl"
+          className="p-[10px] flex flex-row items-center gap-3  justify-center font-semibold rounded-md bg-white border border-slate-800 w-[80%] sm:w-[75%] duration-300 ease-in-out hover:scale-x-105"
           onClick={HandleGoogle}
         >
           <FcGoogle className="w-7 h-7" />

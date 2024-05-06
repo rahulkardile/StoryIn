@@ -101,7 +101,7 @@ const Login = () => {
       <div className="sm:w-full w-[79%] flex portrait:items-center flex-col gap-3">
         <button
           disabled={loading}
-          className="p-[10px] mb-2 flex flex-row items-center portrait:w-[102%] gap-3 justify-center font-semibold rounded-md bg-white border border-slate-800 w-[75%] duration-300 ease-in-out hover:shadow-2xl "
+          className="p-[10px] mb-2 flex flex-row items-center portrait:w-[102%] gap-3 justify-center font-semibold rounded-md bg-white border border-slate-800 w-[75%] duration-500 hover:scale-x-105"
           onClick={HandleGoogle}
         >
           <FcGoogle className="w-7 h-7" />
