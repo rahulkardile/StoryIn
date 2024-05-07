@@ -187,7 +187,7 @@ const BookPage = () => {
                   <h1 className="text-black text-lg">Buy Subscripion from here . . .</h1>
                   <Link
                     to={"/subscription"}
-                    className="p-3 bg-orange-400 text-white mt-2 rounded-full px-9 text-sm lg:text-xl font-semibold sm:font-bold hover:opacity-80"
+                    className="p-2 bg-orange-400 text-white mt-2 rounded-full px-9 text-sm lg:text-xl font-semibold sm:font-bold duration-300 hover:scale-105"
                   >
                     Subscribe Now
                   </Link>
