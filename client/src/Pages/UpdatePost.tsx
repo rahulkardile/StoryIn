@@ -17,7 +17,7 @@ const Create = () => {
     const controller = new AbortController();
 
     const getPrev = async () => {
-      const res = await fetch(`/api/audio-book/getu/${id}`, {
+      const res = await fetch(`https://storyin-1.onrender.com/api/audio-book/getu/${id}`, {
         signal: controller.signal,
         method: "GET",
       });
@@ -49,7 +49,7 @@ const Create = () => {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch(`/api/audio-book/update/${id}`, {
+    const res = await fetch(`https://storyin-1.onrender.com/api/audio-book/update/${id}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

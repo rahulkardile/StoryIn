@@ -25,7 +25,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch("/api/user/get", {
+    const res = await fetch("https://storyin-1.onrender.com/api/user/get", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

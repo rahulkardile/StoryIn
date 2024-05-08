@@ -53,7 +53,7 @@ const Create = () => {
 
     console.log(formData);
 
-    const res = await fetch("/api/audio-book/new", {
+    const res = await fetch("https://storyin-1.onrender.com/api/audio-book/new", {
       method: "POST",
       body: formData,
     });

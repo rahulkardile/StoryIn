@@ -18,7 +18,7 @@ const Header = () => {
   const { user } = useSelector((state: ReduxStates) => state.user);
 
   const handleLogout = async () => {
-    const res = await fetch("/api/user/logout");
+    const res = await fetch("https://storyin-1.onrender.com/api/user/logout");
     const data = await res.json();
 
     if (data.success === true) {
@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   const handleBecome = async () => {
-    const res = await fetch("/api/user/become");
+    const res = await fetch("https://storyin-1.onrender.com/api/user/become");
     const { success, message } = await res.json();
 
     if (success === true) {

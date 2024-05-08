@@ -42,7 +42,7 @@ const Profile = () => {
     const controller = new AbortController();
 
     const getOrder = async () => {
-      const Data = await fetch("/api/order/get", {
+      const Data = await fetch("https://storyin-1.onrender.com/api/order/get", {
         signal: controller.signal,
       });
 
@@ -57,7 +57,7 @@ const Profile = () => {
 
     if (user?.role === "admin" || user?.role === "creator") {
       const userList = async () => {
-        const Data = await fetch("/api/audio-book/userBooks", {
+        const Data = await fetch("https://storyin-1.onrender.com/api/audio-book/userBooks", {
           signal: controller.signal,
         });
 
@@ -82,7 +82,7 @@ const Profile = () => {
 
   const handleDelete = async () => {
     setProccess(true);
-    const res = await fetch(`/api/audio-book/delete/${Id}`, {
+    const res = await fetch(`https://storyin-1.onrender.com/api/audio-book/delete/${Id}`, {
       method: "DELETE",
     });
     const resData = await res.json();
@@ -104,7 +104,7 @@ const Profile = () => {
   };
 
   const handleHeart = async () => {
-    const like = await fetch(`/api/fev/create/${Id}`, {
+    const like = await fetch(`https://storyin-1.onrender.com/api/fev/create/${Id}`, {
       method: "POST",
     });
     
@@ -256,7 +256,7 @@ const Profile = () => {
                   <Link to={`/book/${item._id}`} key={i}>
                     <img
                       draggable={false}
-                      src={`api/${item.poster}`}
+                      src={`https://storyin-1.onrender.com/api/${item.poster}`}
                       onError={e=>{
                         e.currentTarget.src = noImg
                       }}
