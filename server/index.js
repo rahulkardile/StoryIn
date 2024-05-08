@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 
 dotenv.config();
-const PORT = 3300
+const PORT = process.env.PORT || 3300
 const MONGO_URL = process.env.MONGOURL;
 const MONGO_CLOUD_URL = process.env.MONGOURL_CLOUD;
 
