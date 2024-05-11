@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv'
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
-import fs from "fs"
+import fs, { stat } from "fs"
 import path from 'path';
 import razorpay from 'razorpay'
 
@@ -32,18 +32,18 @@ const MONGO_CLOUD_URL = process.env.MONGOURL_CLOUD;
 
 
 try {
-    mongoose.connect(MONGO_CLOUD_URL)
+    mongoose.connect(MONGO_URL)
         .then(() => console.log('Database is connected'))
 } catch (error) {
     console.log('Database is error ' + error);
 }
 
-export const instance  = new razorpay({
+export const instance = new razorpay({
     key_id: process.env.KEYID,
     key_secret: process.env.KEYSECRET,
 })
 
-let cout= 1;
+let cout = 1;
 
 // app.use(express.static(path.join(__dirname, '/client/dist')));
 
@@ -58,27 +58,47 @@ app.get("/", (req, res) => {
 app.get("/api/stream", async (req, res, next) => {
     try {
 
-        const filePath = req.query.path
-        
-        if (!filePath) return next(errorHandler(404, "File Not found"));
-       
-        const stat = fs.statSync(filePath);
-        const fileSize = stat.size;        // legnth of the audio file
-        const range = req.headers.range;   // get range of audio file
+        const filePath = req.query.path;
 
-        const head = {
-            "Content-Length": fileSize,
-            "Content-Type": "audio/mp3"
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({
+                "statusCode": 404,
+                "message": "File not found"
+            })
         }
 
-        res.writeHead(200, head);
-        console.log("streaming " + cout);
+        const stat = fs.statSync(filePath);
+        const fileSize = stat.size;
 
-        cout++;
-        fs.createReadStream(filePath).pipe(res)
+        // Get requested byte range from headers
+        const range = req.headers.range;
+
+        let start = 0;
+        let end = fileSize - 1; //default entire file
+
+        if(range){
+            const parts = range.replace(/bytes=/, '').split('-');
+            start = parseInt(parts[0], 10) || 0;
+            end = parts[1] ? parseInt(parts[1], 10) : fileSize -1;
+        }
+
+        const contentLength = end - start + 1;
+
+        res.writeHead(200, {
+            'Content-Type': 'audio/mpeg',
+            'Content-Length': fileSize,
+            'accept-ranges': 'bytes',
+            'content-range': `bytes ${start}-${end}/${fileSize}`
+        })
+
+        const stream = fs.createReadStream(filePath);
+        stream.on('error', (err)=>{
+            console.error(err)
+        })
+        stream.pipe(res);
 
     } catch (error) {
-        next()
+        next(error)
     }
 })
 
