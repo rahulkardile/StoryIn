@@ -18,7 +18,7 @@ import FevRoute from "./Routes/FevRoute.js"
 
 const app = express();
 // const __dirname = path.resolve();
-app.use(cors());
+app.use(cors({ origin: 'https://storyin-client.onrender.com', credentials: true })); // Allow requests from frontend
 app.use(cookieParser());
 app.use(express.json());
 // app.use(status());
