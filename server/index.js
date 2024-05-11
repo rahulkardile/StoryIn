@@ -61,10 +61,8 @@ app.get("/api/stream", async (req, res, next) => {
         const filePath = req.query.path;
 
         // Check if file exists
-        try {
-            fs.access(filePath);
-        } catch (err) {
-            return res.status(404).json({
+        if(!fs.existsSync(filePath)){
+              return res.status(404).json({
                 "statusCode": 404,
                 "message": "File not found"
             })
@@ -84,8 +82,6 @@ app.get("/api/stream", async (req, res, next) => {
             start = parseInt(parts[0], 10) || 0;
             end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
         }
-
-        const contentLength = end - start + 1;
 
         res.writeHead(200, {
             'Content-Type': 'audio/mpeg',
