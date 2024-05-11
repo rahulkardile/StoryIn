@@ -60,7 +60,10 @@ app.get("/api/stream", async (req, res, next) => {
 
         const filePath = req.query.path;
 
-        if (!fs.existsSync(filePath)) {
+        // Check if file exists
+        try {
+            fs.access(filePath);
+        } catch (err) {
             return res.status(404).json({
                 "statusCode": 404,
                 "message": "File not found"
@@ -76,10 +79,10 @@ app.get("/api/stream", async (req, res, next) => {
         let start = 0;
         let end = fileSize - 1; //default entire file
 
-        if(range){
+        if (range) {
             const parts = range.replace(/bytes=/, '').split('-');
             start = parseInt(parts[0], 10) || 0;
-            end = parts[1] ? parseInt(parts[1], 10) : fileSize -1;
+            end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
         }
 
         const contentLength = end - start + 1;
@@ -92,7 +95,7 @@ app.get("/api/stream", async (req, res, next) => {
         })
 
         const stream = fs.createReadStream(filePath);
-        stream.on('error', (err)=>{
+        stream.on('error', (err) => {
             console.error(err)
         })
         stream.pipe(res);
