@@ -18,7 +18,13 @@ import FevRoute from "./Routes/FevRoute.js"
 
 const app = express();
 // const __dirname = path.resolve();
-app.use(cors({ origin: 'https://storyin-client.onrender.com', credentials: true })); // Allow requests from frontend
+app.use(cors({
+    origin: 'https://storyin-client.onrender.com', 
+    credentials: true,
+    methods: 'GET, POST, PUT, PATCH, DELETE',
+    allowedHeaders: ['Content-Type', 'Authorization']
+})); 
+
 app.use(cookieParser());
 app.use(express.json());
 // app.use(status());
@@ -61,8 +67,8 @@ app.get("/api/stream", async (req, res, next) => {
         const filePath = req.query.path;
 
         // Check if file exists
-        if(!fs.existsSync(filePath)){
-              return res.status(404).json({
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({
                 "statusCode": 404,
                 "message": "File not found"
             })
