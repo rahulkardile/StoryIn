@@ -14,15 +14,16 @@ const Subscription = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkout = async (amount: any) => {
-    const data = await fetch("https://storyin-1.onrender.com/api/order/key");
+    const data = await fetch("/api/order/key");
     const { success, key } = await data.json();
 
     if (success === false) {
       return toast.error("Got Error!");
     }
 
-    const order = await fetch("https://storyin-1.onrender.com/api/order/checkout", {
+    const order = await fetch("/api/order/checkout", {
       method: "POST",
+      credentials: 'same-origin',
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount }),
     });
@@ -42,8 +43,9 @@ const Subscription = () => {
       image: profileImg,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       handler: async (response: any) => {
-        const Info = await fetch("https://storyin-1.onrender.com/api/order/verify", {
+        const Info = await fetch("/api/order/verify", {
           method: "POST",
+          credentials: 'include',
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             order_Id: response.razorpay_order_id,

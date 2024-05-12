@@ -2,7 +2,7 @@ import express from "express"
 import ListBook from "../Models/ListAudioBook.js"
 import { verifyUser } from "../utils/VerifyUser.js";
 import { errorHandler } from "../utils/errHandler.js";
-import fs, { ReadStream, rm } from "fs";
+import { rm } from "fs";
 import { upload } from "../middleware/multer.js";
 
 const routes = express.Router();

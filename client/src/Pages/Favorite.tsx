@@ -18,7 +18,7 @@ const Favorite = () => {
     const controller = new AbortController();
 
     const getList = async () => {
-      const data = await fetch("https://storyin-1.onrender.com/api/fev/userList", {
+      const data = await fetch("/api/fev/userList", {
         signal: controller.signal,
       });
       const bookData = await data.json();
@@ -32,7 +32,7 @@ const Favorite = () => {
   }, []);
 
   const handleRemove = async (id: string) => {
-    const like = await fetch(`https://storyin-1.onrender.com/api/fev/create/${id}`, {
+    const like = await fetch(`/api/fev/create/${id}`, {
       method: "POST",
     });
 

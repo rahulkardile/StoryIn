@@ -46,7 +46,7 @@ const Home = () => {
     const controller = new AbortController();
 
     const data = async () => {
-      const res = await fetch("https://storyin-1.onrender.com/api/audio-book/get", {
+      const res = await fetch("/api/audio-book/get", {
         signal: controller.signal,
       });
 
@@ -60,7 +60,7 @@ const Home = () => {
     };
 
     const trending = async () => {
-      const res = await fetch("https://storyin-1.onrender.com/api/audio-book/trending", {
+      const res = await fetch("/api/audio-book/trending", {
         signal: controller.signal,
       });
 
@@ -74,7 +74,7 @@ const Home = () => {
     };
 
     const getList = async () => {
-      const data = await fetch("https://storyin-1.onrender.com/api/fev/userList", {
+      const data = await fetch("/api/fev/userList", {
         signal: controller.signal,
       });
       const bookData = await data.json();

@@ -32,7 +32,7 @@ const AudioBooks = () => {
     const controller = new AbortController();
 
     const data = async () => {
-      const res = await fetch("https://storyin-1.onrender.com/api/audio-book/get", {
+      const res = await fetch("/api/audio-book/get", {
         signal: controller.signal,
       });
       const resData = await res.json();
@@ -46,7 +46,7 @@ const AudioBooks = () => {
     };
 
     const trending = async () => {
-      const res = await fetch("https://storyin-1.onrender.com/api/audio-book/trending", {
+      const res = await fetch("/api/audio-book/trending", {
         signal: controller.signal,
       });
       const resData = await res.json();

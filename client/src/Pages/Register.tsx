@@ -21,7 +21,7 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
 
-    const res = await fetch("https://storyin-1.onrender.com/api/user/new", {
+    const res = await fetch("/api/user/new", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),

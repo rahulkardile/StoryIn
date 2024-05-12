@@ -43,7 +43,7 @@ const BookPage = () => {
     const controller = new AbortController();
 
     const getData = async () => {
-      const res = await fetch(`https://storyin-1.onrender.com/api/audio-book/get/${id}`, {
+      const res = await fetch(`/api/audio-book/get/${id}`, {
         signal: controller.signal,
       });
       const resData = await res.json();
@@ -52,7 +52,7 @@ const BookPage = () => {
     };
 
     const data = async () => {
-      const res = await fetch("https://storyin-1.onrender.com/api/audio-book/get", {
+      const res = await fetch("/api/audio-book/get", {
         signal: controller.signal,
       });
       const resData = await res.json();
@@ -73,7 +73,7 @@ const BookPage = () => {
   const handleHeart = async () => {
     setHeartLoading(true);
 
-    const like = await fetch(`https://storyin-1.onrender.com/api/fev/create/${id}`, {
+    const like = await fetch(`/api/fev/create/${id}`, {
       method: "POST",
     });
     const { message } = await like.json();
@@ -103,7 +103,7 @@ const BookPage = () => {
               <img
                 className="mb-10 h-80 w-60 object-contain object-center rounded"
                 alt="hero"
-                src={`https://storyin-1.onrender.com/api/${data.poster}`}
+                src={`/api/${data.poster}`}
                 onError={(e) => {
                   e.currentTarget.src = noImg;
                 }}
@@ -176,7 +176,7 @@ const BookPage = () => {
                     controls={true}
                   >
                     <source
-                      src={`https://storyin-1.onrender.com/api/stream?path=${data.episodes[0]}`}
+                      src={`/api/stream?path=${data.episodes[0]}`}
                       className=""
                       type="audio/mp3"
                     />
@@ -212,7 +212,7 @@ const BookPage = () => {
                     {newReq?.map((item, i) => (
                       <NewCard
                         key={i}
-                        img={`https://storyin-1.onrender.com/api/${item?.poster}`}
+                        img={`/api/${item?.poster}`}
                         id={item?._id}
                         author={item?.user.name}
                         bookName={item?.title}
