@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const FevSchema = new mongoose.Schema({
     user: {
         type: mongoose.Types.ObjectId,
-        required: true
+        required: true,
+        ref: "User"
     },
     like: {
         type: Array,
