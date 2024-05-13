@@ -1,9 +1,9 @@
 import React, { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
-import { FcGoogle } from "react-icons/fc"
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addStatus, addUser } from "../Redux/Slices/UserSlice";
+import OAuth from "../components/OAuth";
 
 const Login = () => {
   const [formData, setFormData] = useState({});
@@ -27,6 +27,7 @@ const Login = () => {
 
     const res = await fetch("/api/user/get", {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
@@ -49,8 +50,6 @@ const Login = () => {
     }
     setLoading(false);
   };
-
-  const HandleGoogle = () => {};
 
   return (
     <main className="sm:max-w-[500px] w-[85%] flex flex-col gap-3 justify-center items-center m-auto mt-14 mb-28">
@@ -99,14 +98,7 @@ const Login = () => {
       </form>
 
       <div className="sm:w-full w-[79%] flex portrait:items-center flex-col gap-3">
-        <button
-          disabled={loading}
-          className="p-[10px] mb-2 flex flex-row items-center portrait:w-[102%] gap-3 justify-center font-semibold rounded-md bg-white border border-slate-800 w-[75%] duration-500 hover:scale-x-105"
-          onClick={HandleGoogle}
-        >
-          <FcGoogle className="w-7 h-7" />
-          Continue with Google
-        </button>
+        <OAuth loading={loading} />
         <p>
           Don't Have an account ?
           <Link to={"/register"} className="font-semibold">

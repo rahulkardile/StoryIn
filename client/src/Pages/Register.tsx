@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc"
 import { Link, useNavigate } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 const Register = () => {
   const [formData, setFormData] = useState({});
@@ -41,8 +42,6 @@ const Register = () => {
 
     setLoading(false);
   };
-
-  const HandleGoogle = () => {};
 
   return (
     <main className="max-w-[500px] flex flex-col gap-3 justify-center items-center m-auto mt-14 mb-28">
@@ -129,14 +128,7 @@ const Register = () => {
       </form>
 
       <div className="w-full flex portrait:justify-center portrait:items-center flex-col gap-3">
-        <button
-        disabled={loading}
-          className="p-[10px] flex flex-row items-center gap-3  justify-center font-semibold rounded-md bg-white border border-slate-800 w-[80%] sm:w-[75%] duration-300 ease-in-out hover:scale-x-105"
-          onClick={HandleGoogle}
-        >
-          <FcGoogle className="w-7 h-7" />
-          Continue with Google
-        </button>
+        <OAuth loading={loading} />
         <p>
           Have an account?
           <Link to={"/login"} className="font-semibold"> 

@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const OrderSchema = new mongoose.Schema({
     userId: {
             type: mongoose.Types.ObjectId,
-            required: true
+            required: true,
+            ref: "User"
         },
     email: {
         type: String,
