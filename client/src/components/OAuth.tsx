@@ -14,19 +14,22 @@ const OAuth: React.FC<auth> = (props) => {
     const result = await signInWithPopup(auth, provider);
 
     console.log(result);
-    const { email, displayName, photoURL } = await result.user;
+    const { email, displayName, photoURL, uid } = result.user;
     const res = await fetch(`/api/user/google`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        email: email
+        email: email,
+        name: displayName,
+        photoURL: photoURL,
+        uid: uid
       })
     });
 
     const data = await res.json();
 
-    console.log(email);
     console.log(data);
+    
   };
 
   return (

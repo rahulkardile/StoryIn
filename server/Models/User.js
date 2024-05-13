@@ -5,6 +5,9 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    photoURL: {
+        type: String
+    },
     email: {
         type: String,
         required: true,
@@ -21,6 +24,9 @@ const UserSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required: false
+    },
+    uid: {
+        type: String
     },
     DOB: {
         type: String,
