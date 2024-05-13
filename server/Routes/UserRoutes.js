@@ -31,6 +31,42 @@ router.post("/new", async (req, res, next) => {
   }
 });
 
+router.post("/google", async (req, res, next) => {
+  try {
+    const { name, email, DOB, gender } = await req.body;
+
+    const user = await User.find({ email })
+
+    if (user) {
+      res.status(200).json("user Exist")
+    } else {
+      res.status(200).json("user not Exist")
+    }
+
+    // const checkUser = await User.findOne({
+    //       email: email
+    //     })
+
+    // if (!name, !email, !password, !DOB, !gender) return next(400, "bad req!");
+
+    // const hash = bcrypt.hashSync(password, 10);
+
+    // const newUser = await User.create({
+    //   name,
+    //   email,
+    //   DOB,
+    //   gender,
+    //   password: hash,
+    // });
+
+    // res.status(200).json(`Welcome ${newUser.name}`)
+
+  } catch (error) {
+    next(error);
+  }
+});
+
+
 router.post("/get", async (req, res, next) => {
   try {
 
@@ -89,7 +125,7 @@ router.get("/become", verifyUser, async (req, res, next) => {
         message: "Your now creator"
       })
 
-    }else{
+    } else {
       res.json({
         success: false,
         message: "Your already creator"
