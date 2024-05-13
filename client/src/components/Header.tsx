@@ -95,8 +95,8 @@ const Header = () => {
                 onError={e=>{
                   e.currentTarget.src = profileImg
                 }}
-                className="w-7 h-7 sm:w-9 sm:h-9 rounded-full cursor-pointer"
-                alt=""
+                className="w-8 h-8 sm:w-9 sm:h-9 p-1 rounded-full cursor-pointer"
+                alt="Profile Image"
               />
               <dialog
                 onMouseLeave={() => setDropDown(false)}

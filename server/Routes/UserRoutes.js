@@ -57,8 +57,6 @@ router.post("/google", async (req, res, next) => {
         message: `Welcome back ${user.name}!`
       });
 
-      console.log("existing user");
-
     } else {
 
       const hash = await bcrypt.hashSync(uid, 10);
@@ -81,7 +79,6 @@ router.post("/google", async (req, res, next) => {
         data: rest,
         message: `Welcome ${user.name}!`
       });
-      console.log("new User");
 
     }
 
