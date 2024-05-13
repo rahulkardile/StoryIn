@@ -45,8 +45,6 @@ const OAuth: React.FC<auth> = (props) => {
     }else{
       toast.error(message ? message : "Got the Error")
     }
-    
-    
   };
 
   return (

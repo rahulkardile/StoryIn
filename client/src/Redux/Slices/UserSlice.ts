@@ -4,6 +4,7 @@ export type User = {
   name: string;
   email: string;
   gender: string;
+  photoURL: string;
   _id: string;
   valid?: Date;
   status: boolean;
