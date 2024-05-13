@@ -2,12 +2,20 @@ import React from "react";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
 import app, { auth } from "../firebase.js";
 import { FcGoogle } from "react-icons/fc";
+import { useDispatch } from "react-redux"
+import { addUser } from "../Redux/Slices/UserSlice.js";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 interface auth {
   loading: boolean;
 }
 
 const OAuth: React.FC<auth> = (props) => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const HandleGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth(app);
@@ -26,9 +34,18 @@ const OAuth: React.FC<auth> = (props) => {
       })
     });
 
-    const data = await res.json();
+    const { success, data, message } = await res.json();
 
     console.log(data);
+
+    if(success){
+      toast.success(message);
+      dispatch(addUser(data));
+      navigate("/")
+    }else{
+      toast.error(message ? message : "Got the Error")
+    }
+    
     
   };
 

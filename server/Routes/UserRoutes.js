@@ -50,7 +50,12 @@ router.post("/google", async (req, res, next) => {
 
       const { password: pass, createdAt, updatedAt, __v, ...rest } = user._doc
 
-      res.cookie("_user_access", access_User, { secure: true, maxAge: oneFifty }).status(200).json(rest);
+      res.cookie("_user_access", access_User, { secure: true, maxAge: oneFifty }).status(200).json({
+        statusCode: 200,
+        success: true,
+        data: rest,
+        message: `Welcome back ${user.name}!`
+      });
 
       console.log("existing user");
 
@@ -70,7 +75,12 @@ router.post("/google", async (req, res, next) => {
 
       const { password: pass, createdAt, updatedAt, __v, ...rest } = newUser._doc
 
-      res.cookie("_user_access", access_User, { secure: true, maxAge: oneFifty }).status(200).json(rest);
+      res.cookie("_user_access", access_User, { secure: true, maxAge: oneFifty }).status(200).json({
+        statusCode: 200,
+        success: true,
+        data: rest,
+        message: `Welcome ${user.name}!`
+      });
       console.log("new User");
 
     }
