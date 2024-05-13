@@ -162,7 +162,10 @@ const Profile = () => {
         <div className="flex items-center">
           <img
             draggable={false}
-            src={profileImg}
+            src={user?.photoURL}
+            onError={(e)=>{
+              e.currentTarget.src = profileImg
+            }}
             alt="Profile"
             className="w-16 h-16 rounded-full mr-4 select-none"
           />
