@@ -91,7 +91,10 @@ const Header = () => {
               <img
                 onClick={() => setDropDown(!dropDown)}
                 onMouseEnter={() => setDropDown(true)}
-                src={profileImg}
+                src={user.photoURL}
+                onError={e=>{
+                  e.currentTarget.src = profileImg
+                }}
                 className="w-7 h-7 sm:w-9 sm:h-9 rounded-full cursor-pointer"
                 alt=""
               />

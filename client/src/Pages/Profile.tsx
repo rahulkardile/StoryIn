@@ -113,6 +113,9 @@ const Profile = () => {
     toast.success(message);
   };
 
+console.log("profile img " ,user?.photoURL);
+
+
   return (
     <div
       className={`flex gap-2 flex-col justify-center mt-3 mb-28 m-auto  items-center p-6 rounded-lg `}
