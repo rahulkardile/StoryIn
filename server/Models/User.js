@@ -6,7 +6,8 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
     photoURL: {
-        type: String
+        type: String,
+        default: "https://i1.sndcdn.com/avatars-qaFKlfqlg050FtNk-veBzuQ-t240x240.jpg"
     },
     email: {
         type: String,
