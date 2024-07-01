@@ -67,7 +67,6 @@ const Create = () => {
         if (res.ok) {
           toast.success("File Has been Uploaded");
         }
-
       }
 
     } catch (error) {
@@ -87,7 +86,7 @@ const Create = () => {
       >
         <div className="w-full sm:w-[50%] ml-4">
 
-          {/* <div className="flex flex-col w-[95%] gap-1 mb-2">
+          <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Name</span>
             <input
               type="text"
@@ -120,7 +119,7 @@ const Create = () => {
               onChange={(e) => setTags(e.target.value)}
               required
             />
-          </div> */}
+          </div>
 
           <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Image</span>
@@ -141,7 +140,7 @@ const Create = () => {
             <span className="text-sm">Add episode one after another </span>
           </div>
 
-          {/* <div className="mb-3">
+          <div className="mb-3">
             <input
               type="file"
               id="epi"
@@ -151,7 +150,7 @@ const Create = () => {
               className="p-2 w-[100%] border rounded bg-white"
               onChange={handleFile}
             />
-          </div> */}
+          </div>
 
           <button
             type="submit"
