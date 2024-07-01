@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { s3types } from "../utils/Types-S3";
 
 const Create = () => {
   const [title, setTitle] = useState<string>("");
@@ -13,13 +14,9 @@ const Create = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // const ImgHandler = () => {
-
-  // }
-
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
 
-    const file:File | undefined = e.target.files?.[0];
+    const file: File | undefined = e.target.files?.[0];
 
     if (e.target.id === "img") {
       if (e.target.files != null) {
@@ -41,37 +38,42 @@ const Create = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const formData:any = new FormData();
+    try {
 
-    formData.set("epi", audio);
-    formData.set("img", img);
+      const PosterDetails = {
+        ImageName: img !== undefined ? img.name : "",
+        Imagetype: img !== undefined ? img.type : ""
+      }
 
-    formData.set("title", title);
-    formData.set("description", description);
-    formData.set("tags", tags);
+      console.log(PosterDetails);
 
-    console.log(formData);
+      const res = await fetch("/api/audio-book/s3/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(PosterDetails)
+      })
 
-    const res = await fetch("/api/audio-book/new", {
-      method: "POST",
-      body: formData,
-    });
+      const { url, success }: s3types = await res.json();
 
-    const data = await res.json();
+      if (success) {
+        const res = await fetch(url, {
+          method: "PUT",
+          headers: {
+            "Content-Type": PosterDetails.Imagetype
+          },
+          body: img
+        })
 
-    if (data.success === true) {
-      toast.success("Audio Book successfully created");
-      setAudio(undefined);
-      setImg(undefined);
-      setDescription("");
-      setTags("");
-      setTitle("");
+        if (res.ok) {
+          toast.success("File Has been Uploaded");
+        }
+
+      }
+
+    } catch (error) {
       setLoading(false);
-      navigate(`/`);
-    } else {
-      toast.error("got an error");
-      setLoading(false);
+      console.log(error);
+      toast.error("Can't Upload!!!")
     }
   };
 
@@ -85,7 +87,7 @@ const Create = () => {
       >
         <div className="w-full sm:w-[50%] ml-4">
 
-          <div className="flex flex-col w-[95%] gap-1 mb-2">
+          {/* <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Name</span>
             <input
               type="text"
@@ -118,7 +120,7 @@ const Create = () => {
               onChange={(e) => setTags(e.target.value)}
               required
             />
-          </div>
+          </div> */}
 
           <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Image</span>
@@ -139,7 +141,7 @@ const Create = () => {
             <span className="text-sm">Add episode one after another </span>
           </div>
 
-          <div className="mb-3">
+          {/* <div className="mb-3">
             <input
               type="file"
               id="epi"
@@ -149,7 +151,7 @@ const Create = () => {
               className="p-2 w-[100%] border rounded bg-white"
               onChange={handleFile}
             />
-          </div>
+          </div> */}
 
           <button
             type="submit"

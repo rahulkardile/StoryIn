@@ -14,6 +14,7 @@ const Register = lazy(() => import("./Pages/Register"));
 const AudioBooks = lazy(() => import("./Pages/AudioBooks"));
 const EBooks = lazy(() => import("./Pages/EBooks"));
 const Create = lazy(() => import("./Pages/Create"));
+const Create_S3 = lazy(() => import("./Pages/Create-S3"));
 const Profile = lazy(() => import("./Pages/Profile"));
 const Favorite = lazy(() => import("./Pages/Favorite"));
 const Private = lazy(() => import("./components/Private"));
@@ -38,6 +39,7 @@ const App = () => {
 
           <Route element={<Private />}>
             <Route path="/create" element={<Create />} />
+            <Route path="/create-s3" element={<Create_S3 />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/favorite" element={<Favorite />} />
             <Route path="/update/:id" element={<Update />} />

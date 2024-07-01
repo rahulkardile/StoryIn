@@ -81,14 +81,16 @@ routes.get("/s3/getPoster", async (req, res, next) => {
 })
 
 // upload Files
-routes.get("/s3/upload", async (req, res, next) => {
+routes.post("/s3/upload", async (req, res, next) => {
     try {
-        const { fileName, contentType } = req.body;
-        
+        const { ImageName, Imagetype } = req.body;
+
+        console.log(req.body);
+
         const command = new PutObjectCommand({
             Bucket: "storyin",
-            Key: `uploads/Episodes/${fileName}`,
-            ContentType: contentType
+            Key: `uploads/Episodes/${"epi_" + Date.now() + "_" + ImageName }`,
+            ContentType: Imagetype
         });
 
         const url = await getSignedUrl(s3Clinet, command);
