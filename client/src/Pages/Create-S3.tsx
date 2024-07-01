@@ -46,8 +46,6 @@ const Create = () => {
         type: "image"
       }
 
-      console.log(PosterDetails);
-
       const resPoster = await fetch("/api/audio-book/s3/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -101,6 +99,39 @@ const Create = () => {
       } else {
         toast.error("Server Error For Uploading Episode!");
       }
+
+      const posterUrl = await fetch("/api/audio-book/s3/getPoster", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: ImageKey })
+      })
+
+      const { url, success }: s3types = await posterUrl.json();
+
+      if(success){
+        const res = await fetch("/api/audio-book/new", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            title,
+            description,
+            tags,
+            poster: url,
+            episodes: EpisodeKey
+          })
+        });
+
+        const { } = await res.json();
+
+      }
+
+      // const Upload = await fetch("/api/audio-book/new", {
+      //   method: "POST",
+      //   headers: {"Content-Type": "application/json"},
+      //   body: JSON.stringify({
+
+      //   })
+      // })
 
     } catch (error) {
       setLoading(false);

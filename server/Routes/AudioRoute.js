@@ -10,7 +10,7 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const routes = express.Router();
 
-routes.post("/new", verifyUser, upload.fields([{ name: "img", maxCount: 1 }, { name: "epi", maxCount: 50 }]), async (req, res, next) => {
+routes.post("/new", verifyUser, async (req, res, next) => {
     try {
         const data = req.user;
         const { title, description, date, tags } = req.body;
@@ -58,7 +58,7 @@ routes.post("/new", verifyUser, upload.fields([{ name: "img", maxCount: 1 }, { n
 })
 
 // get object from s3
-routes.get("/s3/getPoster", async (req, res, next) => {
+routes.post("/s3/getPoster", async (req, res, next) => {
     try {
 
         const { key } = req.body;
@@ -74,15 +74,15 @@ routes.get("/s3/getPoster", async (req, res, next) => {
             url,
             success: true
         })
-
     } catch (error) {
         next(error);
     }
 })
 
 // upload Files
-routes.post("/s3/upload", async (req, res, next) => {
+routes.post("/s3/upload", verifyUser, async (req, res, next) => {
     try {
+
         const { FileName, FileType, type } = req.body;
 
         if (type === "image") {
