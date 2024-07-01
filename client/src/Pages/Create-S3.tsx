@@ -41,25 +41,26 @@ const Create = () => {
     try {
 
       const PosterDetails = {
-        ImageName: img !== undefined ? img.name : "",
-        Imagetype: img !== undefined ? img.type : ""
+        FileName: img !== undefined ? img.name : "",
+        FileType: img !== undefined ? img.type : "",
+        type: "image"
       }
 
       console.log(PosterDetails);
 
-      const res = await fetch("/api/audio-book/s3/upload", {
+      const resPoster = await fetch("/api/audio-book/s3/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(PosterDetails)
       })
 
-      const { url, success }: s3types = await res.json();
+      const { url: PosterUploadUrl, success: SuccessPoster, Key: ImageKey }: s3types = await resPoster.json();
 
-      if (success) {
-        const res = await fetch(url, {
+      if (SuccessPoster) {
+        const res = await fetch(PosterUploadUrl, {
           method: "PUT",
           headers: {
-            "Content-Type": PosterDetails.Imagetype
+            "Content-Type": PosterDetails.FileType
           },
           body: img
         })
@@ -67,6 +68,38 @@ const Create = () => {
         if (res.ok) {
           toast.success("File Has been Uploaded");
         }
+      } else {
+        return toast.error("Poster Upload Error");
+      }
+
+      const EpiDetails = {
+        FileName: audio !== undefined ? audio.name : "",
+        FileType: audio !== undefined ? audio.type : "",
+        type: "epi"
+      }
+
+      const resEpi = await fetch("/api/audio-book/s3/upload", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(EpiDetails)
+      })
+
+      const { Key: EpisodeKey, success: EpiSuccess, url: EpiUrl }: s3types = await resEpi.json();
+      if (EpiSuccess) {
+        const UploadEpi = await fetch(EpiUrl, {
+          method: "PUT",
+          headers: { "Content-Type": EpiDetails.FileType },
+          body: audio
+        });
+
+        if (UploadEpi.ok) {
+          toast.success("Episode is uploaded!");
+        } else {
+          return toast.error("Episode Upload Error!!");
+        }
+
+      } else {
+        toast.error("Server Error For Uploading Episode!");
       }
 
     } catch (error) {
@@ -86,7 +119,7 @@ const Create = () => {
       >
         <div className="w-full sm:w-[50%] ml-4">
 
-          <div className="flex flex-col w-[95%] gap-1 mb-2">
+          {/* <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Name</span>
             <input
               type="text"
@@ -119,7 +152,7 @@ const Create = () => {
               onChange={(e) => setTags(e.target.value)}
               required
             />
-          </div>
+          </div> */}
 
           <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Image</span>

@@ -83,22 +83,42 @@ routes.get("/s3/getPoster", async (req, res, next) => {
 // upload Files
 routes.post("/s3/upload", async (req, res, next) => {
     try {
-        const { ImageName, Imagetype } = req.body;
+        const { FileName, FileType, type } = req.body;
 
-        console.log(req.body);
+        if (type === "image") {
 
-        const command = new PutObjectCommand({
-            Bucket: "storyin",
-            Key: `uploads/Episodes/${"epi_" + Date.now() + "_" + ImageName }`,
-            ContentType: Imagetype
-        });
+            const Key = `uploads/Posters/${"Poster_" + Date.now() + "_" + FileName}`;
 
-        const url = await getSignedUrl(s3Clinet, command);
+            const command = new PutObjectCommand({
+                Bucket: "storyin",
+                Key,
+                ContentType: FileType
+            });
 
-        res.status(200).json({
-            url,
-            success: true
-        })
+            const url = await getSignedUrl(s3Clinet, command);
+
+            res.status(200).json({
+                url,
+                Key,
+                success: true
+            })
+        } else if (type === "epi") {
+            const Key = `uploads/Episodes/${"Epi_" + Date.now() + "_" + FileName}`;
+
+            const command = new PutObjectCommand({
+                Bucket: "storyin",
+                Key,
+                ContentType: FileType
+            });
+
+            const url = await getSignedUrl(s3Clinet, command);
+
+            res.status(200).json({
+                url,
+                Key,
+                success: true
+            })
+        }
 
     } catch (error) {
         next(error);
