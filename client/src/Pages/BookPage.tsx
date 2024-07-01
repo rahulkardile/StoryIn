@@ -90,11 +90,10 @@ const BookPage = () => {
           <button
             disabled={heartLoading}
             onClick={() => handleHeart()}
-            className={`${
-              heart
+            className={`${heart
                 ? "z-0 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24 text-red-500"
                 : ""
-            } absolute z-0 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24`}
+              } absolute z-0 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24`}
           >
             <FaHeart />
           </button>

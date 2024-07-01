@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { s3types } from "../utils/Types-S3";
+import { NewBookRes, s3types } from "../utils/Types-S3";
 
 const Create = () => {
   const [title, setTitle] = useState<string>("");
@@ -108,10 +108,10 @@ const Create = () => {
 
       const { url, success }: s3types = await posterUrl.json();
 
-      if(success){
+      if (success) {
         const res = await fetch("/api/audio-book/new", {
           method: "POST",
-          headers: {"Content-Type": "application/json"},
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             title,
             description,
@@ -121,17 +121,18 @@ const Create = () => {
           })
         });
 
-        const { } = await res.json();
-
+        const { message, success }: NewBookRes = await res.json();
+        if (success) {
+          toast.success(message);
+          navigate("/");
+          setAudio(undefined);
+          setTitle("");
+          setTags("");
+          setImg(undefined);
+        } else {
+          toast.error("Problem While Creating!!!")
+        }
       }
-
-      // const Upload = await fetch("/api/audio-book/new", {
-      //   method: "POST",
-      //   headers: {"Content-Type": "application/json"},
-      //   body: JSON.stringify({
-
-      //   })
-      // })
 
     } catch (error) {
       setLoading(false);
@@ -150,7 +151,7 @@ const Create = () => {
       >
         <div className="w-full sm:w-[50%] ml-4">
 
-          {/* <div className="flex flex-col w-[95%] gap-1 mb-2">
+          <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Name</span>
             <input
               type="text"
@@ -183,7 +184,7 @@ const Create = () => {
               onChange={(e) => setTags(e.target.value)}
               required
             />
-          </div> */}
+          </div>
 
           <div className="flex flex-col w-[95%] gap-1 mb-2">
             <span className="text-xs font-medium">Image</span>

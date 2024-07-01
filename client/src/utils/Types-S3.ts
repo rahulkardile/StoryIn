@@ -3,3 +3,8 @@ export type s3types = {
     Key?: string,
     success: boolean
 }
+
+export type NewBookRes = {
+    message: string,
+    success: boolean
+}

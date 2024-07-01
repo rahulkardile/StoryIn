@@ -13,44 +13,61 @@ const routes = express.Router();
 routes.post("/new", verifyUser, async (req, res, next) => {
     try {
         const data = req.user;
-        const { title, description, date, tags } = req.body;
+        const { title, description, date, tags, episodes, poster } = req.body;
 
-        if (!title, !description, !date, !tags) return next(errorHandler(400, "something is mising"));
+        if (!title, !description, !date, !tags, !episodes, !poster) return next(errorHandler(400, "something is mising"));
+        /*
+                const manageAudio = async () => {
+        
+                    let poster;
+                    let episodes = [];
+                    let audioData = [];
+                    let newData = [];
+        
+                    const img = await req.files.epi
+        
+                    audioData.push(img);
+                    audioData = await audioData[0];
+        
+                    newData.push(audioData)
+        
+                    // newData.map(i => episodes.push(i.path))
+        
+                    episodes = audioData[0].path
+                    poster = await req.files.img[0].path;
+        
+                    const NewABook = await ListBook.create({
+                        title,
+                        description,
+                        user: data._id,
+                        tags,
+                        poster,
+                        episodes
+                    })
+        
+                    const message = title.substr(0, 14);
+                    res.status(200).json({
+                        message: message + "...",
+                        success: true
+                    });
+                }
+                manageAudio();
+        */
 
-        const manageAudio = async () => {
+        const NewABook = await ListBook.create({
+            title,
+            description,
+            user: data._id,
+            tags,
+            poster,
+            episodes
+        })
 
-            let poster;
-            let episodes = [];
-            let audioData = [];
-            let newData = [];
-
-            const img = await req.files.epi
-
-            audioData.push(img);
-            audioData = await audioData[0];
-
-            newData.push(audioData)
-
-            // newData.map(i => episodes.push(i.path))
-
-            episodes = audioData[0].path
-            poster = await req.files.img[0].path;
-
-            const NewABook = await ListBook.create({
-                title,
-                description,
-                user: data._id,
-                tags,
-                poster,
-                episodes
-            })
-
-            res.status(200).json({
-                success: true
-            });
-        }
-
-        manageAudio();
+        const message = title.substr(0, 10);
+        res.status(200).json({
+            message: message + "...",
+            success: true
+        });
 
     } catch (error) {
         next(error)
