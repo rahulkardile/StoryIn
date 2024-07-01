@@ -1,6 +1,6 @@
 import React from "react";
 import { signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth";
-import app, { auth } from "../firebase.js";
+import app, { auth } from "../firebase.ts";
 import { FcGoogle } from "react-icons/fc";
 import { useDispatch } from "react-redux"
 import { addUser } from "../Redux/Slices/UserSlice.js";
@@ -38,11 +38,11 @@ const OAuth: React.FC<auth> = (props) => {
 
     console.log(data);
 
-    if(success){
+    if (success) {
       toast.success(message);
       dispatch(addUser(data));
       navigate("/")
-    }else{
+    } else {
       toast.error(message ? message : "Got the Error")
     }
   };

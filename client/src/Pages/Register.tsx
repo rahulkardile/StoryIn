@@ -1,6 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
-import { FcGoogle } from "react-icons/fc"
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
 

@@ -4,7 +4,7 @@ const About = () => {
       <div className="">
         <h1 className="font-bold text-3xl ">About StoryIn</h1><br />
       </div>
-      <div className="">
+      <div className="portrait:p-6 p-2">
         <p>
           StoryIn is one of the world’s largest subscribed audiobook and e-book
           streaming services and offers listening and reading of more than 500

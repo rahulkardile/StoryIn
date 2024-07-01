@@ -42,7 +42,7 @@ const AudioBooks = () => {
       } else {
         toast.error("problem");
       }
-      
+    
     };
 
     const trending = async () => {
@@ -183,16 +183,6 @@ const AudioBooks = () => {
               </section>
             )}
           </section>
-
-          {/* <section className="overflow-hidden flex flex-col gap-4 m-auto">
-            <Card
-              img={Karn}
-              id="23133"
-              author="Shivaji Sawant"
-              bookName="Mrutyunjay Bhag 1 - Karn"
-              title="Stories to start with"
-            />
-          </section> */}
         </section>
       </div>
     </section>
@@ -200,42 +190,4 @@ const AudioBooks = () => {
 };
 
 export default AudioBooks;
-{
-  /* <div className="h-[45%] absolute">
-        <div
-          className="h-[100%] w-full absolute overflow-hidden"
-          style={{ boxShadow: "inset 0 0 10px #f8a100" }}
-        >
-          <img
-            src={mainImg}
-            className=" object-cover shadow-inner"
-            alt="mainLogo"
-          />
-        </div>
-  <Card
-              img={Robo}
-              id="12445"
-              author="Robot Kiyosaki"
-              bookName="Rich Dad Poor Dad"
-              title="Stories to start with"
-            />
-        <div
-          style={{
-            boxShadow: "10px -110px 70px black inset",
-          }}
-          className="absolute bottom-0 flex flex-col gap-3 w-full justify-center left-0"
-        >
-          <h1 className="text-7xl text-orange-500 font-bold mx-14">
-            Audiobooks
-          </h1>
-          <p className="text-lg text-white mx-14 mr-[560px]">
-            Get unlimited access to the world of audiobooks - where new content
-            awaits you every day. Step into a limitless audio adventure with
-            over 400,000+ titles, waiting to be discovered.
-          </p>
-          <button className="p-3 bg-white mx-14 text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80">
-            Subscribe Now
-          </button>
-        </div>
-      </div> */
-}
+

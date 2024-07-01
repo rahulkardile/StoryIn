@@ -6,6 +6,7 @@ import cors from 'cors'
 import fs, { stat } from "fs"
 import path from 'path';
 import razorpay from 'razorpay'
+import { S3Client } from '@aws-sdk/client-s3';
 
 // graphQL SetUp
 import { ApolloServer } from '@apollo/server';
@@ -19,15 +20,14 @@ import FevRoute from "./Routes/FevRoute.js"
 const app = express();
 // const __dirname = path.resolve();
 app.use(cors({
-    origin: 'https://storyin-client.onrender.com', 
+    origin: 'https://storyin-client.onrender.com',
     credentials: true,
     methods: 'GET, POST, PUT, PATCH, DELETE',
     allowedHeaders: ['Content-Type', 'Authorization']
-})); 
+}));
 
 app.use(cookieParser());
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: false }))
 
 dotenv.config();
@@ -35,6 +35,7 @@ const PORT = process.env.PORT || 3300
 const MONGO_URL = process.env.MONGOURL;
 const MONGO_CLOUD_URL = process.env.MONGOURL_CLOUD;
 
+const __dirname = path.resolve();
 
 try {
     mongoose.connect(MONGO_URL)
@@ -48,17 +49,15 @@ export const instance = new razorpay({
     key_secret: process.env.KEYSECRET,
 })
 
-let cout = 1;
-
-// app.use(express.static(path.join(__dirname, '/client/dist')));
-
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
-// })
-
-app.get("/", (req, res) => {
-    res.json("Welcome to server and this is rahul")
+export const s3Clinet = new S3Client({
+    region: "ap-south-1",
+    credentials: {
+        accessKeyId: process.env.s3UserAccess,
+        secretAccessKey: process.env.s3UserSecret
+    }
 })
+
+let cout = 1;
 
 app.get("/api/stream", async (req, res, next) => {
     try {
@@ -99,6 +98,7 @@ app.get("/api/stream", async (req, res, next) => {
         stream.on('error', (err) => {
             console.error(err)
         })
+
         stream.pipe(res);
 
     } catch (error) {
@@ -107,12 +107,16 @@ app.get("/api/stream", async (req, res, next) => {
 })
 
 app.use("/api/uploads", express.static("uploads"))
-
 app.use("/api/user/", User)
 app.use("/api/audio-book/", AudioRoute)
 app.use("/api/order/", OrederRoute)
 app.use("/api/fev/", FevRoute)
 
+app.use(express.static(path.join(__dirname, 'dist')));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+})
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 400;

@@ -1,9 +1,12 @@
-import express from "express"
-import ListBook from "../Models/ListAudioBook.js"
+import express from "express";
+import ListBook from "../Models/ListAudioBook.js";
 import { verifyUser } from "../utils/VerifyUser.js";
 import { errorHandler } from "../utils/errHandler.js";
 import { rm } from "fs";
 import { upload } from "../middleware/multer.js";
+import { s3Clinet } from "../index.js";
+import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const routes = express.Router();
 
@@ -54,26 +57,72 @@ routes.post("/new", verifyUser, upload.fields([{ name: "img", maxCount: 1 }, { n
     }
 })
 
+// get object from s3
+routes.get("/s3/getPoster", async (req, res, next) => {
+    try {
+
+        const { key } = req.body;
+
+        const command = new GetObjectCommand({
+            Bucket: "storyin",
+            Key: key
+        });
+
+        const url = await getSignedUrl(s3Clinet, command);
+
+        res.status(200).json({
+            url,
+            success: true
+        })
+
+    } catch (error) {
+        next(error);
+    }
+})
+
+// upload Files
+routes.get("/s3/upload", async (req, res, next) => {
+    try {
+        const { fileName, contentType } = req.body;
+        
+        const command = new PutObjectCommand({
+            Bucket: "storyin",
+            Key: `uploads/Episodes/${fileName}`,
+            ContentType: contentType
+        });
+
+        const url = await getSignedUrl(s3Clinet, command);
+
+        res.status(200).json({
+            url,
+            success: true
+        })
+
+    } catch (error) {
+        next(error);
+    }
+})
+
 routes.get("/get/:id", async (req, res, next) => {
     try {
 
         const id = req.params.id
         const raw = await ListBook.findById(id).populate("user");
 
-            const modified = {
-                _id: raw._id,
-                title: raw.title,
-                description: raw.description,
-                user: {
-                    _id: raw.user._id,
-                    name: raw.user.name,
-                },
-                poster: raw.poster,
-                tags: raw.tags,
-                episodes: raw.episodes,
-                createdAt: raw.createdAt,
-                updatedAt: raw.updatedAt
-            }
+        const modified = {
+            _id: raw._id,
+            title: raw.title,
+            description: raw.description,
+            user: {
+                _id: raw.user._id,
+                name: raw.user.name,
+            },
+            poster: raw.poster,
+            tags: raw.tags,
+            episodes: raw.episodes,
+            createdAt: raw.createdAt,
+            updatedAt: raw.updatedAt
+        }
 
 
         res.status(200).json(modified)
