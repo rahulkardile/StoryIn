@@ -6,9 +6,10 @@ import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { FaHeart } from "react-icons/fa";
 import noImg from "../assets/noImg.jpg";
+import { postRes, s3types } from "../utils/Types-S3";
 
 const BookPage = () => {
-  const [data, setData] = useState({
+  const [data, setData] = useState<postRes>({
     _id: "",
     title: "",
     description: "",
@@ -22,6 +23,8 @@ const BookPage = () => {
     createdAt: "",
     updatedAt: "",
   });
+
+  const [url, setUrl] = useState<string>("");
 
   const [newReq, setNewReq] = useState([
     {
@@ -49,9 +52,10 @@ const BookPage = () => {
       const resData = await res.json();
 
       setData(resData);
+
     };
 
-    const data = async () => {
+    const dataget = async () => {
       const res = await fetch("/api/audio-book/get", {
         signal: controller.signal,
       });
@@ -65,7 +69,7 @@ const BookPage = () => {
     };
 
     getData();
-    data();
+    dataget();
 
     return () => controller.abort();
   }, []);
@@ -83,6 +87,38 @@ const BookPage = () => {
     setHeartLoading(false);
   };
 
+  const getAudio = async () => {
+    if (status === true || user?.role === "admin" || data.user._id === user?._id) {
+
+      if (data.episodes.length >= 0) {
+
+        const key = {
+          key: data.episodes[0]
+        }
+        console.log(key);
+
+        const res = await fetch("/api/audio-book/s3/getPoster", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(key)
+        })
+
+        const { success, url }: s3types = await res.json();
+
+        if (success) {
+          setUrl(url);
+        } else {
+          toast.error("Got the problem!!");
+        }
+      }
+    }
+  }
+
+  if(data.episodes.length >= 0){
+    getAudio();
+    console.log(url); 
+  }
+
   return (
     <section className="text-gray-600 mt-14 mb-3 body-font">
       {data?.title ? (
@@ -91,8 +127,8 @@ const BookPage = () => {
             disabled={heartLoading}
             onClick={() => handleHeart()}
             className={`${heart
-                ? "z-0 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24 text-red-500"
-                : ""
+              ? "z-0 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24 text-red-500"
+              : ""
               } absolute z-0 left-[83%] sm:left-[88%] text-2xl mr-5 bg-grey-100 rounded-lg top-24`}
           >
             <FaHeart />
@@ -100,9 +136,9 @@ const BookPage = () => {
           <div className="container flex flex-col sm:flex-row sm:mx-4 md:mx-8 gap-4 items-center justify-center">
             <>
               <img
-                className="mb-10 h-80 w-60 object-contain object-center rounded"
+                className="mb-10 h-auto w-60 sm:w-64  xl:w-72 bg-red-200 object-contain object-center rounded"
                 alt="hero"
-                src={`/api/${data.poster}`}
+                src={`${data.poster}`}
                 onError={(e) => {
                   e.currentTarget.src = noImg;
                 }}
@@ -175,9 +211,9 @@ const BookPage = () => {
                     controls={true}
                   >
                     <source
-                      src={`/api/stream?path=${data.episodes[0]}`}
+                      src={url}
                       className=""
-                      type="audio/mp3"
+                      type="audio/*"
                     />
                   </audio>
                 </>
@@ -211,7 +247,7 @@ const BookPage = () => {
                     {newReq?.map((item, i) => (
                       <NewCard
                         key={i}
-                        img={`/api/${item?.poster}`}
+                        img={`${item?.poster}`}
                         id={item?._id}
                         author={item?.user.name}
                         bookName={item?.title}

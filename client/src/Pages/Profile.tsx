@@ -50,7 +50,7 @@ const Profile = () => {
 
       if (success === true) {
         setOrderData(order);
-      }else{
+      } else {
         dispatch(RemoveStatus());
       }
     };
@@ -62,9 +62,10 @@ const Profile = () => {
         });
 
         const { success, data } = await Data.json();
-
         if (success === true) {
           setOrderList(data);
+          console.log(OrderList);
+
         }
       };
 
@@ -107,23 +108,19 @@ const Profile = () => {
     const like = await fetch(`/api/fev/create/${Id}`, {
       method: "POST",
     });
-    
+
     const { message } = await like.json();
     setOption(!Option);
     toast.success(message);
   };
-
-console.log("profile img " ,user?.photoURL);
-
 
   return (
     <div
       className={`flex gap-2 flex-col justify-center mt-3 mb-28 m-auto  items-center p-6 rounded-lg `}
     >
       <ul
-        className={`mt-2 flex absolute z-10 bg-gray-900 text-white w-80 rounded-lg h-auto flex-col py-5 items-center ${
-          Option ? "" : "hidden"
-        }`}
+        className={`mt-2 flex absolute z-10 bg-gray-900 text-white w-80 rounded-lg h-auto flex-col py-5 items-center ${Option ? "" : "hidden"
+          }`}
       >
         <button disabled={Proccess} onClick={() => updatePost()} className="">
           Edit
@@ -158,15 +155,14 @@ console.log("profile img " ,user?.photoURL);
       </ul>
 
       <section
-        className={`flex justify-center items-center flex-col ${
-          Option ? "opacity-10" : ""
-        }`}
+        className={`flex justify-center items-center flex-col ${Option ? "opacity-10" : ""
+          }`}
       >
         <div className="flex items-center">
           <img
             draggable={false}
             src={user?.photoURL}
-            onError={(e)=>{
+            onError={(e) => {
               e.currentTarget.src = profileImg
             }}
             alt="Profile"
@@ -247,27 +243,26 @@ console.log("profile img " ,user?.photoURL);
           </div>
         </div>
       </section>
-      {user?.role === "creator" && OrderList.length > 1 ? (
+      {user?.role === "creator" && OrderList.length > 0 ? (
         <section
-          className={`m-auto flex flex-col justify-center items-center gap-4 ${
-            Option ? "opacity-10" : ""
-          }`}
+          className={`m-auto flex flex-col justify-center w-full items-center gap-4 ${Option ? "opacity-10" : ""
+            }`}
         >
           <h1 className="font-semibold portrait:text-xl my-3">My Books</h1>
 
           <div className="flex justify-center gap-6 sm:gap-8 sm:max-w-[78%] max-w-[93%] flex-row flex-wrap">
             {OrderList.map((item, i) => (
-              <div className="flex justify-evenly mt-3 flex-col sm:w-[160px] w-[120px] h-[120px] sm:h-[160px]">
-                <div className="gap-1 rounded-md overflow-hidden">
+              <div className="flex justify-evenly mt-3 flex-col sm:w-[160px] w-[120px] h-[120px] sm:h-[181px]">
+                <div className="gap-1 rounded-md h-[160px] w-[153px] overflow-hidden">
                   <Link to={`/book/${item._id}`} key={i}>
                     <img
                       draggable={false}
-                      src={`/api/${item.poster}`}
-                      onError={e=>{
+                      src={item.poster}
+                      onError={e => {
                         e.currentTarget.src = noImg
                       }}
                       style={{ userSelect: "none" }}
-                      className="object-fill rounded-md overflow-hidden duration-300 ease-in-out hover:scale-105"
+                      className=" rounded-md overflow-hidden duration-300 ease-in-out hover:scale-105"
                       alt="imgs"
                     />
                   </Link>

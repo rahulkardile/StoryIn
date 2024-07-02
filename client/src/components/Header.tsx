@@ -109,7 +109,7 @@ const Header = () => {
                 >
                   {user.role === "admin" || user.role === "creator" ? (
                     <Link
-                      to={"/create"}
+                      to={"/create-s3"}
                       className="duration-200 hover:text-orange-500 cursor-pointer"
                     >
                       Create

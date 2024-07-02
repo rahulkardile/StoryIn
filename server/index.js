@@ -38,7 +38,7 @@ const MONGO_CLOUD_URL = process.env.MONGOURL_CLOUD;
 const __dirname = path.resolve();
 
 try {
-    mongoose.connect(MONGO_URL)
+    mongoose.connect(MONGO_CLOUD_URL)
         .then(() => console.log('Database is connected'))
 } catch (error) {
     console.log('Database is error ' + error);
@@ -59,7 +59,7 @@ export const s3Clinet = new S3Client({
 
 let cout = 1;
 
-app.get("/api/stream", async (req, res, next) => {
+app.get("/api/stream", async(req, res, next) => {
     try {
 
         const filePath = req.query.path;

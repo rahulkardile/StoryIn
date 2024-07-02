@@ -38,7 +38,6 @@ const App = () => {
           <Route path="/about" element={<About />} />
 
           <Route element={<Private />}>
-            <Route path="/create" element={<Create />} />
             <Route path="/create-s3" element={<Create_S3 />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/favorite" element={<Favorite />} />
@@ -47,6 +46,7 @@ const App = () => {
 
             <Route element={<AdminProtect />}>
               <Route path="/admin" element={<Admin />} />
+              <Route path="/create" element={<Create />} />
             </Route>
           </Route>
 

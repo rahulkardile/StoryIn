@@ -180,7 +180,7 @@ const Home = () => {
                   return (
                     <NewCard
                       key={i}
-                      img={`/api/${item?.poster}`}
+                      img={`${item?.poster}`}
                       id={item?._id}
                       author={item?.user.name}
                       bookName={item?.title}
@@ -215,7 +215,7 @@ const Home = () => {
                 {trending.map((item, i) => (
                   <NewCard
                     key={i}
-                    img={`/api/${item?.poster}`}
+                    img={`${item?.poster}`}
                     id={item?._id}
                     author={item?.user.name}
                     bookName={item?.title}
