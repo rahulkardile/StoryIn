@@ -204,18 +204,8 @@ const BookPage = () => {
                   <h1 className="h-8 w-8 border-[1px] border-black text-black flex items-center text-sm justify-evenly rounded-full m-auto">
                     <span>1</span>
                   </h1>
-
-                  <audio
-                    className="sm:w-[500px] text-red-400"
-                    draggable={false}
-                    controls={true}
-                  >
-                    <source
-                      src={url}
-                      className=""
-                      type="audio/*"
-                    />
-                  </audio>
+                                  
+                  <audio  className="sm:w-[500px] text-red-400" src={url} controls></audio>
                 </>
               ) : (
                 <div className="flex flex-col gap-2 items-center justify-center">
