@@ -114,9 +114,15 @@ const BookPage = () => {
     }
   }
 
-  if(data.episodes.length >= 0){
-    getAudio();
-    console.log(url); 
+  if (data.episodes.length >= 0) {
+
+    if (url.length > 2) {
+      console.log("Emplty");
+
+    } else {
+      getAudio();
+      console.log(url);
+    }
   }
 
   return (
@@ -204,8 +210,8 @@ const BookPage = () => {
                   <h1 className="h-8 w-8 border-[1px] border-black text-black flex items-center text-sm justify-evenly rounded-full m-auto">
                     <span>1</span>
                   </h1>
-                                  
-                  <audio  className="sm:w-[500px] text-red-400" src={url} controls></audio>
+
+                  <audio className="sm:w-[500px] text-red-400" src={url} controls></audio>
                 </>
               ) : (
                 <div className="flex flex-col gap-2 items-center justify-center">
