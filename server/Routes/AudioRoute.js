@@ -164,27 +164,13 @@ routes.get("/get", async (req, res, next) => {
 routes.get("/trending", async (req, res, next) => {
     try {
 
-        const raw = await ListBook.find().populate("user").limit(8).sort({ createdAt: 1 });
-
-        const List = [];
-
-        raw.forEach((i) => {
-            const modified = {
-                _id: i._id,
-                title: i.title,
-                user: {
-                    name: i.user.name,
-                },
-                poster: i.poster
-            }
-
-            List.push(modified);
-        })
+        const raw = await ListBook.find().populate("user", "name").limit(8).sort({ createdAt: 1 });
 
         res.status(200).json({
             success: true,
-            data: List
+            data: raw
         })
+        
     } catch (error) {
         next(error)
     }
