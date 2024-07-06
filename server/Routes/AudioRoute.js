@@ -15,44 +15,8 @@ routes.post("/new", verifyUser, async (req, res, next) => {
         const data = req.user;
         const { title, description, date, tags, episodes, poster } = req.body;
 
-        if (!title, !description, !date, !tags, !episodes, !poster) return next(errorHandler(400, "something is mising"));
-        /*
-                const manageAudio = async () => {
-        
-                    let poster;
-                    let episodes = [];
-                    let audioData = [];
-                    let newData = [];
-        
-                    const img = await req.files.epi
-        
-                    audioData.push(img);
-                    audioData = await audioData[0];
-        
-                    newData.push(audioData)
-        
-                    // newData.map(i => episodes.push(i.path))
-        
-                    episodes = audioData[0].path
-                    poster = await req.files.img[0].path;
-        
-                    const NewABook = await ListBook.create({
-                        title,
-                        description,
-                        user: data._id,
-                        tags,
-                        poster,
-                        episodes
-                    })
-        
-                    const message = title.substr(0, 14);
-                    res.status(200).json({
-                        message: message + "...",
-                        success: true
-                    });
-                }
-                manageAudio();
-        */
+        if (!title, !description, !date, !tags, !episodes, !poster, !data._id) return next(errorHandler(400, "something is mising"));
+        console.log(req.body);
 
         const NewABook = await ListBook.create({
             title,
@@ -70,6 +34,7 @@ routes.post("/new", verifyUser, async (req, res, next) => {
         });
 
     } catch (error) {
+        console.log(error);
         next(error)
     }
 })
@@ -184,29 +149,14 @@ routes.get("/getU/:id", async (req, res, next) => {
 routes.get("/get", async (req, res, next) => {
     try {
 
-        // const List = await ListBook.find().populate("user").limit(8).sort({ createdAt: -1 })
-        const raw = await ListBook.find().populate("user").select(["title", "poster", "user", "_id"]).limit(8).sort({ createdAt: -1 })
-
-        const List = [];
-
-        raw.forEach((i) => {
-            const modified = {
-                _id: i._id,
-                title: i.title,
-                user: {
-                    name: i.user.name,
-                },
-                poster: i.poster
-            }
-
-            List.push(modified);
-        })
+        const raw = await ListBook.find().populate("user", "name").select(["title", "poster", "user", "_id"]).limit(8).sort({ createdAt: -1 });
 
         res.status(200).json({
             success: true,
-            data: List
+            data: raw
         })
     } catch (error) {
+        console.log(error);
         next(error)
     }
 })

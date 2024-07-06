@@ -59,6 +59,10 @@ export const s3Clinet = new S3Client({
 
 let cout = 1;
 
+app.get("/", (req,res)=>{
+    res.send("okk")
+})
+
 app.get("/api/stream", async(req, res, next) => {
     try {
 
@@ -112,11 +116,11 @@ app.use("/api/audio-book/", AudioRoute)
 app.use("/api/order/", OrederRoute)
 app.use("/api/fev/", FevRoute)
 
-app.use(express.static(path.join(__dirname, 'dist')));
+// app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-})
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// })
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 400;

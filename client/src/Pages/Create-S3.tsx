@@ -2,6 +2,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { NewBookRes, s3types } from "../utils/Types-S3";
+import { storege } from "../firebase"
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 const Create = () => {
   const [title, setTitle] = useState<string>("");
@@ -40,35 +42,19 @@ const Create = () => {
     setLoading(true);
     try {
 
-      const PosterDetails = {
-        FileName: img !== undefined ? img.name : "",
-        FileType: img !== undefined ? img.type : "",
-        type: "image"
-      }
+      let imgUrl: string = "";
 
-      const resPoster = await fetch("/api/audio-book/s3/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(PosterDetails)
-      })
-
-      const { url: PosterUploadUrl, success: SuccessPoster, Key: ImageKey }: s3types = await resPoster.json();
-
-      if (SuccessPoster) {
-        const res = await fetch(PosterUploadUrl, {
-          method: "PUT",
-          headers: {
-            "Content-Type": PosterDetails.FileType
-          },
-          body: img
-        })
-
-        if (res.ok) {
-          toast.success("File Has been Uploaded");
+      if (img !== undefined) {
+        setLoading(true);
+        if (img) {
+          const storegeRef = ref(storege, `poster/${Date.now() + "_" + img.name}`);
+          await uploadBytes(storegeRef, img);
+          const dowloadurl = await getDownloadURL(storegeRef);
+          imgUrl = dowloadurl;
         }
-      } else {
-        return toast.error("Poster Upload Error");
       }
+
+      console.log(imgUrl);
 
       const EpiDetails = {
         FileName: audio !== undefined ? audio.name : "",
@@ -100,38 +86,28 @@ const Create = () => {
         toast.error("Server Error For Uploading Episode!");
       }
 
-      const posterUrl = await fetch("/api/audio-book/s3/getPoster", {
+      const res = await fetch("/api/audio-book/new", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: ImageKey })
-      })
+        body: JSON.stringify({
+          title,
+          description,
+          tags,
+          poster: imgUrl,
+          episodes: EpisodeKey
+        })
+      });
 
-      const { url, success }: s3types = await posterUrl.json();
-
+      const { message, success }: NewBookRes = await res.json();
       if (success) {
-        const res = await fetch("/api/audio-book/new", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title,
-            description,
-            tags,
-            poster: url,
-            episodes: EpisodeKey
-          })
-        });
-
-        const { message, success }: NewBookRes = await res.json();
-        if (success) {
-          toast.success(message);
-          navigate("/");
-          setAudio(undefined);
-          setTitle("");
-          setTags("");
-          setImg(undefined);
-        } else {
-          toast.error("Problem While Creating!!!")
-        }
+        toast.success(message);
+        navigate("/");
+        setAudio(undefined);
+        setTitle("");
+        setTags("");
+        setImg(undefined);
+      } else {
+        toast.error("Problem While Creating!!!")
       }
 
     } catch (error) {

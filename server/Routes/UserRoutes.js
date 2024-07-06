@@ -59,7 +59,7 @@ router.post("/google", async (req, res, next) => {
 
     } else {
 
-      const hash = await bcrypt.hashSync(uid, 10);
+      const hash = bcrypt.hashSync(uid, 10);
 
       const newUser = await User.create({
         name,
@@ -125,6 +125,14 @@ router.get("/reSign", verifyUser, async (req, res, next) => {
       user: rest
     })
 
+  } catch (error) {
+    next(error);
+  }
+})
+
+router.get("/verify", verifyUser, (req, res,next)=> {
+  try {
+    res.send(req.user);
   } catch (error) {
     next(error);
   }

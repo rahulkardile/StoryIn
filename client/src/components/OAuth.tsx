@@ -21,7 +21,6 @@ const OAuth: React.FC<auth> = (props) => {
     const auth = getAuth(app);
     const result = await signInWithPopup(auth, provider);
 
-    console.log(result);
     const { email, displayName, photoURL, uid } = result.user;
     const res = await fetch(`/api/user/google`, {
       method: "post",
@@ -35,8 +34,6 @@ const OAuth: React.FC<auth> = (props) => {
     });
 
     const { success, data, message } = await res.json();
-
-    console.log(data);
 
     if (success) {
       toast.success(message);
