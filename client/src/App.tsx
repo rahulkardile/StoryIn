@@ -24,6 +24,8 @@ const Update = lazy(() => import("./Pages/UpdatePost"));
 const Subscription = lazy(() => import("./Pages/Subscription"));
 
 const App = () => {
+  console.log(import.meta.env.VITE_SOME_KEY) // "123"
+  console.log(import.meta.env.VITE_DB_PASSWORD) // undefined
   return (
     <BrowserRouter>
       <Header />

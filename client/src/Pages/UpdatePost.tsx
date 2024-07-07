@@ -72,8 +72,6 @@ const Create = () => {
     }
   };
 
-  console.log(data);
-
   return (
     <section className="flex justify-evenly flex-col gap-4 m-auto items-center mt-6 mb-24">
       <h1 className="text-2xl font-semibold">Update Your Audio Book</h1>
