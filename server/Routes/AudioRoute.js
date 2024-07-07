@@ -5,7 +5,7 @@ import { errorHandler } from "../utils/errHandler.js";
 import { rm } from "fs";
 import { upload } from "../middleware/multer.js";
 import { s3Clinet } from "../index.js";
-import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { GetObjectCommand, PutObjectCommand, HeadObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const routes = express.Router();
@@ -233,37 +233,39 @@ routes.post("/update/:id", verifyUser, async (req, res, next) => {
 
 routes.delete("/delete/:id", verifyUser, async (req, res, next) => {
     try {
-        const { _id, role } = req.user;
+        console.log("working");
+        const { _id: userId, role } = req.user;
         const id = req.params.id;
 
         const Book = await ListBook.findById(id);
 
         if (!Book) return next(errorHandler(400, "Not Found"))
-        if (Book.user != _id) return next(errorHandler(400, "bad request!"))
+        if (Book.user != userId) return next(errorHandler(400, "bad request!"))
+        let isBook;
 
-        // const deleteFileList = [];
-        // deleteFileList.push(Book.poster);
-        // Book.episodes.forEach(i => deleteFileList.push(i));
+        await Promise.all(
+            Book.episodes.map(async (item) => {
+                try {
+                    s3Client.send(
+                        new HeadObjectCommand({
+                            Bucket: "storyin",
+                            Key: item
+                        })
+                    );
+                    isBook = true;
+                } catch (error) {
+                    isBook = true;
+                }
+            })
+        );
 
-        // deleteFileList.forEach(async (i) => {
-
-        //     rm(i, (err, data) => {
-        //         if (err) {
-        //             if (err.code === "ENOENT") {
-        //                 console.log("File not found!");
-        //                 return next(errorHandler(404, "File not found"))
-        //             } else {
-        //                 console.log(err);
-        //             }
-        //         }
-        //     })
-
-        // })
-
-        await ListBook.findOneAndDelete({ _id: Book._id });
+        console.log(isBook);
+        // await ListBook.findOneAndDelete({ _id: Book._id });
         res.status(200).json({
             success: true,
-            message: "deleted successfully!"
+            isBook,
+            message: "deleted successfully!",
+            book: Book
         })
 
     } catch (error) {
