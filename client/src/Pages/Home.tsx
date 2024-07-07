@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import logo from "../assets/4214.jpg";
-import pie from "../assets/audio/Life of Pi - Book Summary.mp3";
 
 import InfoApp from "../components/InfoApp";
 import KeyFeture from "../components/KeyFeture";
@@ -24,7 +23,7 @@ const Home = () => {
       title: "",
     },
   ]);
-  
+
   const [trending, setTrending] = useState([
     {
       poster: "",
@@ -37,7 +36,7 @@ const Home = () => {
   ]);
 
   const [playAudio, setPlay] = useState(false);
-  const [audio] = useState(new Audio(pie));
+  const [audio] = useState(new Audio("https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FLife%20of%20Pi%20-%20Book%20Summary-Fxbbs6oj.mp3?alt=media&token=6cdb2fe5-f20f-4d95-866d-ca2f51d4deaf"));
   const { status } = useSelector((state: ReduxStates) => state.user);
 
   const dispatch = useDispatch();
@@ -176,7 +175,7 @@ const Home = () => {
               </div>
               <div id="scroll" className="overflow-auto whitespace-nowrap mb-3">
                 {data.map((item, i) => {
-                  
+
                   return (
                     <NewCard
                       key={i}

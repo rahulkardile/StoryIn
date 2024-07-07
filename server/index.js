@@ -59,10 +59,6 @@ export const s3Clinet = new S3Client({
 
 let cout = 1;
 
-app.get("/", (req,res)=>{
-    res.send("okk")
-})
-
 app.get("/api/stream", async(req, res, next) => {
     try {
 

@@ -1,9 +1,9 @@
-import img from "../assets/pexels-perfecto-capucine-1324859.jpg";
 import Card from "../components/Card";
+import img from "../assets/pexels-perfecto-capucine-1324859.jpg"
 import { FaCaretRight } from "react-icons/fa";
+import Robo from "../assets/3-device.png"
+import Karn from "../assets/Personalization_Block.jpeg"
 import { Link } from "react-router-dom";
-import Karn from "../assets/NewCard.jpeg";
-import Robo from "../assets/img.webp";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 
