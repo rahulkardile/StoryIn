@@ -16,7 +16,6 @@ routes.post("/new", verifyUser, async (req, res, next) => {
         const { title, description, date, tags, episodes, poster } = req.body;
 
         if (!title, !description, !date, !tags, !episodes, !poster, !data._id) return next(errorHandler(400, "something is mising"));
-        console.log(req.body);
 
         const NewABook = await ListBook.create({
             title,
@@ -170,7 +169,7 @@ routes.get("/trending", async (req, res, next) => {
             success: true,
             data: raw
         })
-        
+
     } catch (error) {
         next(error)
     }
@@ -242,24 +241,24 @@ routes.delete("/delete/:id", verifyUser, async (req, res, next) => {
         if (!Book) return next(errorHandler(400, "Not Found"))
         if (Book.user != _id) return next(errorHandler(400, "bad request!"))
 
-        const deleteFileList = [];
-        deleteFileList.push(Book.poster);
-        Book.episodes.forEach(i => deleteFileList.push(i));
+        // const deleteFileList = [];
+        // deleteFileList.push(Book.poster);
+        // Book.episodes.forEach(i => deleteFileList.push(i));
 
-        deleteFileList.forEach(async (i) => {
+        // deleteFileList.forEach(async (i) => {
 
-            rm(i, (err, data) => {
-                if (err) {
-                    if (err.code === "ENOENT") {
-                        console.log("File not found!");
-                        return next(errorHandler(404, "File not found"))
-                    } else {
-                        console.log(err);
-                    }
-                }
-            })
+        //     rm(i, (err, data) => {
+        //         if (err) {
+        //             if (err.code === "ENOENT") {
+        //                 console.log("File not found!");
+        //                 return next(errorHandler(404, "File not found"))
+        //             } else {
+        //                 console.log(err);
+        //             }
+        //         }
+        //     })
 
-        })
+        // })
 
         await ListBook.findOneAndDelete({ _id: Book._id });
         res.status(200).json({
