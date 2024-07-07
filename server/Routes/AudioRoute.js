@@ -246,7 +246,7 @@ routes.delete("/delete/:id", verifyUser, async (req, res, next) => {
         await Promise.all(
             Book.episodes.map(async (item) => {
                 try {
-                    s3Client.send(
+                    s3Clinet.send(
                         new HeadObjectCommand({
                             Bucket: "storyin",
                             Key: item
