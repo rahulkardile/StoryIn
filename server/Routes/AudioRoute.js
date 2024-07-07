@@ -26,7 +26,7 @@ routes.post("/new", verifyUser, async (req, res, next) => {
             episodes
         })
 
-        const message = title.substr(0, 10);
+        const message = title.substr(0, 30);
         res.status(200).json({
             message: message + "...",
             success: true
@@ -259,14 +259,14 @@ routes.delete("/delete/:id", verifyUser, async (req, res, next) => {
                         Key: item
                     })
 
-                    const result = await s3Clinet.send(command);
-                    console.log(result);
+                    await s3Clinet.send(command);
                     await ListBook.findOneAndDelete({ _id: Book._id });
 
                     isBookDeleted = true;
                     res.status(200).json({
                         success: true,
                         isBookDeleted,
+                        url: Book.poster,
                         message: "deleted successfully!",
                     })
 

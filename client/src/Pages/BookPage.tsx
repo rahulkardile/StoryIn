@@ -95,7 +95,6 @@ const BookPage = () => {
         const key = {
           key: data.episodes[0]
         }
-        console.log(key);
 
         const res = await fetch("/api/audio-book/s3/getPoster", {
           method: "POST",
@@ -108,7 +107,7 @@ const BookPage = () => {
         if (success) {
           setUrl(url);
         } else {
-          toast.error("Got the problem!!");
+          ""
         }
       }
     }
@@ -117,8 +116,7 @@ const BookPage = () => {
   if (data.episodes.length >= 0) {
 
     if (url.length > 2) {
-      console.log("Emplty");
-
+      ''
     } else {
       getAudio();
       console.log(url);
@@ -205,7 +203,7 @@ const BookPage = () => {
             <h1>Episodes</h1>
             <p className="border-t-[1px] my-3 border-slate-500 h-1 w-full" />
             <div className="flex flex-row items-center mb-3 gap-2">
-              {status === true || user?.role === "admin" ? (
+              {status === true || user?.role === "admin" || data.user._id === user?._id ? (
                 <>
                   <h1 className="h-8 w-8 border-[1px] border-black text-black flex items-center text-sm justify-evenly rounded-full m-auto">
                     <span>1</span>

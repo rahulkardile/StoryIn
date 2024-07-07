@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { NewBookRes, s3types } from "../utils/Types-S3";
-import { storege } from "../firebase"
+import { storage } from "../firebase.ts"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 const Create = () => {
@@ -47,7 +47,7 @@ const Create = () => {
       if (img !== undefined) {
         setLoading(true);
         if (img) {
-          const storegeRef = ref(storege, `poster/${Date.now() + "_" + img.name}`);
+          const storegeRef = ref(storage, `posters/${Date.now() + "_" + img.name}`);
           await uploadBytes(storegeRef, img);
           const dowloadurl = await getDownloadURL(storegeRef);
           imgUrl = dowloadurl;
@@ -77,7 +77,7 @@ const Create = () => {
         });
 
         if (UploadEpi.ok) {
-          toast.success("Episode is uploaded!");
+          ""
         } else {
           return toast.error("Episode Upload Error!!");
         }

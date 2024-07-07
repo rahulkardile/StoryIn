@@ -7,6 +7,8 @@ import { BiDotsVerticalRounded } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { RemoveStatus } from "../Redux/Slices/UserSlice";
 import noImg from "../assets/noImg.jpg"
+import { storage } from "../firebase";
+import { deleteObject, ref } from "firebase/storage";
 
 const Profile = () => {
   const { user, status } = useSelector((state: ReduxStates) => state.user);
@@ -88,15 +90,21 @@ const Profile = () => {
     });
     const resData = await res.json();
     if (resData.success === true) {
+
+      const desertRef = ref(storage, resData.url);
+      deleteObject(desertRef).then(() => {
+        toast.success("deleted successfully")
+      }).catch((error) => {
+        toast.error("Uh-oh, an error occurred!");
+        console.log(error);
+      });
       setProccess(false);
       setId("");
-      toast.success(resData.message);
       window.location.reload();
     } else {
       setProccess(false);
       setId("");
       toast.error("Can't Delete!");
-      window.location.reload();
     }
   };
 
