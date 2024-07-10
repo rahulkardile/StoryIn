@@ -1,5 +1,4 @@
 import toast from "react-hot-toast";
-import profileImg from "../assets/profile.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { addStatus } from "../Redux/Slices/UserSlice";
@@ -11,6 +10,9 @@ const Subscription = () => {
   const { user } = useSelector((state: ReduxStates) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const profileImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=668c8081-a5b3-469a-a8f6-3a8f7bb89fc7";
+
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const checkout = async (amount: any) => {

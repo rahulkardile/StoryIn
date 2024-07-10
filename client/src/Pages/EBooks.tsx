@@ -1,15 +1,16 @@
 import Card from "../components/Card";
-import img from "../assets/pexels-perfecto-capucine-1324859.jpg"
 import { FaCaretRight } from "react-icons/fa";
-import Robo from "../assets/3-device.png"
-import Karn from "../assets/Personalization_Block.jpeg"
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 
 const EBooks = () => {
 
-  const { status } = useSelector((state: ReduxStates)=> state.user)
+  const img = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2Fpexels-perfecto-capucine-1324859.jpg?alt=media&token=a4fffe00-2150-4a67-b022-865c1615a501"
+  const Robo = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FerrorImage.jpg?alt=media&token=8775dd92-495a-4722-9787-2e5a66485172"
+  const Karn = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FerrorImage.jpg?alt=media&token=8775dd92-495a-4722-9787-2e5a66485172"
+
+  const { status } = useSelector((state: ReduxStates) => state.user)
 
   return (
     <section className="h-[1300px] w-full">
@@ -29,10 +30,10 @@ const EBooks = () => {
             Get access to more than 250 000 + eBooks – new content is added
             daily. Start now. Read anytime, anywhere.
           </p>
-          { 
-            status === false  ? <button className="p-3 bg-white mx-14 text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80">
-            Subscribe Now
-          </button> : ""
+          {
+            status === false ? <button className="p-3 bg-white mx-14 text-black max-w-52 mb-5 rounded-lg text-base font-bold hover:opacity-80">
+              Subscribe Now
+            </button> : ""
           }
         </div>
       </div>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import noImg from "../assets/noImg.jpg"
 
 const Favorite = () => {
+
+  const noImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FerrorImage.jpg?alt=media&token=8775dd92-495a-4722-9787-2e5a66485172"
   const [data, setData] = useState([
     {
       _id: "",
@@ -61,7 +62,7 @@ const Favorite = () => {
                   src={`/api/${i.poster}`}
                   className="object-contain w-32 h-[200px] sm:w-56 duration-300 rounded-2xl hover:scale-105"
                   alt="poster"
-                  onError={e=> {
+                  onError={e => {
                     e.currentTarget.src = noImg
                   }}
                 />

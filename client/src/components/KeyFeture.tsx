@@ -1,8 +1,9 @@
-import sec from "../assets/Personalization_Block.jpeg";
-import thi from "../assets/3-device.png";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { Link } from "react-router-dom";
+
+const sec = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FPersonalization_Block.jpeg?alt=media&token=a164ee4e-b119-4bae-bb46-4f0fa05e17c7";
+const thi = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2F3-device.png?alt=media&token=619392ed-9481-47f9-b9b0-cd4ef6413bd1";
 
 const KeyFeture = () => {
   const { status } = useSelector((state: ReduxStates) => state.user);

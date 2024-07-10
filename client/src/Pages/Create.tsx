@@ -13,10 +13,6 @@ const Create = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  // const ImgHandler = () => {
-
-  // }
-
   const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
 
     const file:File | undefined = e.target.files?.[0];

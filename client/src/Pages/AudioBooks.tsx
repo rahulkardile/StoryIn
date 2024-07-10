@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { FaCaretRight } from "react-icons/fa6";
-import mainImg from "../assets/Cover.jpg";
 import { Link } from "react-router-dom";
 import NewCard from "../components/NewCard";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
+
+const mainImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FCover.jpg?alt=media&token=8e4ddda0-d60f-41f9-9170-aa09e255738b";
 
 const AudioBooks = () => {
   const [data, setData] = useState([{
@@ -120,7 +121,7 @@ const AudioBooks = () => {
                   {data.map((item, i) => (
                     <NewCard
                       key={i}
-                      img={`/api/${item?.poster}`}
+                      img={`${item?.poster}`}
                       id={item?._id}
                       author={item?.user.name}
                       bookName={item?.title}
@@ -160,7 +161,7 @@ const AudioBooks = () => {
                     {Trending.map((item, i) => (
                       <NewCard
                         key={i}
-                        img={`/api/${item?.poster}`}
+                        img={`${item?.poster}`}
                         id={item?._id}
                         author={item?.user.name}
                         bookName={item?.title}

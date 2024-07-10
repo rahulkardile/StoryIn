@@ -5,8 +5,9 @@ import NewCard from "../components/NewCard";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { FaHeart } from "react-icons/fa";
-import noImg from "../assets/noImg.jpg";
 import { postRes, s3types } from "../utils/Types-S3";
+
+const noImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FerrorImage.jpg?alt=media&token=8775dd92-495a-4722-9787-2e5a66485172";
 
 const BookPage = () => {
   const [data, setData] = useState<postRes>({

@@ -1,3 +1,4 @@
+import serverless from 'serverless-http'
 import express from 'express'
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
@@ -7,10 +8,6 @@ import fs, { stat } from "fs"
 import path from 'path';
 import razorpay from 'razorpay'
 import { S3Client } from '@aws-sdk/client-s3';
-
-// graphQL SetUp
-import { ApolloServer } from '@apollo/server';
-import { expressMiddleware } from "@apollo/server/express4"
 
 import User from "./Routes/UserRoutes.js"
 import OrederRoute from "./Routes/OrderRoute.js"
@@ -134,3 +131,5 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
     console.log(`Server is running on ${PORT} . . .`);
 })
+
+// export const handler = serverless(app);

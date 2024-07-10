@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import logo from "../assets/4214.jpg";
-
 import InfoApp from "../components/InfoApp";
 import KeyFeture from "../components/KeyFeture";
 import toast from "react-hot-toast";
@@ -10,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { add } from "../Redux/Slices/Fevs";
 import { FaPlay, FaPause } from "react-icons/fa";
+
+const logo = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2F4214.jpg?alt=media&token=385f19da-9c44-48f3-9720-ec3428160f6a";
 
 const Home = () => {
 

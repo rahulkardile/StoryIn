@@ -9,7 +9,8 @@ import {
   RemoveUser,
   changeRole,
 } from "../Redux/Slices/UserSlice";
-import profileImg from "../assets/profile.jpg";
+
+const profileImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=668c8081-a5b3-469a-a8f6-3a8f7bb89fc7";
 
 const Header = () => {
   const dispatch = useDispatch();

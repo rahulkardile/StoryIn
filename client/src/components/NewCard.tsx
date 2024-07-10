@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import noImg from "../assets/noImg.jpg"
 
 type data = {
   img: string;
@@ -7,6 +6,8 @@ type data = {
   bookName: string;
   id: string;
 };
+
+const noImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FerrorImage.jpg?alt=media&token=8775dd92-495a-4722-9787-2e5a66485172"
 
 const NewCard = (data: data) => {
   const naviagte = useNavigate();

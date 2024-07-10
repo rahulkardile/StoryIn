@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
-import profileImg from "../assets/profile.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { RemoveStatus } from "../Redux/Slices/UserSlice";
-import noImg from "../assets/noImg.jpg"
 import { storage } from "../firebase";
 import { deleteObject, ref } from "firebase/storage";
 
@@ -17,6 +15,9 @@ const Profile = () => {
   const [Option, setOption] = useState<boolean>(false);
   const [Proccess, setProccess] = useState<boolean>(false);
 
+  const noImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FerrorImage.jpg?alt=media&token=8775dd92-495a-4722-9787-2e5a66485172"
+  const profileImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2Fprofile.jpg?alt=media&token=668c8081-a5b3-469a-a8f6-3a8f7bb89fc7";
+  
   const [Id, setId] = useState<string>("");
 
   const [orderDate, setOrderData] = useState({
