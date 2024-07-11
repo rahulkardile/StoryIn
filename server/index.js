@@ -13,6 +13,7 @@ import User from "./Routes/UserRoutes.js"
 import OrederRoute from "./Routes/OrderRoute.js"
 import AudioRoute from "./Routes/AudioRoute.js"
 import FevRoute from "./Routes/FevRoute.js"
+import { errorHandler } from './utils/errHandler.js';
 
 const app = express();
 app.use(cors());
@@ -103,10 +104,21 @@ app.use("/api/audio-book/", AudioRoute)
 app.use("/api/order/", OrederRoute)
 app.use("/api/fev/", FevRoute)
 
-app.use(express.static(path.join(__dirname, 'dist')));
+// app.use(express.static(path.join(__dirname, 'dist')));
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// })
+
+app.get("*", (req, res, next)=>{
+    try {
+        res.status(404).json({
+            success: true,
+            message: "Route Not Found!"
+        })
+    } catch (error) {
+        next(errorHandler(error))
+    }
 })
 
 app.use((err, req, res, next) => {
