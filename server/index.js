@@ -15,13 +15,7 @@ import AudioRoute from "./Routes/AudioRoute.js"
 import FevRoute from "./Routes/FevRoute.js"
 
 const app = express();
-// const __dirname = path.resolve();
-app.use(cors({
-    origin: 'https://storyin-client.onrender.com',
-    credentials: true,
-    methods: 'GET, POST, PUT, PATCH, DELETE',
-    allowedHeaders: ['Content-Type', 'Authorization']
-}));
+app.use(cors());
 
 app.use(cookieParser());
 app.use(express.json());
@@ -56,7 +50,7 @@ export const s3Clinet = new S3Client({
 
 let cout = 1;
 
-app.get("/api/stream", async(req, res, next) => {
+app.get("/api/stream", async (req, res, next) => {
     try {
 
         const filePath = req.query.path;
@@ -128,8 +122,8 @@ app.use((err, req, res, next) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT} . . .`);
-})
+// app.listen(PORT, () => {
+//     console.log(`Server is running on ${PORT} . . .`);
+// })
 
-// export const handler = serverless(app);
+export const handler = serverless(app);

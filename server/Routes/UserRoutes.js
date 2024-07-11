@@ -1,6 +1,6 @@
 import express from "express";
 import { User } from "../Models/User.js";
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs"
 import { errorHandler } from "../utils/errHandler.js";
 import jwt from "jsonwebtoken"
 import { verifyUser } from "../utils/VerifyUser.js";
