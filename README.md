@@ -57,4 +57,4 @@ npm run dev
 client
 npm run dev
 
-Also check the application here: https://storyin.onrender.com
+Also check the application here: https://storyin-client.onrender.com/
