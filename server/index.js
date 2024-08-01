@@ -104,11 +104,11 @@ app.use("/api/audio-book/", AudioRoute)
 app.use("/api/order/", OrederRoute)
 app.use("/api/fev/", FevRoute)
 
-// app.use(express.static(path.join(__dirname, 'dist')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-// })
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+})
 
 app.get("*", (req, res, next)=>{
     try {
@@ -134,8 +134,8 @@ app.use((err, req, res, next) => {
     });
 });
 
-// app.listen(PORT, () => {
-//     console.log(`Server is running on ${PORT} . . .`);
-// })
+app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT} . . .`);
+})
 
-export const handler = serverless(app);
+// export const handler = serverless(app);
