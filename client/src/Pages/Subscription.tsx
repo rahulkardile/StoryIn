@@ -92,7 +92,7 @@ const Subscription = () => {
       <h1 className="text-2xl text-center text-black font-semibold mb-4">
         Choose Your Plan
       </h1>
-
+    <h3 className="text-blue-500 text-center mb-7 font-semibold">Please add <span className="text-green-400 underline font-bold">success@razorpay</span> to purches subscription</h3>
       <div className="flex gap-4  items-center justify-center flex-col sm:flex-row ">
         <div className="w-10/12 p-4 h-auto border rounded-lg flex flex-col gap-1 items-center bg-gray-100">
           <h2 className="text-lg font-semibold">Premium of 1 Months</h2>

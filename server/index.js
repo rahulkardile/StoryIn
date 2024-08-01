@@ -110,16 +110,16 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 })
 
-app.get("*", (req, res, next)=>{
-    try {
-        res.status(404).json({
-            success: true,
-            message: "Route Not Found!"
-        })
-    } catch (error) {
-        next(errorHandler(error))
-    }
-})
+// app.get("*", (req, res, next)=>{
+//     try {
+//         res.status(404).json({
+//             success: true,
+//             message: "Route Not Found!"
+//         })
+//     } catch (error) {
+//         next(errorHandler(error))
+//     }
+// })
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 400;

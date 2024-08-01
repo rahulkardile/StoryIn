@@ -22,6 +22,7 @@ const Admin = lazy(() => import("./Pages/Admin"));
 const About = lazy(() => import("./Pages/About"));
 const Update = lazy(() => import("./Pages/UpdatePost"));
 const Subscription = lazy(() => import("./Pages/Subscription"));
+const NotFound = lazy(() => import("./Pages/NotFound"));
 
 const App = () => {
 
@@ -51,7 +52,7 @@ const App = () => {
             </Route>
           </Route>
 
-          <Route path="*" element={<div>Not Found</div>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       <Footer />
