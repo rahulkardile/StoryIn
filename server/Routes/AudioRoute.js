@@ -10,6 +10,17 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const routes = express.Router();
 
+routes.get("/", async (req, res, next) => {
+    try {
+        res.status(200).json({
+            message: "Working fine audio",
+            success: true
+        })
+    } catch (error) {
+        next(error);
+    }
+})
+
 routes.post("/new", verifyUser, async (req, res, next) => {
     try {
         const data = req.user;

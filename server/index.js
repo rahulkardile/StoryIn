@@ -110,6 +110,17 @@ app.use("/api/fev/", FevRoute)
 //     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 // })
 
+app.get("/api/home", (req, res, next)=>{
+    try {
+        res.status(404).json({
+            success: true,
+            message: "We Are at home Route"
+        })
+    } catch (error) {
+        next(errorHandler(error))
+    }
+})
+
 app.get("*", (req, res, next)=>{
     try {
         res.status(404).json({
@@ -134,8 +145,8 @@ app.use((err, req, res, next) => {
     });
 });
 
-// app.listen(PORT, () => {
-//     console.log(`Server is running on ${PORT} . . .`);
-// })
+app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT} . . .`);
+})
 
 export const handler = serverless(app);
