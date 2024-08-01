@@ -44,6 +44,8 @@ PORT = ***********
 KEYID = ***********
 KEYSECRET = ***********
 MONGOURL_CLOUD = ***********
+s3UserAccess = ***********
+s3UserSecret = ***********
 
 ## Development Server
 
@@ -55,4 +57,4 @@ npm run dev
 client
 npm run dev
 
-Also check the application here: https://storyin-client.onrender.com/
+Also check the application here: https://storyin.onrender.com
