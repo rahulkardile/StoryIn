@@ -1,6 +1,7 @@
 # Logs
 logs
 *.log
+.serverless
 .env
 npm-debug.log*
 yarn-debug.log*
