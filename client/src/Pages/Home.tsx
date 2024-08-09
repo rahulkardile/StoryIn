@@ -45,7 +45,7 @@ const Home = () => {
     const controller = new AbortController();
 
     const data = async () => {
-      const res = await fetch("/api/audio-book/get", {
+      const res = await fetch("https://storyin-8xqa2p7b.b4a.run/api/audio-book/get", {
         signal: controller.signal,
       });
 
@@ -59,7 +59,7 @@ const Home = () => {
     };
 
     const trending = async () => {
-      const res = await fetch("/api/audio-book/trending", {
+      const res = await fetch("https://storyin-8xqa2p7b.b4a.run/api/audio-book/trending", {
         signal: controller.signal,
       });
 
