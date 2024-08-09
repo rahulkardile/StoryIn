@@ -6,9 +6,9 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors'
 import fs, { stat } from "fs"
 import path from 'path';
-import razorpay from 'razorpay'
-import helmet from "helmet"
-import rateLimit from "express-rate-limit"
+import razorpay from 'razorpay';
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import { S3Client } from '@aws-sdk/client-s3';
 import cluster from 'cluster';
 import os from "os";
@@ -18,7 +18,7 @@ import OrederRoute from "./Routes/OrderRoute.js"
 import AudioRoute from "./Routes/AudioRoute.js"
 import FevRoute from "./Routes/FevRoute.js"
 
-const totalCPUs = os.cpus().length;
+const totalCPUs = 1 || os.cpus().length;
 
 dotenv.config();
 const PORT = process.env.PORT || 3300
@@ -39,7 +39,7 @@ export const s3Clinet = new S3Client({
 })
 
 if (cluster.isPrimary) {
-    console.log(`Total cpu's are ${totalCPUs} . . . \n`);
+    console.log(`Total cpu's are ${os.cpus().length} . . . \n`);
 
     for (let i = 0; i < totalCPUs; i++) {
         cluster.fork();
@@ -73,7 +73,7 @@ if (cluster.isPrimary) {
     app.use(express.urlencoded({ extended: false }))
 
     try {
-        mongoose.connect(MONGO_CLOUD_URL);
+        mongoose.connect(MONGO_CLOUD_URL).then(()=>console.log('Database s connected . . . '));
     } catch (error) {
         console.log('Database is error ' + error);
     }
