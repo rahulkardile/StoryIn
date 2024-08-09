@@ -7,25 +7,41 @@ import cors from 'cors'
 import fs, { stat } from "fs"
 import path from 'path';
 import razorpay from 'razorpay'
+import helmet from "helmet"
+import rateLimit from "express-rate-limit"
 import { S3Client } from '@aws-sdk/client-s3';
 
 import User from "./Routes/UserRoutes.js"
 import OrederRoute from "./Routes/OrderRoute.js"
 import AudioRoute from "./Routes/AudioRoute.js"
 import FevRoute from "./Routes/FevRoute.js"
-import { errorHandler } from './utils/errHandler.js';
 
 const app = express();
-app.use(cors());
 
-app.use(cookieParser());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100,
+    message: {
+        message: "Too many requests, please try again later.",
+        success: true,
+    }
+})
 
 dotenv.config();
 const PORT = process.env.PORT || 3300
 const MONGO_URL = process.env.MONGOURL;
 const MONGO_CLOUD_URL = process.env.MONGOURL_CLOUD;
+
+app.use(cors({
+    origin: process.env.CORS_ORIGIN || 'http://localhost:3300' || "*",
+    optionsSuccessStatus: 200
+}));
+
+app.use(helmet());
+app.use(limiter);
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
 
 const __dirname = path.resolve();
 
