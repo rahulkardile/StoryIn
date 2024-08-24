@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
 import { add } from "../Redux/Slices/Fevs";
 import { FaPlay, FaPause } from "react-icons/fa";
+import { IHomeAPI } from "../Interfaces/IHome";
 
 const logo = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2F4214.jpg?alt=media&token=385f19da-9c44-48f3-9720-ec3428160f6a";
 
 const Home = () => {
 
-  const [data, setData] = useState([
+  const [data, setData] = useState<IHomeAPI[]>([
     {
       poster: "",
       _id: "",
@@ -24,7 +25,7 @@ const Home = () => {
     },
   ]);
 
-  const [trending, setTrending] = useState([
+  const [trending, setTrending] = useState<IHomeAPI[]>([
     {
       poster: "",
       _id: "",
@@ -45,7 +46,7 @@ const Home = () => {
     const controller = new AbortController();
 
     const data = async () => {
-      const res = await fetch("https://storyin-8xqa2p7b.b4a.run/api/audio-book/get", {
+      const res = await fetch("/api/audio-book/get", {
         signal: controller.signal,
       });
 
@@ -59,7 +60,7 @@ const Home = () => {
     };
 
     const trending = async () => {
-      const res = await fetch("https://storyin-8xqa2p7b.b4a.run/api/audio-book/trending", {
+      const res = await fetch("/api/audio-book/trending", {
         signal: controller.signal,
       });
 

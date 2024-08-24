@@ -34,11 +34,9 @@ router.post("/new", async (req, res, next) => {
 router.post("/google", async (req, res, next) => {
   try {
     const { name, email, photoURL, uid } = await req.body;
-
     const user = await User.findOne({ email })
 
     if (user) {
-
       if (user.uid !== uid) {
         return res.status(200).json({
           statusCode: 400,
@@ -79,14 +77,12 @@ router.post("/google", async (req, res, next) => {
         data: rest,
         message: `Welcome ${user.name}!`
       });
-
     }
 
   } catch (error) {
     next(error);
   }
 });
-
 
 router.post("/get", async (req, res, next) => {
   try {

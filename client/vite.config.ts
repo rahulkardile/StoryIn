@@ -11,7 +11,7 @@ export default defineConfig({
   server:{
     proxy: {
       "/api": {
-        target:"https://storyin-8xqa2p7b.b4a.run",
+        target:"http://localhost:3300",
         secure: false
       }
     }

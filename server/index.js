@@ -1,4 +1,4 @@
-import serverless from 'serverless-http'
+import serverless from 'serverless-http';
 import express from 'express'
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
@@ -18,7 +18,7 @@ import OrederRoute from "./Routes/OrderRoute.js"
 import AudioRoute from "./Routes/AudioRoute.js"
 import FevRoute from "./Routes/FevRoute.js"
 
-const totalCPUs = 1 || os.cpus().length;
+const totalCPUs = 1;
 
 dotenv.config();
 const PORT = process.env.PORT || 3300
@@ -133,7 +133,8 @@ if (cluster.isPrimary) {
     app.use("/api/user/", User)
     app.use("/api/audio-book/", AudioRoute)
     app.use("/api/order/", OrederRoute)
-    app.use("/api/fev/", FevRoute)
+    app.use("/api/fev/", FevRoute);
+
     app.get("/pid", (req, res) => {
         res.send({
             message: `pid is ${process.pid}`,
