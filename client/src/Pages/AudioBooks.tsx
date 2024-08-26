@@ -5,11 +5,12 @@ import NewCard from "../components/NewCard";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { ReduxStates } from "../Redux/Store";
+import { IHomeAPI } from "../Interfaces/IHome";
 
 const mainImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FCover.jpg?alt=media&token=8e4ddda0-d60f-41f9-9170-aa09e255738b";
 
 const AudioBooks = () => {
-  const [data, setData] = useState([{
+  const [data, setData] = useState<IHomeAPI[]>([{
     _id: "",
     poster: "",
     title: "",
@@ -19,7 +20,7 @@ const AudioBooks = () => {
   }]);
   console.log(data);
   
-  const [Trending, setTrending] = useState([{
+  const [Trending, setTrending] = useState<IHomeAPI[]>([{
     _id: "",
     poster: "",
     title: "",

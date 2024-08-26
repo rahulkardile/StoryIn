@@ -4,9 +4,14 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { addStatus, addUser } from "../Redux/Slices/UserSlice";
 import OAuth from "../components/OAuth";
+import { ILogin } from "../Interfaces/IHome";
 
 const Login = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<ILogin>({
+    email: "",
+    password: ""
+  });
+  
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 

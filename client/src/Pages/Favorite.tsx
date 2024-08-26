@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { IFavorite } from "../Interfaces/IFavorite";
 
 const Favorite = () => {
 
   const noImg = "https://firebasestorage.googleapis.com/v0/b/storyin-64d8b.appspot.com/o/assets%2FerrorImage.jpg?alt=media&token=8775dd92-495a-4722-9787-2e5a66485172"
-  const [data, setData] = useState([
+  const [data, setData] = useState<IFavorite[]>([
     {
       _id: "",
       title: "",
